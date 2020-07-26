@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 13:51:17
- * @LastEditTime: 2020-07-26 18:00:38
+ * @LastEditTime: 2020-07-26 20:32:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\store\index.js
@@ -28,8 +28,6 @@ const store = new Vuex.Store({
         
     },
     getters: {
-        // getLoginInfo: (state) => () => {
-        // }
     },
     mutations: {
         connecting:(state,boolVal) =>state.connecting = boolVal,

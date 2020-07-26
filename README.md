@@ -1,4 +1,4 @@
-# obs
+# obs-websoket-js-vue
 
 > obs web manager
 

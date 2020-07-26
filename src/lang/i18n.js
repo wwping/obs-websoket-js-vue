@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:12:43
- * @LastEditTime: 2020-07-26 15:16:59
+ * @LastEditTime: 2020-07-26 19:42:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\i18n.js
@@ -20,7 +20,7 @@ const messages = {
 }
 
 function getLocal () {
-    let lang = 'zh'
+    let lang = localStorage.getItem('local') || 'zh';
     if (Vue.env && Vue.env.language) {
         lang = Vue.env.language
     }

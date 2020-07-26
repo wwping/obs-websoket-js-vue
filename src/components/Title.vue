@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 14:06:43
- * @LastEditTime: 2020-07-26 16:05:32
+ * @LastEditTime: 2020-07-26 19:50:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Title.vue
@@ -13,6 +13,12 @@
                 <span><Icon type="ios-infinite" size="16" /></span>
                 <span>{{connectText}}</span>
             </div>
+        </div>
+        <div class="flex-1"></div>
+        <div>
+            <Select v-model="language" style="width:auto" size="small" @on-change="languageChange">
+                <Option v-for="item in languages" :value="item.name" :key="item.name">{{ item.txt }}</Option>
+            </Select>
         </div>
         <div class="flex-1"></div>
         <div>
@@ -37,7 +43,12 @@ export default {
                 address:'localhost',
                 port:4444,
                 secret:'',
-            }
+            },
+            language:localStorage.getItem('local') || 'zh',
+            languages:[
+                {name:'en',txt:'English'},
+                {name:'zh',txt:'简体中文'},
+            ],
         }
     },
     computed:{
@@ -58,6 +69,10 @@ export default {
         },
         disconnect(){
             msgSubPusher.push('obs-disconnect')
+        },
+        languageChange(val){
+            localStorage.setItem('local',val);
+            window.location.reload();
         }
     }
 }
@@ -67,4 +82,7 @@ export default {
 .status.connecting{color: green;font-weight: bold;}
 .config-input{width: auto;}
 .config-input.port{width: 80px;}
+
+.ivu-select{padding-top: 5px;vertical-align: inherit;border:0;font-size: 13px;}
+.config-input,.ivu-btn{vertical-align: inherit;}
 </style>

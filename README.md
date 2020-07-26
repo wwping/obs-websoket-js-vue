@@ -7,4 +7,5 @@
 - obs plugin obs-websoket
 
 
-
+## preview
+![](https://github.com/wwping/obs-websoket-js-vue/blob/master/preview.png?raw=true)

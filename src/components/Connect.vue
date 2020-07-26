@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:27:20
- * @LastEditTime: 2020-07-26 17:58:15
+ * @LastEditTime: 2020-07-26 20:22:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Connect.vue
@@ -45,7 +45,6 @@ export default {
 
         this.obs.on('Exiting',this.exiting)
         this.obs.on('BroadcastCustomMessage',(data)=>{
-            //msgSubPusher.push('obs-msg-'+data.realm ,data.data);
         });
 
         msgSubPusher.add('obs-command',this.command);
@@ -110,8 +109,6 @@ export default {
             });
         },
         getMedias(){
-            
-
             this.command({
                 cmd:'GetSpecialSources',
                 callback:(data)=>{
@@ -140,29 +137,14 @@ export default {
                                     let types = ['ffmpeg_source','dshow_input','wasapi_input_capture','wasapi_output_capture'];
                                     let allAudios = data.sources.filter(c=>types.indexOf(c.typeId)>=0).map(c=>c.name);
                                     
-                                    console.log(data.sources);
-                                    
                                     let currentSources = this.scenes.filter(c=>c.name == this.current_scene)[0];
-
-                                    
                                     if(currentSources){
                                         currentSources = currentSources.sources;
                                     }else{
                                         currentSources = [];
                                     }
-
-
-
                                     //currentSources = currentSources.filter(c=>allAudios.indexOf(c.name)>=0 || _audios.indexOf(c.name)>=0);
-
                                     console.log(currentSources);
-
-                                    //let audios = sources.filter(c=>c.)
-
-
-
-                                    //this.$store.dispatch('scenes',data.scenes);
-                                    //this.$store.dispatch('current_scene',data.currentScene);
                                 }
                             }
                         });

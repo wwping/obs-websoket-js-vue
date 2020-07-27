@@ -35,7 +35,6 @@ li{list-style: none;}
 .mb-10{margin-bottom:10px;}
 .hide{display: none;}
 body {
-    overflow: hidden;
     font: 12px/1.5 "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei",sans-serif, helvetica, arial, verdana, tahoma, sans-serif !important;
 }
 

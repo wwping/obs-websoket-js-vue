@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-07-26 13:39:46
+ * @LastEditTime: 2020-07-27 13:14:08
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \obs\config\index.js
+ */ 
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
@@ -44,12 +52,13 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    // assetsPublicPath: '/obs-websoket-js-vue-site/',
 
     /**
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

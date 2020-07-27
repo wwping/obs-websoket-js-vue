@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 14:06:43
- * @LastEditTime: 2020-07-26 19:50:46
+ * @LastEditTime: 2020-07-27 12:13:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Title.vue
@@ -12,6 +12,10 @@
             <div class="status" :class="{connecting:connecting}">
                 <span><Icon type="ios-infinite" size="16" /></span>
                 <span>{{connectText}}</span>
+                <span class="status-btn">
+                    <a class="error" v-if="connecting" @click="disconnect">{{$t('df.unconnect')}}</a>
+                    <a href="javascript:;" v-else @click="connect">{{$t('df.connect')}}</a>
+                </span>
             </div>
         </div>
         <div class="flex-1"></div>
@@ -19,16 +23,6 @@
             <Select v-model="language" style="width:auto" size="small" @on-change="languageChange">
                 <Option v-for="item in languages" :value="item.name" :key="item.name">{{ item.txt }}</Option>
             </Select>
-        </div>
-        <div class="flex-1"></div>
-        <div>
-            <span>{{$t('df.address')}} : <Input v-model="config.address" size="small" placeholder="地址" class="config-input" /></span>
-            <span>{{$t('df.port')}} : <Input v-model="config.port" size="small" placeholder="端口" class="config-input port"/></span>
-            <span>{{$t('df.secret')}} : <Input v-model="config.secret" size="small" placeholder="密码" class="config-input port" type="password"/></span>
-            <span>
-                <Button size="small" type="error" v-if="connecting" @click="disconnect">{{$t('df.unconnect')}}</Button>
-                <Button size="small" v-else @click="connect">{{$t('df.connect')}}</Button>
-            </span>
         </div>
     </div>
 </template>
@@ -39,11 +33,6 @@ export default {
     name:'Title',
     data(){
         return {
-            config:{
-                address:'localhost',
-                port:4444,
-                secret:'',
-            },
             language:localStorage.getItem('local') || 'zh',
             languages:[
                 {name:'en',txt:'English'},
@@ -57,11 +46,9 @@ export default {
         },
         ...mapState({
             connecting:state => state.connecting,
-            connectConfig:state=>state.connectConfig
         })
     },
     mounted(){
-        this.config = JSON.parse(JSON.stringify(this.connectConfig));
     },
     methods:{
         connect(){
@@ -77,12 +64,19 @@ export default {
     }
 }
 </script>
+<style>
+.wrap-title .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
+.wrap-title  .ivu-select-single .ivu-select-selection .ivu-select-selected-value{font-size: 12px;}
+.wrap-title .ivu-select-selection{background-color: transparent;}
+</style>
 <style scoped>
-.wrap-title{padding: 0 10px;}
+.wrap-title{padding: 0 10px;background-color: #f5f5f5;height: 39px;}
 .status.connecting{color: green;font-weight: bold;}
-.config-input{width: auto;}
-.config-input.port{width: 80px;}
+.config-input{width: auto;width: 80px;}
+.config-input.port{width: 60px;}
 
-.ivu-select{padding-top: 5px;vertical-align: inherit;border:0;font-size: 13px;}
-.config-input,.ivu-btn{vertical-align: inherit;}
+.ivu-select{padding-top: 7px;vertical-align: inherit;border:0;font-size: 13px;}
+
+.status-btn a{color:#333;border: 1px solid #ddd;padding: 2px 6px;border-radius: 2px;background-color: #f5f5f5;}
+.status-btn a.error{color:red;}
 </style>

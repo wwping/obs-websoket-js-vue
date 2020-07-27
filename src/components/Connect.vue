@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:27:20
- * @LastEditTime: 2020-07-26 20:22:42
+ * @LastEditTime: 2020-07-27 12:33:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Connect.vue
@@ -14,182 +14,238 @@ import OBSWebSocket from 'obs-websocket-js';
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import msgSubPusher from '../lib/msgSubPusher'
 export default {
-    name:'Connect',
-    data(){
+    name: 'Connect',
+    data () {
         return {
-            obs:null
+            obs: null
         }
     },
-    computed:{
+    computed: {
         ...mapState({
-            connecting:state => state.connecting,
-            connectConfig:state=>state.connectConfig,
-            scenes:state=>state.scenes,
-            current_scene:state=>state.current_scene,
+            connecting: state => state.connecting,
+            connect_config: state => state.connect_config,
+            scenes: state => state.scenes,
+            current_scene: state => state.current_scene,
         }),
-
     },
-    mounted(){
+    watch:{
+        connecting(val){
+            this.updateSources();
+        }
+    },
+    mounted () {
         this.obs = new OBSWebSocket();
 
         this.obs.on('ConnectionClosed', this.close);
 
-        this.obs.on('SourceCreated', this.sourceCreated);
-        this.obs.on('SourceDestroyed', this.sourceDestroyed);
+        this.obs.on('StreamStarted', this.streamStarted)
+        this.obs.on('StreamStopped', this.streamStopped)
+        this.obs.on('RecordingPaused', this.recordingPaused)
+        this.obs.on('RecordingResumed', this.recordingResumed)
 
-        this.obs.on('StreamStarted',this.streamStarted)
-        this.obs.on('StreamStopped',this.streamStopped)
+        this.obs.on('RecordingStarted', this.recordingStarted)
+        this.obs.on('RecordingStopped', this.recordingStopped)
 
-        this.obs.on('RecordingStarted',this.recordingStarted)
-        this.obs.on('RecordingStopped',this.recordingStopped)
-
-        this.obs.on('Exiting',this.exiting)
-        this.obs.on('BroadcastCustomMessage',(data)=>{
+        this.obs.on('Exiting', this.exiting)
+        this.obs.on('BroadcastCustomMessage', (data) => {
         });
 
-        msgSubPusher.add('obs-command',this.command);
-        msgSubPusher.add('obs-connect',this.connect);
-        msgSubPusher.add('obs-disconnect',this.disconnect);
-        msgSubPusher.add('obs-setCurrentScene',this.setCurrentScene);
+        //listener events to update sources
+        let updateEvenets = [
+            'SwitchScenes','ScenesChanged'
+            , 'SceneCollectionChanged', 'SceneCollectionListChanged'
+            , 'TransitionListChanged', 'TransitionDurationChanged'
+            , 'ProfileChanged', 'ProfileListChanged'
+            , 'StreamStarted' , 'StreamStopped', 'StreamStatus'
+            , 'RecordingStarted', 'RecordingStopped', 'RecordingPaused', 'RecordingResumed'
+            , 'ReplayStarted', 'ReplayStopped'
+            , 'SourceCreated', 'SourceDestroyed', 'SourceVolumeChanged', 'SourceMuteStateChanged'
+            , 'SourceAudioActivated', 'SourceAudioDeactivated' , 'SourceAudioActivated', 'SourceAudioSyncOffsetChanged', 'SourceAudioMixersChanged'
+            , 'SourceRenamed', 'SourceFilterAdded', 'SourceFilterRemoved', 'SourceFilterVisibilityChanged', 'SourceFiltersReordered'
+            , 'MediaPaused', 'MediaStopped', 'MediaNext', 'MediaPrevious', 'MediaStarted', 'MediaEnded'
+            , 'SourceOrderChanged', 'SceneItemAdded', 'SceneItemRemoved', 'SceneItemVisibilityChanged', 'SceneItemLockChanged'
+            , 'SceneItemTransformChanged', 'SceneItemSelected' , 'SceneItemDeselected'
+            , 'PreviewSceneChanged', 'StudioModeSwitched'
+        ];
+        updateEvenets.map(c=>{
+            this.obs.on(c,()=>{
+                this.updateSources();
+            })
+        })
+
+        msgSubPusher.add('obs-command', this.command);
+        msgSubPusher.add('obs-connect', this.connect);
+        msgSubPusher.add('obs-disconnect', this.disconnect);
+        msgSubPusher.add('obs-setCurrentScene', this.setCurrentScene);
 
         this.connect();
-
-        this.updateSources();
     },
-    methods:{
-        connect(){
-            let address = `${this.connectConfig.address}:${this.connectConfig.port}`;
-            this.obs.connect({ address:address, password: this.connectConfig.secret }).then(()=>{
+    methods: {
+        connect () {
+            let address = `${this.connect_config.address}:${this.connect_config.port}`;
+            this.obs.connect({ address: address, password: this.connect_config.secret }).then(() => {
                 this.success();
-            }).catch(()=>{
+            }).catch(() => {
                 this.error();
             });
         },
-        disconnect(){
+        disconnect () {
             this.obs.disconnect();
         },
-        setConnecting(boolVal){
-            this.$store.dispatch('connecting',boolVal)
+        setConnecting (boolVal) {
+            this.$store.dispatch('connecting', boolVal)
         },
-        success(){
+        success () {
             this.setConnecting(true);
         },
-        error(){this.setConnecting(false)},
-        close(){this.setConnecting(false)},
-        exiting(){this.setConnecting(false)},
+        error () { this.setConnecting(false) },
+        close () { this.setConnecting(false) },
+        exiting () { this.setConnecting(false) },
 
         //scenes
-        setCurrentScene(name){
+        setCurrentScene (name) {
             this.command({
-                cmd:'SetCurrentScene',
-                params:{'scene-name':name},
-                callback:()=>{}
+                cmd: 'SetCurrentScene',
+                params: { 'scene-name': name },
+                callback: () => { }
             })
-            this.$store.dispatch('current_scene',name);
+            this.$store.dispatch('current_scene', name);
         },
 
         //soucres
-        sourceCreated(){},
-        sourceDestroyed(){},
-        updateSources(){
+        updateSources () {
             this.getScenes();
             this.getTransition();
-            //this.getMedias();
-            setTimeout(this.updateSources, 100);
+            this.getMedias();
+            this.getRecordStatus();
+            this.getStreamingStatus();
         },
-        getScenes(){
+        getScenes () {
             this.command({
-                cmd:'GetSceneList',
-                callback:(data)=>{
-                    if(data.status == 'ok'){
-                        this.$store.dispatch('scenes',data.scenes);
-                        this.$store.dispatch('current_scene',data.currentScene);
+                cmd: 'GetSceneList',
+                callback: (data) => {
+                    if (data.status == 'ok') {
+                        this.$store.dispatch('scenes', data.scenes);
+                        this.$store.dispatch('current_scene', data.currentScene);
                     }
                 }
             });
         },
-        getMedias(){
+        getMedias () {
             this.command({
-                cmd:'GetSpecialSources',
-                callback:(data)=>{
-                    if(data.status == 'ok'){
-                        let fields = ['desktop-1','desktop-2','mic-1','mic-2','mic-3'];
+                cmd: 'GetSpecialSources',
+                callback: (data) => {
+                    if (data.status == 'ok') {
+                        let fields = ['desktop-1', 'desktop-2', 'mic-1', 'mic-2', 'mic-3'];
                         let _audios = [];
-                        for(let j in data){
-                            if(fields.indexOf(j)>=0){
+                        for (let j in data) {
+                            if (fields.indexOf(j) >= 0) {
                                 _audios.push(data[j]);
                             }
                         }
 
                         this.command({
-                            cmd:'GetSourceSettings',
-                            params:{sourceName:_audios[0]},
-                            callback:(data)=>{
-                                console.log(data);
-                            }
-                        })
+                            cmd: 'GetSourceTypesList',
+                            callback: (data) => {
+                                if (data.status == 'ok') {
+                                    let types = data.types.filter(c => c.caps.hasAudio == true).map(c => c.typeId);
 
-                        this.command({
-                            cmd:'GetSourcesList',
-                            callback:(data)=>{
-                                if(data.status == 'ok'){
-                                    
-                                    let types = ['ffmpeg_source','dshow_input','wasapi_input_capture','wasapi_output_capture'];
-                                    let allAudios = data.sources.filter(c=>types.indexOf(c.typeId)>=0).map(c=>c.name);
-                                    
-                                    let currentSources = this.scenes.filter(c=>c.name == this.current_scene)[0];
-                                    if(currentSources){
-                                        currentSources = currentSources.sources;
-                                    }else{
-                                        currentSources = [];
-                                    }
-                                    //currentSources = currentSources.filter(c=>allAudios.indexOf(c.name)>=0 || _audios.indexOf(c.name)>=0);
-                                    console.log(currentSources);
+                                    let currentSources = this.scenes.filter(c => c.name == this.current_scene)[0];
+                                    let allAudios = currentSources.sources.filter(c => types.indexOf(c.type) >= 0 && c.render == true).map(c => c.name);
+                                    allAudios = allAudios.concat(_audios);
+
+                                    let audiosFunc = allAudios.map(c => {
+                                        return new Promise((a, b) => {
+                                            this.command({
+                                                cmd: 'GetVolume',
+                                                params: { source: c,useDecibel:true },
+                                                callback: (data) => {
+                                                    if (data.status == 'ok') {
+                                                        a(data);
+                                                    } else {
+                                                        b();
+                                                    }
+                                                }
+                                            })
+                                        });
+                                    })
+                                    Promise.all(audiosFunc).then((data) => {
+                                        this.$store.dispatch('sounds', data.map(c => {
+                                            return {
+                                                name: c.name,
+                                                muted: c.muted,
+                                                volume: c.volume,
+                                            }
+                                        }))
+                                    })
                                 }
                             }
-                        });
+                        })
                     }
                 }
             });
-            
         },
 
         //transtion
-        getTransition(){
+        getTransition () {
             this.command({
-                cmd:'GetTransitionList',
-                params:{},
-                callback:(data)=>{
-                    if(data.status == 'ok'){
-                        this.$store.dispatch('transitions',data.transitions);
-                        this.$store.dispatch('current_transition',data.currentTransition);
+                cmd: 'GetTransitionList',
+                params: {},
+                callback: (data) => {
+                    if (data.status == 'ok') {
+                        this.$store.dispatch('transitions', data.transitions);
+                        this.$store.dispatch('current_transition', data.currentTransition);
                     }
                 }
             })
 
             this.command({
-                cmd:'GetTransitionDuration',
-                params:{},
-                callback:(data)=>{
-                    if(data.status == 'ok'){
-                        this.$store.dispatch('transition_duration',data.transitionDuration);
+                cmd: 'GetTransitionDuration',
+                params: {},
+                callback: (data) => {
+                    if (data.status == 'ok') {
+                        this.$store.dispatch('transition_duration', data.transitionDuration);
                     }
                 }
             })
         },
 
         //stream
-        setStreaming(boolVal){this.$store.dispatch('streaming',boolVal)},
-        streamStarted(){this.setStreaming(true)},
-        streamStopped(){this.setStreaming(false)},
-
+        setStreaming (boolVal) { this.$store.dispatch('streaming', boolVal) },
+        streamStarted () { this.setStreaming(true) },
+        streamStopped () { this.setStreaming(false) },
+        getStreamingStatus(){
+            this.command({
+                cmd:'GetStreamingStatus',
+                callback:(data)=>{
+                    if(data.status == 'ok'){
+                        this.setStreaming(data.streaming);
+                    }
+                }
+            })
+        },
+        
         //record
-        setRecording(boolVal){this.$store.dispatch('recording',boolVal)},
-        recordingStarted(){this.setRecording(true)},
-        recordingStopped(){this.setRecording(false)},
+        setRecording (boolVal) { this.$store.dispatch('recording', boolVal) },
+        setRecordingPause (boolVal) { this.$store.dispatch('record_paused', boolVal) },
+        recordingStarted () { this.setRecording(true) },
+        recordingStopped () { this.setRecording(false) },
+        recordingPaused () { this.setRecordingPause(true) },
+        recordingResumed () { this.setRecordingPause(false) },
+        getRecordStatus(){
+            this.command({
+                cmd:'GetRecordingStatus',
+                callback:(data)=>{
+                    if(data.status == 'ok'){
+                        this.setRecording(data.isRecording);
+                        this.setRecordingPause(data.isRecordingPaused);
+                    }
+                }
+            })
+        },
 
-        command({cmd,params,callback}){
-            this.obs.send(cmd,params || {}).then(callback).catch(callback);
+        command ({ cmd, params, callback }) {
+            this.obs.send(cmd, params || {}).then(callback).catch(callback);
         }
     }
 }

@@ -90,6 +90,9 @@ body {
 .scroll::-webkit-scrollbar {width: 10px;height: 1px;}
 .scroll::-webkit-scrollbar-thumb {background: rgba(0,0,0,0.1);border-radius: 4px;}
 
+.ivu-select-dropdown::-webkit-scrollbar {width: 10px;height: 1px;}
+.ivu-select-dropdown::-webkit-scrollbar-thumb {background: rgba(0,0,0,0.1);border-radius: 4px;}
+
 .flex-display{ display: flex; display: -webkit-flex; display: -ms-flex; display: -o-flex; flex-wrap: wrap}
 .flex-display-nowrap{display: flex; display: -webkit-flex; display: -ms-flex; display: -o-flex; flex-wrap: nowrap;}
 .flex-1{-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;}

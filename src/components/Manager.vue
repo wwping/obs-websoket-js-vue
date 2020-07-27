@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 14:57:31
- * @LastEditTime: 2020-07-27 12:18:00
+ * @LastEditTime: 2020-07-27 17:55:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Manager.vue
@@ -29,7 +29,7 @@
             </div>
             <div class="transtions flex-1">
                 <h3>{{$t('df.transtions')}}</h3>
-                <div class="cont scroll">
+                <div class="cont scroll transition">
                     <Transtions></Transtions>
                 </div>
             </div>

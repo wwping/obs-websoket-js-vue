@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:27:20
- * @LastEditTime: 2020-07-27 13:21:21
+ * @LastEditTime: 2020-07-27 13:35:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Connect.vue
@@ -101,7 +101,7 @@ export default {
         },
         error () { this.setConnecting(false) },
         close () { this.setConnecting(false) },
-        exiting () { this.setConnecting(false) },
+        exiting () { this.setConnecting(false);},
 
         //scenes
         setCurrentScene (name) {

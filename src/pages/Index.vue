@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 13:49:06
- * @LastEditTime: 2020-07-27 12:17:24
+ * @LastEditTime: 2020-07-27 13:33:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\pages\Index.vue
@@ -53,7 +53,7 @@ export default {
 }
 </script>
 <style>
-.ivu-tabs-bar{margin-bottom: 0;}
+.ivu-tabs-bar{margin-bottom: 0 !important;}
 </style>
 <style scoped>
 .wrap{width: 900px;border: 1px solid #ddd;margin:20px auto 0 auto;}

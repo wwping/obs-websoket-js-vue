@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 17:51:12
- * @LastEditTime: 2020-07-26 18:06:40
+ * @LastEditTime: 2020-07-27 17:56:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Transtions.vue
@@ -11,7 +11,7 @@
         <div class="transition">
             <ul>
                 <li>
-                    <Select :value="current_transition" @on-change="currentChange">
+                    <Select :value="current_transition" @on-change="currentChange" placement="top-end">
                         <Option v-for="item in transitions" :value="item.name" :key="item.name">{{ item.name }}</Option>
                     </Select>
                 </li>

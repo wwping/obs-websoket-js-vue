@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 14:06:43
- * @LastEditTime: 2020-07-27 12:13:03
+ * @LastEditTime: 2020-07-28 17:21:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Title.vue
@@ -20,7 +20,7 @@
         </div>
         <div class="flex-1"></div>
         <div>
-            <Select v-model="language" style="width:auto" size="small" @on-change="languageChange">
+            <Select v-model="language" style="width:auto;position:relative; z-index:99999" size="small" @on-change="languageChange">
                 <Option v-for="item in languages" :value="item.name" :key="item.name">{{ item.txt }}</Option>
             </Select>
         </div>

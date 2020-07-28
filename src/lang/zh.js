@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:52
- * @LastEditTime: 2020-07-27 22:41:07
+ * @LastEditTime: 2020-07-28 16:27:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\zh.js
@@ -30,9 +30,10 @@ export default {
         'resumeRecord':'继续录制',
 
         'manager':'管理',
-        'setting':'设置',
+        'connectSetting':'连接设置',
         'save':'保存',
 
-        'plugins':'云插件',
+        'pluginStore':'云插件商店',
+        'myPlugin':'我的插件',
     }
 }

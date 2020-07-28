@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-27 22:39:41
- * @LastEditTime: 2020-07-28 14:06:31
+ * @LastEditTime: 2020-07-28 17:07:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Plugins.vue
@@ -19,13 +19,16 @@
                                     <img :src="path + item.path + item.preview">
                                 </dt>
                                 <dd>
-                                    <h3>{{item.text}}</h3>
+                                    <h3>
+                                        <span>{{item.text}}-{{item.obssource}}</span>
+                                        <a href="javascript:;" style="color:red;" @click="del(item)"><Icon type="ios-trash" /></a>
+                                    </h3>
                                 </dd>
                             </dl>
                         </li>
                     </ul>
                     <div class="pages t-c">
-                        <Page :total="plugins.length"
+                        <Page :total="total"
                               show-total
                               :current="pageIndex"
                               :page-size="pageSize"
@@ -42,33 +45,48 @@
 <script>
 import axios from 'axios'
 import Setting from '../components/plugins/Setting'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
     data () {
         return {
-            plugins: [],
             pageIndex: 1,
             pageSize: 6,
             split: 0.6,
             path: './static/plugins/',
-            info:''
+            info:'',
+            total:0
         }
     },
     components:{Setting},
     computed: {
         pluginsPage () {
+            
             let min = (this.pageIndex - 1) * this.pageSize;
             let max = min + this.pageSize;
-            return this.plugins.filter((c, i) => i >= min && i < max);
-        }
+
+            let keys = Object.keys(this.my_plugins);
+            this.total = keys.length;
+
+            keys = keys.filter((c, i) => i >= min && i < max);
+
+            let res = [];
+            for(let i = 0; i < keys.length; i++){
+                res.push(this.my_plugins[keys[i]]);
+            }
+            return res;
+        },
+        ...mapState({
+            my_plugins:state => state.my_plugins,
+        })
     },
     mounted () {
-        axios.get(`${this.path}config.json`).then((res) => {
-            this.plugins = res.data;
-        });
     },
     methods:{
         select(item){
             this.info = JSON.stringify(item);
+        },
+        del(item){
+            this.$store.dispatch('del_plugin',item.text + '-' + item.obssource);
         }
     }
 }

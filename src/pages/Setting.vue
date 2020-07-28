@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-27 11:46:57
- * @LastEditTime: 2020-07-27 12:19:15
+ * @LastEditTime: 2020-07-28 16:27:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Setting.vue
@@ -55,7 +55,6 @@ export default {
 
             msgSubPusher.push('obs-disconnect')
             msgSubPusher.push('obs-connect')
-            
         },
     }
 }

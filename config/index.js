@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 13:39:46
- * @LastEditTime: 2020-07-27 18:01:52
+ * @LastEditTime: 2020-07-28 17:08:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\config\index.js
@@ -51,8 +51,8 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
-    // assetsPublicPath: '/obs-websoket-js-vue-site/',
+    // assetsPublicPath: '/',
+    assetsPublicPath: '/obs-websoket-js-vue-site/',
 
     /**
      * Source Maps

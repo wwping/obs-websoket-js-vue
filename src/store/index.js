@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 13:51:17
- * @LastEditTime: 2020-07-27 12:28:36
+ * @LastEditTime: 2020-07-28 17:06:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\store\index.js
@@ -16,18 +16,18 @@ const store = new Vuex.Store({
         streaming:false,
         recording:false,
         record_paused:false,
-        connect_config:{
+        connect_config:JSON.parse(localStorage.getItem('connect_config') || JSON.stringify({
             address:'127.0.0.1',
             port:4444,
             secret:''
-        },
+        })),
         scenes:[],
         current_scene:'',
         transitions:[],
         current_transition:'',
         transition_duration:0,
-        sounds:[]
-        
+        sounds:[],
+        my_plugins:JSON.parse(localStorage.getItem('my_plugins') || JSON.stringify({}))
     },
     getters: {
     },
@@ -42,7 +42,20 @@ const store = new Vuex.Store({
         current_transition:(state,strVal)=>state.current_transition = strVal,
         transition_duration:(state,numberVal)=>state.transition_duration = numberVal,
         sounds:(state,arrayVal)=>state.sounds = JSON.parse(JSON.stringify(arrayVal)),
-        connect_config:(state,jsonVal)=>state.connectConfig = JSON.parse(JSON.stringify(jsonVal)),
+        connect_config:(state,jsonVal)=>{
+            state.connect_config = JSON.parse(JSON.stringify(jsonVal));
+            localStorage.setItem('connect_config',JSON.stringify(jsonVal));
+        },
+        my_plugins:(state,jsonVal)=>{
+            state.my_plugins[jsonVal.name] = jsonVal.data;
+            state.my_plugins = JSON.parse(JSON.stringify(state.my_plugins));
+            localStorage.setItem('my_plugins',JSON.stringify(state.my_plugins));
+        },
+        del_plugin:(state,jsonVal)=>{
+            delete state.my_plugins[jsonVal];
+            state.my_plugins = JSON.parse(JSON.stringify(state.my_plugins));
+            localStorage.setItem('my_plugins',JSON.stringify(state.my_plugins));
+        },
     },
     actions: {
         connecting:(context,boolVal) =>context.commit("connecting",boolVal),
@@ -56,6 +69,9 @@ const store = new Vuex.Store({
         transition_duration :(context,numberVal) =>context.commit("transition_duration",numberVal),
         sounds :(context,arrayVal) =>context.commit("sounds",arrayVal),
         connect_config :(context,jsonVal) =>context.commit("connect_config",jsonVal),
+        my_plugins :(context,jsonVal) =>context.commit("my_plugins",jsonVal),
+        del_plugin :(context,strVal) =>context.commit("del_plugin",strVal),
+        
     }
 });
 

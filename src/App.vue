@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 13:39:46
- * @LastEditTime: 2020-07-27 22:51:51
+ * @LastEditTime: 2020-07-28 14:15:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\App.vue
@@ -20,6 +20,7 @@
                 <div>
                     <router-view/>
                 </div>
+                <div class="copyright">Author : wwping , QQ : <strong>1069410172</strong></div>
             </div>
         </div>
     </div>
@@ -42,7 +43,7 @@ export default {
 .wrap{width: 900px;border: 1px solid #ddd;margin:20px auto 0 auto;}
 .title{height: 40px;line-height: 40px;border-bottom: 1px solid #ddd;}
 
-
+.copyright{border-top: 1px solid #ddd;padding:6px;}
 @media screen and (max-width: 900px) {
     .wrap{width: 100%;margin: 0;border: 0;border-bottom: 1px solid #ddd;}
 }

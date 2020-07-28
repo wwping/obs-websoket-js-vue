@@ -1,0 +1,58 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-07-27 20:55:05
+ * @LastEditTime: 2020-07-28 13:35:48
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \undefinedd:\Desktop\plugins\text.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粒子特效</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <canvas class="canvas" width="100%" height="100%"></canvas>
+    <script src="../js.js"></script>
+    <script src="js.js"></script>
+    <script>
+        
+        var type = getParam('type') || 'text';
+        var text = getParam('text') || '粒子';
+        var color = '#'+(getParam('color') || 'ff0');
+        var colorArray = color.hex2rgb();
+
+        switch(type){
+            case 'text':
+                S.Shape.switchShape(S.ShapeBuilder.letter(text),true);
+                break;
+            case 'time':
+                setInterval(() => {
+                    let date = new Date();
+                    let text = addz(date.getHours())+':'+addz(date.getMinutes())+':'+addz(date.getSeconds());
+                    S.Shape.switchShape(S.ShapeBuilder.letter(text),true);
+                }, 1000);
+                break;
+            case 'countdown':
+                let num = Number(text);
+                if(!isNaN(num)){
+                    S.Shape.switchShape(S.ShapeBuilder.letter(num+''),true);
+                    let timer = setInterval(()=>{
+                        num --;
+                        if(num >= 0){
+                            S.Shape.switchShape(S.ShapeBuilder.letter(num+''),true);
+                        }else{
+                            clearInterval(timer);
+                        }
+                    },1000)
+                }
+                break;
+            default:
+                break;
+        }
+    </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:52
- * @LastEditTime: 2020-07-27 12:35:45
+ * @LastEditTime: 2020-07-27 22:41:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\zh.js
@@ -32,5 +32,7 @@ export default {
         'manager':'管理',
         'setting':'设置',
         'save':'保存',
+
+        'plugins':'云插件',
     }
 }

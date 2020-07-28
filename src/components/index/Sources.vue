@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 16:20:34
- * @LastEditTime: 2020-07-26 18:53:24
+ * @LastEditTime: 2020-07-27 22:55:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Sources.vue
@@ -27,7 +27,7 @@
 </template>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-import msgSubPusher from '../lib/msgSubPusher'
+import msgSubPusher from '../../lib/msgSubPusher'
 export default {
     name:'Sources',
     computed:{

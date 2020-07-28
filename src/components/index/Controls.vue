@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:20:08
- * @LastEditTime: 2020-07-27 12:38:00
+ * @LastEditTime: 2020-07-27 22:55:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Controls.vue
@@ -31,7 +31,7 @@
 </template>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-import msgSubPusher from '../lib/msgSubPusher'
+import msgSubPusher from '../../lib/msgSubPusher'
 export default {
     name:'Controls',
     data(){

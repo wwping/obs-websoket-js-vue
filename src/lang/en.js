@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:46
- * @LastEditTime: 2020-07-27 12:35:32
+ * @LastEditTime: 2020-07-27 22:40:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\en.js
@@ -33,5 +33,7 @@ export default {
         'manager':'view',
         'setting':'setting',
         'save':'save',
+
+        'plugins':'plugins',
     }
 }

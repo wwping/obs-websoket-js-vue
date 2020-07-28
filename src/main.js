@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 13:39:46
- * @LastEditTime: 2020-07-26 15:14:56
+ * @LastEditTime: 2020-07-27 23:15:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\main.js
@@ -11,6 +11,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+
 
 import store from './store'
 import ViewUI from 'view-design';

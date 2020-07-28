@@ -1,0 +1,105 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-07-27 20:18:26
+ * @LastEditTime: 2020-07-27 20:47:48
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \undefinedd:\Desktop\clock.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫彩倒计时</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;
+        }
+        svg{
+            height: 100%;
+            width: 100%;
+        }
+        .words{
+            font-size: 100px;
+            font-weight: bold;
+            text-transform: uppercase;
+            fill: none;
+            stroke-width: 2px;
+            stroke-dasharray: 90,310;
+            animation-name: drawing;
+            animation-duration: 8s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+        .words-1{
+            stroke: deepskyblue;
+            text-shadow: 1px 1px 1px #000;
+            animation-delay: -2s;
+        }
+        .words-2{
+            stroke: lightseagreen;
+            text-shadow: 1px 1px 1px #000;
+            animation-delay: -4s;
+        }
+        .words-3{
+            stroke: orange;
+            text-shadow: 1px 1px 1px #000;
+            animation-delay: -6s;
+        }
+        .words-4{
+            stroke: purple;
+            text-shadow: 1px 1px 1px #000;
+            animation-delay: -8s;
+        }
+        @keyframes drawing {
+            100%{
+                stroke-dashoffset: -400;
+            }
+        }
+    </style>
+</head>
+<body>
+    <svg>
+        <text text-anchor="start" x="0" y="100" class="words words-1">20:20:32</text>
+        <text text-anchor="start" x="0" y="100" class="words words-2">20:20:32</text>
+        <text text-anchor="start" x="0" y="100" class="words words-3">20:20:32</text>
+        <text text-anchor="start" x="0" y="100" class="words words-4">20:20:32</text>
+    </svg>
+    <script src="js.js"></script>
+    <script>
+
+        var h = Number(getParam('h') || 0);
+        var m = Number(getParam('m') || 0);
+        var s = Number(getParam('s') || 0);
+
+        var alls = (h * 60 * 60) + (m * 60) + s;
+
+
+        var texts=document.getElementsByTagName("text");
+        function showtime(alls){
+            let h = addz(Math.floor(alls / 3600));
+            let m = addz(Math.floor((alls / 60 % 60)));
+            let s = addz(Math.floor((alls % 60)));
+            for (var i in texts){
+                texts[i].innerHTML = h+':'+m+':'+s;
+            }
+        }
+
+        showtime(alls);
+        setInterval(function(){
+            if(alls > 0){
+                alls--;
+                showtime(alls);
+            }
+        },1000);
+    </script>
+</body>
+</html>

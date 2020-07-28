@@ -24,7 +24,7 @@
 </template>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-import msgSubPusher from '../lib/msgSubPusher'
+import msgSubPusher from '../../lib/msgSubPusher'
 export default {
     name:'Transtions',
     data(){

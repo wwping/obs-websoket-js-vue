@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 18:55:37
- * @LastEditTime: 2020-07-26 19:17:45
+ * @LastEditTime: 2020-07-27 22:55:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Preview.vue
@@ -15,7 +15,7 @@
 </template>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-import msgSubPusher from '../lib/msgSubPusher'
+import msgSubPusher from '../../lib/msgSubPusher'
 export default {
     name:'Preview',
     data(){

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>色块</title>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        #remark{position: absolute;left: 0;top: 0;right: 0;bottom: 0;}
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+    <script src="js.js"></script>
+    <script>
+        var opacity = Number(getParam('opacity') || '100');
+        var color = '#' + (getParam('color') || 'fff');
+
+        var colorArr =  color.hex2rgb();
+        colorArr.push(opacity/100);
+
+        document.getElementById('div1').innerHTML = `<div id="remark" style="background-color:rgba(${colorArr.join(',')})"></div>`;
+    </script>
+</body>
+</html>

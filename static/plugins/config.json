@@ -1,5 +1,43 @@
 [
     {
+        "name":"remark",
+        "path":"",
+        "text":"简单色块",
+        "size":{},
+        "preview":"remark.png",
+        "params":{
+            "_0":{
+                "child":{
+                    "width":{
+                        "type":"number",
+                        "text":"框宽度",
+                        "default":1920
+                    },
+                    "height":{
+                        "type":"number",
+                        "text":"框高度",
+                        "default":1080
+                    }
+                }
+            },
+            "_1":{
+                "child":{
+                    "color":{
+                        "type":"color",
+                        "text":"颜色",
+                        "default":"#fff"
+                    },
+                    "opacity":{
+                        "type":"number",
+                        "text":"透明度",
+                        "default":100
+                    }
+                }
+            }
+            
+        }
+    },
+    {
         "name":"clock",
         "path":"",
         "text":"炫彩时钟",
@@ -152,7 +190,7 @@
     {
         "name":"index",
         "path":"bilibili/",
-        "text":"B站弹幕",
+        "text":"B站弹幕-混合",
         "size":{"w":400},
         "preview":"bilibili.png",
         "params":{
@@ -210,6 +248,72 @@
                         "text":"边框色",
                         "default":"#fff"
                     },
+                    "opacity":{
+                        "type":"number",
+                        "text":"透明度",
+                        "default":100
+                    }
+                }
+            }
+            
+        }
+    },
+    {
+        "name":"index2",
+        "path":"bilibili/",
+        "text":"B站弹幕-纯发言",
+        "size":{"w":400},
+        "preview":"bilibili2.png",
+        "params":{
+            "rid":{
+                "type":"text",
+                "text":"房间号",
+                "default":"0"
+            },
+            "_0":{
+                "child":{
+                    "row":{
+                        "type":"number",
+                        "text":"显示行数",
+                        "default":10
+                    },
+                    "level":{
+                        "type":"number",
+                        "text":"发言等级",
+                        "default":0
+                    }
+                }
+            },
+            "_2":{
+                "child":{
+                    "width":{
+                        "type":"number",
+                        "text":"框宽度",
+                        "default":400
+                    },
+                    "height":{
+                        "type":"number",
+                        "text":"框高度",
+                        "default":360
+                    }
+                }
+            },
+            "_4":{
+                "child":{
+                    "color1":{
+                        "type":"color",
+                        "text":"颜色1",
+                        "default":"f00"
+                    },
+                    "color2":{
+                        "type":"color",
+                        "text":"颜色2",
+                        "default":"ff0"
+                    }
+                }
+            },
+            "_3":{
+                "child":{
                     "opacity":{
                         "type":"number",
                         "text":"透明度",

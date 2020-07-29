@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B站弹幕</title>
+    <link rel="stylesheet" href="../reset.css">
+    <style type="text/css">
+    /* body{background-color: rgba(0,0,0,0.5);} */
+    .wrap{position: absolute; left: 1px;top: 1px;right: 1px;bottom: 1px;box-sizing: border-box; overflow: hidden;color:#fff}
+    .wrap>h3{color:#fff;border-bottom: 1px solid #ddd;padding: 6px;font-size: 14px;text-shadow: 1px 1px 1px rgba(0,0,0,1);}
+    ul{padding: 0 10px;}
+    li{height: 30px;line-height: 30px;text-shadow: 1px 1px 1px rgba(0,0,0,1);margin-bottom: 6px;border-radius: 30px;padding: 0 20px; white-space:nowrap;overflow: hidden;}
+    span.uname{color:#00ff4e}
+    span.level{border: 1px solid #ddd;background-color: #eee;padding:0 4px;border-radius: 2px; color:#333;text-shadow: none;}
+    span.pz{background-color: #fff;color:#666;border-radius:4px 2px 2px 4px;padding: 2px 2px 2px 0px;text-shadow: none;}
+    span.pz span{background-color: green;color:#fff;margin: -2px 0 -2px 0; padding: 2px 4px;margin-right: 2px;border-radius: 4px 0 0 4px;}
+    .ly .name{color:red;}
+    .jz .name{color: orange;} 
+    .gift{color: orange;} 
+    span.msg{margin-left: 6px;}
+    </style>
+</head>
+<body>
+    <div>
+        <div id="app">
+            <div class="wrap">
+                <ul>
+                    <li v-for="(item,index) in msgs" :key="index" :style="{'background-image':'linear-gradient(to right, rgba('+color1+') , rgba('+color2+'))'}">
+                        <div v-if="item.type == 'dm'" class="dm">
+                            <span class="uname">{{item.user.name}}</span>
+                            <span class="msg">{{item.msg}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js.js"></script>
+    <script src="../js.js"></script>
+    <script src="pako.min.js"></script>
+    <script src="../jquery-1.8.3.min.js"></script>
+    <script src="axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+
+        const rid = getParam('rid') || '0';
+        const level = Number(getParam('level') || '0');
+        const row = Number(getParam('row') || '5');
+        const opacity = Number(getParam('opacity') || '100');
+        const color1 = '#' + (getParam('color1') || 'f00');
+        const color2 = '#' + (getParam('color2') || 'ff0');
+
+        let _c1 = color1.hex2rgb();
+        _c1.push(opacity/100);
+        let _c2 = color2.hex2rgb();
+        _c2.push(opacity/100);
+
+        var app = new Vue({
+            el: '#app',
+            data(){
+                return {
+                    renqi:0,
+                    rid:0,
+                    msgs:[],
+                    opacity:opacity,
+                    gifts:{},
+                    color1:_c1.join(','),
+                    color2:_c2.join(',')
+                }
+            },
+            mounted(){
+
+                $.ajax({
+                     url: 'https://api.bilibili.com/x/space/acc/info?jsonp=jsonp&mid=30392111',
+                     type: 'GET',
+                     dataType: "jsonp",
+                     jsonpCallback:'jsonp',
+                     success: function (data) {
+                         console.log(data);
+                     }
+                 });
+
+                this.rid = rid;
+
+                axios.get('http://obs.qbcode.cn:8000/bilibili/init?id='+rid).then((res)=>{
+                    if(res.data.code == 0){
+                        let rid = res.data.data.room_id;
+
+                        axios.get('http://obs.qbcode.cn:8000/bilibili/info?id='+rid).then((res)=>{
+                            if(res.data.code == 0){
+                                let host_list = res.data.data.host_list;
+                                let token = res.data.data.token;
+
+                                let host = host_list.slice(-1)[0];
+                                let url = `ws://${host.host}:${host.ws_port}/sub`
+                                const ws = new WebSocket(url);
+                                ws.onopen = function () {
+                                    ws.send(encode(JSON.stringify({
+                                        "clientver": "1.6.3",
+                                        "platform": "web",
+                                        "protover": 1,
+                                        "roomid": rid,
+                                        "uid": 0,
+                                        "type": 1
+                                    }), 7));
+
+                                    setInterval(function () {
+                                        ws.send(encode('', 2));
+                                    }, 30000);
+                                };
+                                ws.onmessage = async (msgEvent)=> {
+                                    this.onmessage(await decode(msgEvent.data));
+                                }
+
+                            }else{
+                                console.error('获取信息失败!');
+                            }
+                        })
+                    }else{
+                        console.error('获取房间号失败!');
+                    }
+                })
+            },
+            methods: {
+                onmessage(packet){
+                    if(packet.op == 5){
+                        let body = packet.body;
+                        for(let i = 0; i < body.length; i++){
+                            let item = body[i];
+                            switch(item.cmd){
+                                case 'DANMU_MSG':
+                                    if(item.info[4][0] > level){
+                                        this.msgs.push({
+                                            type:'dm',
+                                            pz:{
+                                                name:item.info[3][1],
+                                                level:item.info[3][0],
+                                            },
+                                            user:{
+                                                level:item.info[4][0],
+                                                name:item.info[2][1]
+                                            },
+                                            msg:item.info[1]
+                                        })
+                                    }
+                                    console.log(item);
+                                    break;
+                                default:
+                                    // console.log(item);
+                                    break;
+                            }
+                           
+                            if(this.msgs.length > row){
+                                this.msgs.splice(0,1);
+                            }
+                        }
+                    }else if(packet.op == 3){
+                        this.renqi = packet.body.count;
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+</html>

@@ -148,5 +148,76 @@
                 }
             }
         }
+    },
+    {
+        "name":"index",
+        "path":"bilibili/",
+        "text":"B站弹幕",
+        "size":{"w":400},
+        "preview":"bilibili.png",
+        "params":{
+            "rid":{
+                "type":"text",
+                "text":"房间号",
+                "default":"0"
+            },
+            "_0":{
+                "child":{
+                    "row":{
+                        "type":"number",
+                        "text":"显示行数",
+                        "default":0
+                    },
+                    "silver":{
+                        "type":"bool",
+                        "text":"银瓜子",
+                        "default":true
+                    }
+                }
+            },
+            "_1":{
+                "child":{
+                    "level":{
+                        "type":"number",
+                        "text":"发言等级",
+                        "default":0
+                    },
+                    "price":{
+                        "type":"number",
+                        "text":"礼物价格",
+                        "default":0
+                    }
+                }
+            },
+            "_2":{
+                "child":{
+                    "width":{
+                        "type":"number",
+                        "text":"框宽度",
+                        "default":400
+                    },
+                    "height":{
+                        "type":"number",
+                        "text":"框高度",
+                        "default":500
+                    }
+                }
+            },
+            "_3":{
+                "child":{
+                    "bcolor":{
+                        "type":"color",
+                        "text":"边框色",
+                        "default":"#fff"
+                    },
+                    "opacity":{
+                        "type":"number",
+                        "text":"透明度",
+                        "default":100
+                    }
+                }
+            }
+            
+        }
     }
 ]

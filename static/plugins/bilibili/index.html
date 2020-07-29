@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B站弹幕</title>
+    <link rel="stylesheet" href="../reset.css">
+    <style type="text/css">
+    /* body{background-color: rgba(0,0,0,0.5);} */
+    .wrap{position: absolute;background-color: rgba(0,0,0,0.5); left: 1px;top: 1px;right: 1px;bottom: 1px;box-sizing: border-box; overflow: hidden;border: 1px solid #fff;color:#fff}
+    .wrap>h3{color:#fff;border-bottom: 1px solid #ddd;padding: 6px;font-size: 14px;text-shadow: 1px 1px 1px rgba(0,0,0,1);}
+    ul{padding: 0 10px;}
+    li{height: 30px;line-height: 30px;text-shadow: 1px 1px 1px rgba(0,0,0,1); white-space:nowrap;overflow: hidden;}
+    span.uname{color:#00ff4e}
+    span.level{border: 1px solid #ddd;background-color: #eee;padding:0 4px;border-radius: 2px; color:#333;text-shadow: none;}
+    span.pz{background-color: #fff;color:#666;border-radius:4px 2px 2px 4px;padding: 2px 2px 2px 0px;text-shadow: none;}
+    span.pz span{background-color: green;color:#fff;margin: -2px 0 -2px 0; padding: 2px 4px;margin-right: 2px;border-radius: 4px 0 0 4px;}
+    .ly .name{color:red;}
+    .jz .name{color: orange;} 
+    .gift{color: orange;} 
+    span.msg{margin-left: 6px;}
+    </style>
+</head>
+<body>
+    <div>
+        <div id="app">
+            <div class="wrap" :style="{'background-color':'rgba(0,0,0,'+(opacity/100)+')','border-color':'#'+bcolor}">
+                <h3 :style="{'border-color':'rgba(255,255,255,'+(1-opacity/100)+')'}">房间号 : {{rid}}</h3>
+                <ul>
+                    <li v-for="(item,index) in msgs" :key="index">
+                        <div v-if="item.type == 'dm'" class="dm">
+                            <span class="pz" v-if="item.pz.name"><span>{{item.pz.name}}</span>{{item.pz.level}}</span>
+                            <span class="uname">{{item.user.name}} <span class="level">{{item.user.level}}</span></span>
+                            <span class="msg">{{item.msg}}</span>
+                        </div>
+                        <div v-else-if="item.type=='ly'" class="ly">
+                            <span><span class="name">{{item.user.name}}</span> {{item.user.svip?'年费':''}}姥爷 进入房间</span>
+                        </div>
+                        <div v-else-if="item.type == 'jz'" class="jz">
+                            <span><span class="name">{{item.user.name}}</span>舰长 进入房间</span>
+                        </div>
+                        <div v-else-if="item.type == 'jy'" class="jy">
+                            <span><span class="name">{{item.user.name}}</span> 被房管禁言</span>
+                        </div>
+                        <div v-else-if="item.type == 'tw'" class="tw">
+                            <span><span class="uname">{{item.user.name}}</span> 投喂 <span class="gift">{{item.gift.name}}</span>x{{item.gift.num}}</span>
+                        </div>
+                        <div v-else-if="item.type == 'lj'" class="lj">
+                            <span><span class="uname">{{item.user.name}}</span> 连击 <strong class="gift">{{item.gift.name}}</strong>x{{item.gift.num}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js.js"></script>
+    <script src="../js.js"></script>
+    <script src="pako.min.js"></script>
+    <script src="axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+
+        const rid = getParam('rid') || '0';
+        const level = Number(getParam('level') || '0');
+        const row = Number(getParam('row') || '5');
+        const price = Number(getParam('price') || '0');
+        const silver = (getParam('silver') || 'true') == 'true';
+        const opacity = Number(getParam('opacity') || '100');
+        const bcolor = getParam('bcolor') || 'fff';
+
+        var app = new Vue({
+            el: '#app',
+            data(){
+                return {
+                    renqi:0,
+                    rid:0,
+                    msgs:[],
+                    opacity:opacity,
+                    bcolor:bcolor,
+                }
+            },
+            mounted(){
+
+                this.rid = rid;
+
+                axios.get('http://obs.qbcode.cn:8000/bilibili/init?id='+rid).then((res)=>{
+                    if(res.data.code == 0){
+                        let rid = res.data.data.room_id;
+                        axios.get('http://obs.qbcode.cn:8000/bilibili/info?id='+rid).then((res)=>{
+                            if(res.data.code == 0){
+                                let host_list = res.data.data.host_list;
+                                let token = res.data.data.token;
+
+                                let host = host_list.slice(-1)[0];
+                                let url = `ws://${host.host}:${host.ws_port}/sub`
+                                const ws = new WebSocket(url);
+                                ws.onopen = function () {
+                                    ws.send(encode(JSON.stringify({
+                                        "clientver": "1.6.3",
+                                        "platform": "web",
+                                        "protover": 1,
+                                        "roomid": rid,
+                                        "uid": 0,
+                                        "type": 1
+                                    }), 7));
+
+                                    setInterval(function () {
+                                        ws.send(encode('', 2));
+                                    }, 30000);
+                                };
+                                ws.onmessage = async (msgEvent)=> {
+                                    this.onmessage(await decode(msgEvent.data));
+                                }
+
+                            }else{
+                                console.error('获取信息失败!');
+                            }
+                        })
+                    }else{
+                        console.error('获取房间号失败!');
+                    }
+                })
+            },
+            methods: {
+                onmessage(packet){
+                    if(packet.op == 5){
+                        let body = packet.body;
+                        for(let i = 0; i < body.length; i++){
+                            let item = body[i];
+                            switch(item.cmd){
+                                case 'DANMU_MSG':
+                                    if(item.info[4][0] > level){
+                                        this.msgs.push({
+                                            type:'dm',
+                                            pz:{
+                                                name:item.info[3][1],
+                                                level:item.info[3][0],
+                                            },
+                                            user:{
+                                                level:item.info[4][0],
+                                                name:item.info[2][1]
+                                            },
+                                            msg:item.info[1]
+                                        })
+                                    }
+                                    break;
+                                // case 'INTERACT_WORD':
+                                //     console.log(`${item.data.uname} 用户 :进入房间`)
+                                //     break;
+                                case 'WELCOME':
+                                    this.msgs.push({
+                                        type:'ly',
+                                        user:{
+                                            svip:item.data.svip,
+                                            name:item.data.uname
+                                        },
+                                    })
+                                    break;
+                                case 'WELCOME_GUARD':
+                                    this.msgs.push({
+                                        type:'jz',
+                                        user:{
+                                            name:item.data.username
+                                        },
+                                    })
+                                    console.log(item);
+                                    break;
+                                case 'ROOM_BLOCK_MSG':
+                                    this.msgs.push({
+                                        type:'jy',
+                                        user:{
+                                            name:item.data.uname
+                                        },
+                                    })
+                                    break;
+                                case 'SEND_GIFT':
+                                    if(item.data.coin_type == 'silver'){
+                                        if(silver){
+                                            this.msgs.push({
+                                                type:'tw',
+                                                gift:{
+                                                    type:'投喂',
+                                                    name:item.data.giftName,
+                                                    num:item.data.num
+                                                },
+                                                user:{
+                                                    name:item.data.uname
+                                                },
+                                            });
+                                        }
+                                    }else{
+                                        this.msgs.push({
+                                            type:'tw',
+                                            gift:{
+                                                type:'投喂',
+                                                name:item.data.giftName,
+                                                num:item.data.num
+                                            },
+                                            user:{
+                                                name:item.data.uname
+                                            },
+                                        });
+                                    }
+                                    break;
+                                case 'COMBO_END':
+                                    if(item.data.price > price){
+                                        this.msgs.push({
+                                            type:'lj',
+                                            gift:{
+                                                type:'连击',
+                                                name:item.data.gift_name,
+                                                num:item.data.gift_num
+                                            },
+                                            user:{
+                                                name:item.data.uname
+                                            },
+                                        });
+                                    }
+                                    break;
+                                default:
+                                //   console.log(item);
+                                    break;
+                            }
+                           
+                            if(this.msgs.length > row){
+                                this.msgs.splice(0,1);
+                            }
+                        }
+                    }else if(packet.op == 3){
+                        this.renqi = packet.body.count;
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+</html>

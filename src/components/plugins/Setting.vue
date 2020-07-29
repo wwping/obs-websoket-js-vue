@@ -100,26 +100,28 @@ export default {
     },
     watch: {
         info (val) {
-            this.item = JSON.parse(val);
-            
-            let json = {};
-            for (let j in this.item.params) {
-                if(this.item.params[j].child){
-                    for(let jj in this.item.params[j].child){
-                            json[jj] = this.item.params[j].child[jj].default;
+            if(val){
+                this.item = JSON.parse(val);
+                let json = {};
+                for (let j in this.item.params) {
+                    if(this.item.params[j].child){
+                        for(let jj in this.item.params[j].child){
+                                json[jj] = this.item.params[j].child[jj].default;
+                        }
+                    }else{
+                        json[j] = this.item.params[j].default;
                     }
-                }else{
-                    json[j] = this.item.params[j].default;
                 }
+                
+                this.formValidate = JSON.parse(JSON.stringify(json));
+
+                if(this.item['obssource']){
+                    this.source = this.item['obssource'];
+                }
+
+                this.filterSources();
             }
             
-            this.formValidate = JSON.parse(JSON.stringify(json));
-
-            if(this.item['obssource']){
-                this.source = this.item['obssource'];
-            }
-
-            this.filterSources();
         },
         current_scene(){
             this.filterSources();
@@ -157,9 +159,10 @@ export default {
             let params = [`t=${new Date().getTime()}`];
             for(let j in this.formValidate){
                 let val = this.formValidate[j];
-                if(j == 'color'){
-                    val = val.replace(/#/g,'');
+                if(typeof val == 'string'){
+                    val = val.replace(/^#/,'');
                 }
+                
                 params.push(`${j}=${val}`);
             }
 
@@ -232,6 +235,6 @@ export default {
 }
 </script>
 <style scoped>
-.setting-wrap{padding: 20px;position: absolute;left: 0;top: 0;right: 0;bottom: 0;overflow: auto;}
+.setting-wrap{padding: 20px;}
 .setting-wrap h3{font-size: 16px;}
 </style>

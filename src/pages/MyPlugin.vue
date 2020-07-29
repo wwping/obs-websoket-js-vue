@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-27 22:39:41
- * @LastEditTime: 2020-07-28 17:07:45
+ * @LastEditTime: 2020-07-28 17:24:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Plugins.vue
@@ -73,6 +73,10 @@ export default {
             for(let i = 0; i < keys.length; i++){
                 res.push(this.my_plugins[keys[i]]);
             }
+
+            // if(res.length > 0){
+            //     this.select(res[0])
+            // }
             return res;
         },
         ...mapState({
@@ -80,9 +84,12 @@ export default {
         })
     },
     mounted () {
+
+        
     },
     methods:{
         select(item){
+            this.info = '{}';
             this.info = JSON.stringify(item);
         },
         del(item){

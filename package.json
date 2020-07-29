@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "bili-danmu-loader-yl": "^1.0.4",
     "obs-websocket-js": "^4.0.1",
+    "pako": "^1.0.11",
+    "request": "^2.88.2",
     "view-design": "^4.3.2",
     "vue": "^2.5.2",
     "vue-i18n": "^8.18.2",

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-27 22:39:41
- * @LastEditTime: 2020-07-28 14:06:31
+ * @LastEditTime: 2020-07-28 17:24:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Plugins.vue
@@ -63,7 +63,10 @@ export default {
     },
     mounted () {
         axios.get(`${this.path}config.json`).then((res) => {
-            this.plugins = res.data;
+            this.plugins = res.data || [];
+            if(this.plugins.length > 0){
+                this.select(this.plugins[0])
+            }
         });
     },
     methods:{

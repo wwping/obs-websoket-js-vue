@@ -60,6 +60,24 @@ function getParam(query,name){
             res.write(body)
             res.end();
         })
+    }
+
+    if(pathname === '/bilibili/gifts') {
+        var id =getParam(query,'id');
+        request({
+            url:'https://api.live.bilibili.com/xlive/web-room/v1/giftPanel/giftConfig?platform=pc&room_id='+id,  
+            method:'GET',  
+            headers:{  
+                "Content-Type": 'application/json',  
+            }  
+        },function(error,response,body){
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+            res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+            res.writeHead(200, {"Content-Type": "application/json"})
+            res.write(body)
+            res.end();
+        })
 
     }
 }).listen(3000)

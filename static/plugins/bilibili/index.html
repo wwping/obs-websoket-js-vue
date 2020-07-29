@@ -78,6 +78,7 @@
                     msgs:[],
                     opacity:opacity,
                     bcolor:bcolor,
+                    gifts:{}
                 }
             },
             mounted(){
@@ -87,6 +88,25 @@
                 axios.get('http://obs.qbcode.cn:8000/bilibili/init?id='+rid).then((res)=>{
                     if(res.data.code == 0){
                         let rid = res.data.data.room_id;
+
+                        axios.get('http://obs.qbcode.cn:8000/bilibili/gifts?id='+rid).then((res)=>{
+                            if(res.data.code == 0){
+                                let list = res.data.data.list;;
+                                let json = {};
+                                for(let i = 0; i < list.length; i++){
+                                    let item = list[i];
+                                    json[item.name] = {
+                                        gif:item.gif,
+                                        img_basic:item.img_basic,
+                                        img_dynamic:item.img_dynamic,
+                                        webp:item.webp,
+                                        coin_type:item.coin_type,
+                                    };
+                                }
+                                this.gifts = json;
+                            }
+                        });
+
                         axios.get('http://obs.qbcode.cn:8000/bilibili/info?id='+rid).then((res)=>{
                             if(res.data.code == 0){
                                 let host_list = res.data.data.host_list;

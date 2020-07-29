@@ -86,7 +86,7 @@ body {
 .scrollbar::scrollbar-thumb{background-color:#ccc; height:10px;border-radius:4px;}
 .scrollbar::scrollbar-track{background-color:#fff;}
 
-.scroll::-webkit-scrollbar {width: 10px;height: 1px;}
+.scroll::-webkit-scrollbar {width: 10px;height: 10px;}
 .scroll::-webkit-scrollbar-thumb {background: rgba(0,0,0,0.1);border-radius: 4px;}
 
 .ivu-select-dropdown::-webkit-scrollbar {width: 10px;height: 1px;}

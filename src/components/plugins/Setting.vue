@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-28 10:21:30
- * @LastEditTime: 2020-07-28 17:01:11
+ * @LastEditTime: 2020-07-29 22:55:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\plugins\Setting.vue
@@ -235,6 +235,6 @@ export default {
 }
 </script>
 <style scoped>
-.setting-wrap{padding: 20px;}
+.setting-wrap{padding: 20px;position: absolute;left: 0;top: 0;right: 0;bottom: 0;overflow: auto;}
 .setting-wrap h3{font-size: 16px;}
 </style>

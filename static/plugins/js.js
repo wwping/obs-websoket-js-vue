@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-27 20:38:40
- * @LastEditTime: 2020-07-27 21:48:32
+ * @LastEditTime: 2020-07-29 23:11:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \undefinedd:\Desktop\plugins\js.js
@@ -40,3 +40,18 @@ String.prototype.hex2rgb = function(){
     }
     return color;
 };
+
+
+function randomNum(minNum,maxNum){ 
+    switch(arguments.length){ 
+        case 1: 
+            return parseInt(Math.random()*minNum+1,10); 
+        break; 
+        case 2: 
+            return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
+        break; 
+            default: 
+                return 0; 
+            break; 
+    } 
+} 

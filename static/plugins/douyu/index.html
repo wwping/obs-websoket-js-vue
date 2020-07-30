@@ -11,37 +11,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>斗鱼弹幕</title>
+    <link rel="stylesheet" href="../reset.css">
+    <style type="text/css">
+    /* body{background-color: rgba(0,0,0,0.5);} */
+    .wrap{position: absolute;background-color: rgba(0,0,0,0.5); left: 1px;top: 1px;right: 1px;bottom: 1px;box-sizing: border-box; overflow: hidden;color:#fff}
+    .wrap>h3{display: none; color:#fff;border-bottom: 1px solid #ddd;padding: 6px;font-size: 14px;text-shadow: 1px 1px 1px rgba(0,0,0,1);}
+    ul{padding: 0 10px;}
+    li{padding: 4px 0; text-shadow: 1px 1px 1px rgba(0,0,0,1); white-space:nowrap;overflow: hidden;font-size: 20px;}
+    span.uname{color:#00ff4e}
+    span.level{border: 1px solid #ddd;background-color: #eee;padding:0 4px;border-radius: 2px; color:#333;text-shadow: none;}
+    span.pz{background-color: #fff;color:#666;border-radius:4px 2px 2px 4px;padding: 2px 2px 2px 0px;text-shadow: none;}
+    span.pz span{background-color: green;color:#fff;margin: -2px 0 -2px 0; padding: 2px 4px;margin-right: 2px;border-radius: 4px 0 0 4px;}
+    .ly .name{color:red;}
+    .jz .name{color: orange;} 
+    .jf .name{color: orange;} 
+    .gift{color: orange;} 
+    span.msg{margin-left: 6px;}
+    </style>
 </head>
 <body>
+    <div>
+        <div id="app">
+            <div class="wrap" :style="{'background-color':'rgba(0,0,0,'+(opacity/100)+')','border-color':bcolor?('1px solid #'+bcolor):'none'}">
+                <h3 :style="{'border-bottom':bcolor?('1px solid rgba(255,255,255,'+(1-opacity/100)+')'):'none'}">房间号 : {{rid}}</h3>
+                <ul>
+                    <li v-for="(item,index) in msgs" :key="index">
+                        <div v-if="item.type == 'dm'" class="dm">
+                            <span class="pz" v-if="item.pz.name && label"><span>{{item.pz.name}}</span>{{item.pz.level}}</span>
+                            <span class="uname" :style="{color:item.user.color}">{{item.user.name}} : <span class="level" v-if="slevel">{{item.user.level}}</span></span>
+                            <span class="msg">{{item.msg}}</span>
+                        </div>
+                        <div v-else-if="item.type == 'lw'" class="tw">
+                            <span v-if="item.gift.name && item.gift.name.price >= price"><span class="uname">{{item.user.name}}</span> 赠送 <strong class="gift">{{item.gift.name.name}}</strong> x <strong class="gift">{{item.gift.num}}</strong></span>
+                        </div>
+                        <div v-else-if="item.type == 'jf'" class="jf">
+                            <span><span class="name">{{item.user.name}}</span> 进入房间</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="../js.js"></script>
+    <script src="./lw.js"></script>
     <script src="douyudanmaku.min.js"></script>
+    <script src="../axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
-        var room = new danmaku('3168536', {
-            debug: false, //存储到indexedDB
-        })
-        //系统事件
-        room.on('connect', function() {
-            console.log('[connect] roomId=%s', this.roomId)
-        })
-        room.on('disconnect', function() {
-            console.log('[disconnect] roomId=%s', this.roomId)
-        })
-        room.on('error', function(err) {
-            console.log('[error] roomId=%s', this.roomId)
-        })
-        //消息事件
-        room.on('chatmsg', function(res) {
-            console.log('[chatmsg]', `<lv ${res.level}> [${res.nn}] ${res.txt}`)
-        })
-        room.on('loginres', function(res) {
-            console.log('[loginres]', '登录成功')
-        })
-        room.on('uenter', function(res) {
-            console.log('[uenter]', `${res.nn}进入房间`)
-        })
-        //开始监听
-        room.run()
 
+
+        const rid = getParam('rid') || '0';
+        const level = Number(getParam('level') || '0');
+        const row = Number(getParam('row') || '5');
+        const price = Number(getParam('price') || '0');
+        const opacity = Number(getParam('opacity') || '100');
+        const bcolor = getParam('bcolor') || '';
+
+        const lw = (getParam('lw') || 'true') == 'true';
+        const slevel = (getParam('slevel') || 'true') == 'true';
+        const label = (getParam('label') || 'true') == 'true';
+        const dm = (getParam('dm') || 'true') == 'true';
+        const jf = (getParam('jf') || 'true') == 'true';
+
+        var app = new Vue({
+            el: '#app',
+            data(){
+                return {
+                    renqi:0,
+                    rid:0,
+                    msgs:[],
+                    opacity:opacity,
+                    bcolor:bcolor,
+                    gifts:{},
+                    slevel:slevel,
+                    label:label,
+                    giftNames:liwu,
+                    price:price
+                }
+            },
+            mounted(){
+
+                this.rid = rid;
+
+                var room = new danmaku(this.rid, {
+                    debug: false, //存储到indexedDB
+                })
+                //系统事件
+                room.on('connect', function() {
+                })
+                room.on('disconnect', function() {
+                })
+                room.on('error', function(err) {
+                })
+
+                room.on('loginres', function(res) {
+                    //console.log('[loginres]', '登录成功')
+                })
+
+                
+                //消息事件
+                room.on('chatmsg', (res)=> {
+                    if(dm && res.level >= level){
+                        this.msgs.push({
+                            type:'dm',
+                            msg:res.txt,
+                            user:{
+                                name:res.nn,
+                                level:res.level,
+                                color:`rgb(${randomNum(128,255)},${randomNum(128,255)},${randomNum(128,255)})`
+                            },
+                            pz:{
+                                name:res.bnn,
+                                level:Number(res.bl)
+                            },
+                            fans:res.ifs == '1',
+                            gz:res.nc == '1'
+                        })
+                    }
+                    if(this.msgs.length > row){
+                        this.msgs.splice(0,1);
+                    }
+                })
+                //礼物
+                room.on('spbc', function(res) {
+                    console.log('礼物');
+                    console.log(res);
+                })
+                room.on('dgb', (res)=> {
+                    if(lw){
+                        let gift = this.giftNames[res.pid] || '';
+                        this.msgs.push({
+                            type:'lw',
+                            msg:res.txt,
+                            user:{
+                                name:res.nn,
+                                level:res.level
+                            },
+                            gift:{
+                                name:gift,
+                                num:Number(res.hits)
+                            },
+                            pz:{
+                                name:res.bnn,
+                                level:Number(res.bl)
+                            }
+                        })
+                    }
+                    if(this.msgs.length > row){
+                        this.msgs.splice(0,1);
+                    }
+                })
+
+                //进入房间
+                room.on('uenter', function(res) {
+                    if(jf){
+                        this.msgs.push({
+                            type:'jf',
+                            user:{
+                                name:res.nn
+                            }
+                        })
+                    }
+                    console.log(res);
+                })
+
+                //开始监听
+                room.run()
+            },
+            methods: {
+                onmessage(packet){
+                }
+            },
+        })
     </script>
 </body>
 </html>

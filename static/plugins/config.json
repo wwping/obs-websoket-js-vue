@@ -1,7 +1,167 @@
 [
     {
+        "name":"index",
+        "path":"xiayu/",
+        "text":"下雨动画1",
+        "size":{"w":1920,"h":1080},
+        "preview":"xueyu.jpg",
+        "params":{
+            "_3":{
+                "child":{
+                    "width":{
+                        "type":"number",
+                        "text":"框宽度",
+                        "default":1920
+                    },
+                    "height":{
+                        "type":"number",
+                        "text":"框高度",
+                        "default":1080
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name":"index",
+        "path":"xiaxue/",
+        "text":"下雪动画1",
+        "size":{"w":1920,"h":1080},
+        "preview":"xiaxue.jpg",
+        "params":{
+            "_3":{
+                "child":{
+                    "width":{
+                        "type":"number",
+                        "text":"框宽度",
+                        "default":1920
+                    },
+                    "height":{
+                        "type":"number",
+                        "text":"框高度",
+                        "default":1080
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name":"index",
+        "path":"loading/",
+        "text":"简单动画",
+        "size":{"w":200,"h":200},
+        "preview":"loading.jpg",
+        "params":{
+            "index":{
+                "type":"select",
+                "text":"下标",
+                "options":"1|2|3|4|5|6",
+                "default":"1"
+            },
+            "_3":{
+                "child":{
+                    "width":{
+                        "type":"number",
+                        "text":"框宽度",
+                        "default":200
+                    },
+                    "height":{
+                        "type":"number",
+                        "text":"框高度",
+                        "default":200
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name":"index",
+        "path":"panel/",
+        "text":"简单面板",
+        "size":{},
+        "preview":"panel.png",
+        "params":{
+            "title":{
+                "type":"text",
+                "text":"标题",
+                "default":"标题示例"
+            },
+            "_00":{
+                "child":{
+                    "radius":{
+                        "type":"number",
+                        "text":"圆角",
+                        "default":4
+                    },
+                    "fontsize":{
+                        "type":"number",
+                        "text":"字大小",
+                        "default":16
+                    }
+                }
+            },
+            "_0":{
+                "child":{
+                    "c_bcolor":{
+                        "type":"color",
+                        "text":"背景色",
+                        "default":"#fff"
+                    },
+                    "c_opacity":{
+                        "type":"number",
+                        "text":"背景透明",
+                        "default":100
+                    }
+                }
+            },
+            "_1":{
+                "child":{
+                    "t_bcolor":{
+                        "type":"color",
+                        "text":"标题背景色",
+                        "default":"#fff"
+                    },
+                    "t_height":{
+                        "type":"number",
+                        "text":"标题高度",
+                        "default":40
+                    }
+                }
+            },
+            "_2":{
+                "child":{
+                    "t_color":{
+                        "type":"color",
+                        "text":"标题色",
+                        "default":"#000"
+                    },
+                    "t_opacity":{
+                        "type":"number",
+                        "text":"标题透明",
+                        "default":100
+                    }
+                }
+            },
+            "_3":{
+                "child":{
+                    "width":{
+                        "type":"number",
+                        "text":"框宽度",
+                        "default":200
+                    },
+                    "height":{
+                        "type":"number",
+                        "text":"框高度",
+                        "default":200
+                    }
+                }
+            }
+            
+        }
+    },
+    {
         "name":"remark",
-        "path":"",
+        "path":"remark/",
         "text":"简单色块",
         "size":{},
         "preview":"remark.png",
@@ -39,14 +199,14 @@
     },
     {
         "name":"clock",
-        "path":"",
+        "path":"clock/",
         "text":"炫彩时钟",
         "size":{"w":440,"h":120},
         "preview":"color.png"
     },
     {
         "name":"countdown",
-        "path":"",
+        "path":"countdown/",
         "text":"炫彩倒计时",
         "size":{"w":440,"h":120},
         "preview":"countdown.png",
@@ -95,7 +255,7 @@
     },
     {
         "name":"scroll_text",
-        "path":"",
+        "path":"scroll_text/",
         "text":"高级文字",
         "size":{},
         "preview":"scroll_text.png",

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loading</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="loading-1 loading-wrap">
+        <div class="spinner-box">
+            <div class="configure-border-1">  
+              <div class="configure-core"></div>
+            </div>  
+            <div class="configure-border-2">
+              <div class="configure-core"></div>
+            </div> 
+          </div>
+    </div>
+    <div class="loading-2 loading-wrap">
+        <div class="solar-system">
+            <div class="earth-orbit orbit">
+              <div class="planet earth"></div>
+              <div class="venus-orbit orbit">
+                <div class="planet venus"></div>
+                <div class="mercury-orbit orbit">
+                  <div class="planet mercury"></div>
+                  <div class="sun"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="loading-3 loading-wrap">
+        <div class="item-loader-container">
+            <div class="la-square-jelly-box la-2x">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-4 loading-wrap">
+        <div class="loader">
+            <div class="face">
+                <div class="circle"></div>
+            </div>
+            <div class="face">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+    <div class="loading-5 loading-wrap">
+        <div id="loading-center">
+			<div id="loading-center-absolute">
+				<div class="object" id="first_object"></div>
+				<div class="object" id="second_object"></div>
+				<div class="object" id="third_object"></div>
+			</div>
+		</div>
+    </div>
+    <div class="loading-6 loading-wrap">
+        <div id="loading-center1">
+			<div id="loading-center-absolute1">
+				<div class="object1" id="first_object1"></div>
+				<div class="object1" id="second_object1"></div>
+				<div class="object1" id="third_object1"></div>
+				<div class="object1" id="forth_object1"></div>
+			</div>
+		</div>
+    </div>
+    <script src="../js.js"></script>
+    <script>
+        var index = getParam('index') || '1';
+
+        document.querySelector('.loading-'+index).style.display = 'block';
+
+    </script>
+</body>
+</html>

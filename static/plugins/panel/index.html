@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面板</title>
+    <link rel="stylesheet" href="../reset.css" />
+    <style>
+        body{background-color: red;}
+        h3{text-indent: 1em;box-shadow: 0 1px 4px rgba(0,0,0,0.1);position: relative;z-index: 2;}
+        .c{position: absolute;z-index: 1;left: 0;right: 0;bottom: 0;}
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="inner">
+            <h3 class="t">非官方梵蒂冈梵蒂冈</h3>
+            <div class="c"></div>
+        </div>
+    </div>
+    <script src="../js.js"></script>
+    <script>
+        var c_bcolor = '#' + (getParam('c_bcolor') || 'fff');
+        var c_opacity = Number(getParam('c_opacity') || '100');
+
+        var radius = Number(getParam('radius') || '4');
+        var fontsize = Number(getParam('radius') || '16');
+        
+        
+
+        var title = (getParam('title') || '');
+        var t_color = '#' + (getParam('t_color') || '000');
+        var t_bcolor = '#' + (getParam('t_bcolor') || 'fff');
+        var t_height = Number(getParam('t_height') || '40');
+        var t_opacity = Number(getParam('t_opacity') || '100');
+
+        var tbcolorRgb = t_bcolor.hex2rgb();
+        tbcolorRgb.push(t_opacity/100);
+
+        var c_bcolorRgb = c_bcolor.hex2rgb();
+        c_bcolorRgb.push(c_opacity/100);
+
+        var html  = ['<div id="inner">']
+            html.push(`<h3 class="t" style="color:${t_color};background-color:rgba(${tbcolorRgb.join(',')});height:${t_height}px;line-height:${t_height}px;border-radius:${radius}px ${radius}px 0 0;font-size:${fontsize}px">${title}</h3>`);
+            html.push(`<div class="c" style="background-color:rgba(${c_bcolorRgb.join(',')});top:${t_height}px;border-radius:0 0 ${radius}px ${radius}px;"></div>`)
+            html.push('</div>')
+        
+        document.getElementById('wrap').innerHTML = html.join('');
+    </script>
+</body>
+</html>

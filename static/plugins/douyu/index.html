@@ -125,22 +125,18 @@
                                 name:res.bnn,
                                 level:Number(res.bl)
                             },
-                            fans:res.ifs == '1',
-                            gz:res.nc == '1'
+                            fans:res.ifs == '1', //粉丝
+                            gz:res.nc == '1', //贵族
+                            gzdj:res.nl//贵族等级
                         })
                     }
                     if(this.msgs.length > row){
                         this.msgs.splice(0,1);
                     }
                 })
-                //礼物
-                room.on('spbc', function(res) {
-                    console.log('礼物');
-                    console.log(res);
-                })
                 room.on('dgb', (res)=> {
                     if(lw){
-                        let gift = this.giftNames[res.pid] || '';
+                        let gift = this.giftNames[res.pid] || this.giftNames[res.gfid] || '';
                         this.msgs.push({
                             type:'lw',
                             msg:res.txt,
@@ -164,7 +160,7 @@
                 })
 
                 //进入房间
-                room.on('uenter', function(res) {
+                room.on('uenter', (res)=> {
                     if(jf){
                         this.msgs.push({
                             type:'jf',

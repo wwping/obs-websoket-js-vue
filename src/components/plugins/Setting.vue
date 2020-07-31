@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-28 10:21:30
- * @LastEditTime: 2020-07-29 22:55:52
+ * @LastEditTime: 2020-07-31 11:17:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\plugins\Setting.vue
@@ -35,9 +35,16 @@
                                         </span>
                                         <span v-else-if="itemsub.type=='select'">
                                             <Select v-model="formValidate[kk]">
-                                                <Option v-for="op in itemsub.options.split('|')"
+                                                <Option v-for="(op,index) in itemsub.options.split('|')"
                                                         :value="op"
-                                                        :key="op">{{ op }}</Option>
+                                                        :key="index">{{ op }}</Option>
+                                            </Select>
+                                        </span>
+                                        <span v-else-if="item.type =='font'" filterable allow-create @on-create="handleCreateFont">
+                                            <Select v-model="formValidate[key]">
+                                                <Option v-for="(op,index) in fontFunc(item)"
+                                                        :value="op"
+                                                        :key="index">{{ op }}</Option>
                                             </Select>
                                         </span>
                                         <span v-else-if="itemsub.type =='color'">
@@ -59,9 +66,16 @@
                             </span>
                             <span v-else-if="item.type=='select'">
                                 <Select v-model="formValidate[key]">
-                                    <Option v-for="op in item.options.split('|')"
+                                    <Option v-for="(op,index) in item.options.split('|')"
                                             :value="op"
-                                            :key="op">{{ op }}</Option>
+                                            :key="index">{{ op }}</Option>
+                                </Select>
+                            </span>
+                            <span v-else-if="item.type=='font'">
+                                <Select v-model="formValidate[key]" filterable allow-create @on-create="handleCreateFont">
+                                    <Option v-for="(op,index) in fontFunc(item)"
+                                            :value="op"
+                                            :key="index">{{ op }}</Option>
                                 </Select>
                             </span>
                             <span v-else-if="item.type =='color'">
@@ -71,6 +85,9 @@
                                 <Checkbox v-model="formValidate[key]">{{item.text}}</Checkbox>
                             </span>
                         </div>
+                    </FormItem>
+                    <FormItem :label="$t('df.rerender')">
+                        <Checkbox v-model="shutdown">{{$t('df.obsshutdown')}}</Checkbox>
                     </FormItem>
                     <FormItem :label="'OBS' + $t('df.sources')">
                         <Select v-model="source">
@@ -82,6 +99,9 @@
                     <FormItem>
                         <Button type="primary"
                                 @click="handleSubmit('formValidate')">Submit</Button>
+                            
+                        <Button v-if="isupdate" type="default"
+                                @click="update">Update</Button>
                     </FormItem>
                 </Form>
             </div>
@@ -118,12 +138,20 @@ export default {
                 if(this.item['obssource']){
                     this.source = this.item['obssource'];
                 }
+                if(this.item['obsshutdown']){
+                    this.shutdown = this.item['obsshutdown'];
+                }
+
+                this.isupdate = this.item['update']
 
                 this.filterSources();
             }
             
         },
         current_scene(){
+            this.filterSources();
+        },
+        scenes(){
             this.filterSources();
         }
     },
@@ -132,6 +160,8 @@ export default {
             scenes:state => state.scenes,
             current_scene:state => state.current_scene,
             my_plugins:state => state.my_plugins,
+            sfonts:state => state.fonts,
+            connect_config:state => state.connect_config,
         })
     },
     data () {
@@ -140,10 +170,26 @@ export default {
             formValidate: {},
             ruleValidate: {},
             source:'',
-            sources:[]
+            sources:[],
+            shutdown:true,
+            isupdate:false,
+            fonts:['宋体','新宋体','黑体','微软雅黑','幼圆','楷体','隶书','华文彩云','华文仿宋','华文楷体','华文隶书','华文隶书','华文琥珀','华文宋体','华文细黑','Helvetica', 'Arial', 'sans-serif','fantasy']
         }
     },
+    mounted(){
+        this.fonts = this.fonts.concat(this.sfonts);
+    },
     methods: {
+        fontFunc(item){
+            let options =  item.options.split('|').concat(this.fonts);
+            return options.filter(c=>c.length > 0);
+        },
+        handleCreateFont(val){
+            if(this.fonts.indexOf(val) == -1){
+                this.$store.dispatch('fonts',val);
+                this.fonts.push(val)
+            }
+        },
         filterSources(){
             let scene = this.scenes.filter(c=>c.name == this.current_scene)[0];
             if(scene){
@@ -162,17 +208,18 @@ export default {
                 if(typeof val == 'string'){
                     val = val.replace(/^#/,'');
                 }
-                
                 params.push(`${j}=${val}`);
             }
 
+            for(let j in this.connect_config){
+                params.push(`${j}=${this.connect_config[j]}`);
+            }
+
+            params.push(`obssource=${this.source}-${this.item.path}-${this.item.name}`);
+
             return url + '?' + (params.join('&'));
         },
-        handleSubmit (name) {
-            if(!this.source){
-                return;
-            }
-            
+        getParams(){
             let settings = {
                 width : this.item.size.w,
                 height:this.item.size.h,
@@ -195,16 +242,6 @@ export default {
                 settings.height = this.formValidate.height;
             }
 
-            msgSubPusher.push('obs-command',{
-                cmd:'SetSourceSettings',
-                params:{
-                    sourceName:this.source,
-                    sourceSettings:settings
-                },
-                callback:(data)=>{}
-            });
-
-
             let data = JSON.parse(JSON.stringify(this.item));
             for(let j in this.formValidate){
                 let val = this.formValidate[j];
@@ -226,11 +263,44 @@ export default {
 
             }
             data['obssource'] = this.source;
+            data['obsshutdown'] = this.shutdown;
+            
             this.$store.dispatch('my_plugins',{
                 name:data.text + '-' + this.source,
                 data:data
             });
-        }
+
+            return settings;
+        },
+        handleSubmit (name) {
+            if(!this.source){
+                return;
+            }
+            
+            msgSubPusher.push('obs-command',{
+                cmd:'SetSourceSettings',
+                params:{
+                    sourceName:this.source,
+                    sourceSettings:this.getParams()
+                },
+                callback:(data)=>{}
+            });
+        },
+        update(){
+            if(!this.source){
+                return;
+            }
+            msgSubPusher.push('obs-command',{
+                cmd:'BroadcastCustomMessage',
+                params:{
+                    realm:`plugin-set-${this.source}-${this.item.path}-${this.item.name}`,
+                    data:this.formValidate,
+                },
+                callback:(data)=>{
+                    console.log(data);
+                }
+            })
+        },
     }
 }
 </script>

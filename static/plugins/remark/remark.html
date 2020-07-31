@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-07-30 21:47:02
+ * @LastEditTime: 2020-07-30 22:28:57
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \obs\static\plugins\remark\remark.html
+--> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,10 +24,18 @@
         var opacity = Number(getParam('opacity') || '100');
         var color = '#' + (getParam('color') || 'fff');
 
+        var bwidth = Number(getParam('bw') || '0');
+        var bstyle = getParam('bs') || 'solid';
+        var bradius = getParam('br') || '0px 0px 0px 0px';
+        var bcolor = '#' + (getParam('bc') || 'fff');
+
+        let style = `background-color:rgba(${colorArr.join(',')});border:${bwidth} ${bstyle} ${bcolor};border-radius:${bradius}`
+
+
         var colorArr =  color.hex2rgb();
         colorArr.push(opacity/100);
 
-        document.getElementById('div1').innerHTML = `<div id="remark" style="background-color:rgba(${colorArr.join(',')})"></div>`;
+        document.getElementById('div1').innerHTML = `<div id="remark" style=""></div>`;
     </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-28 14:35:47
- * @LastEditTime: 2020-07-28 16:02:35
+ * @LastEditTime: 2020-07-30 22:09:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\static\plugins\scroll_text.html
@@ -16,6 +16,7 @@
     <style>
         body{overflow: hidden;background-color: #000;}
         #text{white-space:nowrap;transform: translate(0px);}
+        #wrap{position: absolute;left: 0;top: 0;right: 0;bottom: 0;overflow: hidden;}
     </style>
 </head>
 <body id="wrap">
@@ -28,30 +29,47 @@
         var p_color = '#' + (getParam('color') || 'fff');
         var p_s = '#' + (getParam('s') || '000');
         var p_s_x = Number(getParam('s_x') || '1');
-        var p_s_y = Number(getParam('s_x') || '1');
+        var p_s_y = Number(getParam('s_y') || '1');
         var p_s_size = Number(getParam('s_size') || '1');
         var p_s_opacity = Number(getParam('s_opacity') || '100');
         var p_scroll = (getParam('scroll') || 'false') == 'true';
         var p_speed = Number(getParam('speed') || '1');
+        var p_scroll_y = (getParam('scroll_y') || 'false') == 'true';
+        var p_speed_y = Number(getParam('speed_y') || '1');
+
         var p_fsize = Number(getParam('fsize') || '20');
+        var p_font = getParam('font') || '微软雅黑';
 
         var p_s_rgb = p_s.hex2rgb(); 
 
-        var styles = `font-size:${p_fsize}px;color:${p_color};text-shadow:${p_s_x}px ${p_s_y}px ${p_s_size}px rgba(${p_s_rgb.join(',')},${p_s_opacity/100});`;
+        var styles = `font-family: ${p_font};font-size:${p_fsize}px;color:${p_color};text-shadow:${p_s_x}px ${p_s_y}px ${p_s_size}px rgba(${p_s_rgb.join(',')},${p_s_opacity/100});`;
         document.getElementById('text-span').innerHTML = `<span id="text-inner" style="${styles}">${p_text}</span>`;
 
 
-        if(p_scroll){
+        if(p_scroll || p_scroll_y){
             var text =document.getElementById('text');
             var wrapw = document.getElementById('wrap').offsetWidth;
             var textw = document.getElementById('text-inner').offsetWidth;
-            var _textw = 0;
+            var wraph = document.getElementById('wrap').offsetHeight;
+            var texth = document.getElementById('text-inner').offsetHeight;
+
+            var _textx = 0;
+            var _texty = 0;
             var fn = ()=>{
-                _textw-=p_speed;
-                if(_textw <-textw){
-                    _textw = wrapw;
+                if(p_scroll){
+                    _textx-=p_speed;
                 }
-                text.style.transform = 'translate('+_textw+'px)'
+                if(p_scroll_y){
+                    _texty-=p_speed_y;
+                }
+                if(_textx <-textw){
+                    _textx = wrapw;
+                }
+                if(_texty <-texth){
+                    _texty = wraph;
+                }
+                console.log(_texty);
+                text.style.transform = 'translateX('+_textx+'px) translateY('+_texty+'px)'
                 requestAnimationFrame(fn);
             }
             requestAnimationFrame(fn)

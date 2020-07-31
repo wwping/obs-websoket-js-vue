@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-29 21:56:10
- * @LastEditTime: 2020-07-29 22:06:43
+ * @LastEditTime: 2020-07-31 09:48:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \undefinedd:\Desktop\dydm\index.html
@@ -112,6 +112,7 @@
                 
                 //消息事件
                 room.on('chatmsg', (res)=> {
+                    console.log(res);
                     if(dm && res.level >= level){
                         this.msgs.push({
                             type:'dm',
@@ -127,7 +128,8 @@
                             },
                             fans:res.ifs == '1', //粉丝
                             gz:res.nc == '1', //贵族
-                            gzdj:res.nl//贵族等级
+                            gzdj:res.nl,//贵族等级
+                            rg:res.rg // 4房管
                         })
                     }
                     if(this.msgs.length > row){

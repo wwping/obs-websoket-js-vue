@@ -1,6 +1,149 @@
 [
     {
         "name":"index",
+        "path":"progress/",
+        "text":"简单进度环",
+        "size":{"w":200,"h":200},
+        "update":true,
+        "preview":"progress.jpg",
+        "params":{
+            "title":{
+                "type":"text",
+                "text":"标题",
+                "default":"标题"
+            },
+            "_0":{
+                "child":{
+                    "num":{
+                        "type":"number",
+                        "text":"当前值",
+                        "default":1
+                    },
+                    "total":{
+                        "type":"number",
+                        "text":"期望值",
+                        "default":1
+                    }
+                }
+            },
+            "ff":{
+                "type":"font",
+                "text":"字体",
+                "options":"",
+                "default":"微软雅黑"
+            },
+            "_00":{
+                "child":{
+                    "color":{
+                        "type":"color",
+                        "text":"字色",
+                        "default":"#000"
+                    },
+                    "fontsize":{
+                        "type":"number",
+                        "text":"字大小",
+                        "default":16
+                    }
+                }
+            },
+            "_000":{
+                "child":{
+                    "sx":{
+                        "type":"number",
+                        "text":"阴影偏移x",
+                        "default":0
+                    },
+                    "sy":{
+                        "type":"number",
+                        "text":"阴影偏移y",
+                        "default":0
+                    }
+                }
+            },
+            "_0000":{
+                "child":{
+                    "ss":{
+                        "type":"number",
+                        "text":"阴影距离",
+                        "default":0
+                    },
+                    "so":{
+                        "type":"number",
+                        "text":"阴影透明",
+                        "default":100
+                    }
+                }
+            },
+            "_00000":{
+                "child":{
+                    "sc":{
+                        "type":"color",
+                        "text":"阴影色",
+                        "default":"#000"
+                    }
+                }
+            },
+            
+            "_1":{
+                "child":{
+                    "fill":{
+                        "type":"color",
+                        "text":"背景色",
+                        "default":"#fff"
+                    },
+                    "fo":{
+                        "type":"number",
+                        "text":"背景透明",
+                        "default":100
+                    }
+                }
+            },
+            "_2":{
+                "child":{
+                    "stroke1":{
+                        "type":"color",
+                        "text":"底圈色",
+                        "default":"#fff"
+                    },
+                    "stroke2":{
+                        "type":"color",
+                        "text":"外圈色",
+                        "default":"#f00"
+                    }
+                }
+            },
+            "_4":{
+                "child":{
+                    "strokew":{
+                        "type":"number",
+                        "text":"圈宽",
+                        "default":5
+                    },
+                    "so1":{
+                        "type":"number",
+                        "text":"圈透明",
+                        "default":100
+                    }
+                }
+            },
+            "_100":{
+                "child":{
+                    "width":{
+                        "type":"number",
+                        "text":"框宽度",
+                        "default":200
+                    },
+                    "height":{
+                        "type":"number",
+                        "text":"框高度",
+                        "default":200
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name":"index",
         "path":"xiayu/",
         "text":"下雨动画1",
         "size":{"w":1920,"h":1080},
@@ -79,7 +222,7 @@
         "path":"panel/",
         "text":"简单面板",
         "size":{},
-        "preview":"panel.png",
+        "preview":"panel.jpg",
         "params":{
             "title":{
                 "type":"text",
@@ -164,7 +307,7 @@
         "path":"remark/",
         "text":"简单色块",
         "size":{},
-        "preview":"remark.png",
+        "preview":"remark.jpg",
         "params":{
             "_0":{
                 "child":{
@@ -184,7 +327,7 @@
                 "child":{
                     "color":{
                         "type":"color",
-                        "text":"颜色",
+                        "text":"背景色",
                         "default":"#fff"
                     },
                     "opacity":{
@@ -193,8 +336,55 @@
                         "default":100
                     }
                 }
+            },
+            "bs":{
+                "type":"select",
+                "options":"solid|dotted|dashed|double|none",
+                "text":"边框类型",
+                "default":"solid"
+            },
+            "_2":{
+                "child":{
+                    "bw":{
+                        "type":"number",
+                        "text":"边框宽",
+                        "default":0
+                    },
+                    "bc":{
+                        "type":"color",
+                        "text":"边框颜色",
+                        "default":"#fff"
+                    }
+                }
+            },
+            "_3":{
+                "child":{
+                    "br1":{
+                        "type":"number",
+                        "text":"圆角1",
+                        "default":0
+                    },
+                    "br2":{
+                        "type":"number",
+                        "text":"圆角2",
+                        "default":0
+                    }
+                }
+            },
+            "_4":{
+                "child":{
+                    "br3":{
+                        "type":"number",
+                        "text":"圆角3",
+                        "default":0
+                    },
+                    "br4":{
+                        "type":"number",
+                        "text":"圆角4",
+                        "default":0
+                    }
+                }
             }
-            
         }
     },
     {
@@ -202,14 +392,14 @@
         "path":"clock/",
         "text":"炫彩时钟",
         "size":{"w":440,"h":120},
-        "preview":"color.png"
+        "preview":"color.jpg"
     },
     {
         "name":"countdown",
         "path":"countdown/",
         "text":"炫彩倒计时",
         "size":{"w":440,"h":120},
-        "preview":"countdown.png",
+        "preview":"countdown.jpg",
         "params":{
             "h":{
                 "type":"number",
@@ -233,7 +423,7 @@
         "path":"text/",
         "text":"粒子文字",
         "size":{"w":1920,"h":1080},
-        "preview":"text.png",
+        "preview":"text.jpg",
         "params":{
             "type":{
                 "type":"select",
@@ -258,7 +448,7 @@
         "path":"scroll_text/",
         "text":"高级文字",
         "size":{},
-        "preview":"scroll_text.png",
+        "preview":"scroll_text.jpg",
         "params":{
             
             "text":{
@@ -273,16 +463,37 @@
                         "text":"字体大小",
                         "default":20
                     }
+                    
                 }
+            },
+            "font":{
+                "type":"font",
+                "options":"",
+                "text":"字体",
+                "default":"微软雅黑"
             },
             "_1":{
                 "child":{
                     "scroll":{
                         "type":"bool",
-                        "text":"是否滚动",
+                        "text":"横向滚动",
                         "default":true
                     },
                     "speed":{
+                        "type":"number",
+                        "text":"滚动速度",
+                        "default":1
+                    }
+                }
+            },
+            "_11":{
+                "child":{
+                    "scroll_y":{
+                        "type":"bool",
+                        "text":"纵向滚动",
+                        "default":true
+                    },
+                    "speed_y":{
                         "type":"number",
                         "text":"滚动速度",
                         "default":1
@@ -352,7 +563,7 @@
         "path":"bilibili/",
         "text":"B站弹幕-混合",
         "size":{"w":400},
-        "preview":"bilibili.png",
+        "preview":"bilibili.jpg",
         "params":{
             "rid":{
                 "type":"text",
@@ -465,7 +676,7 @@
         "path":"douyu/",
         "text":"斗鱼弹幕-混合",
         "size":{"w":400},
-        "preview":"douyu.png",
+        "preview":"douyu.jpg",
         "params":{
             "rid":{
                 "type":"text",

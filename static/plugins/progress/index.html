@@ -1,0 +1,92 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-07-30 23:24:20
+ * @LastEditTime: 2020-07-31 11:09:11
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \obsd:\Desktop\index.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>进度环</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        #wrap{position: absolute;left: 0;top: 0;right: 0;bottom: 0;}
+        #wrap .texts{position: absolute;left: 0;right: 0;top: 50%;transform: translateY(-50%);text-align: center;}
+    </style>
+</head>
+<body>
+    <div id="wrap"></div>
+    <script src="../js.js"></script>
+    <script src="../obs-websocket.min.js"></script>
+    <script>
+        
+        function set(json){
+
+            let cal =  json.num/json.total;
+            let num = 628.3185307179587-(cal*628.3185307179587);
+            if(json.num>=json.total){
+                num = 0;
+            }
+
+            let shadowColor = (json.sc || '#000').hex2rgb();
+            shadowColor.push(json.so/100);
+
+
+            let str = `<svg version="1.1" preserveAspectRatio="xMinYMin meet" viewBox="0 0 200 200">
+                <circle id="circle1" cx="100" cy="100" r="${100-json.strokew}" fill="${json.fill}" fill-opacity="${json.fo / 100}" stroke-opacity="${json.so1/100}" stroke-width="${json.strokew}" stroke="${json.stroke1}" />
+                <circle id="circle2" cx="100" cy="100" r="${100-json.strokew}"  fill="none" stroke-opacity="${json.so1/100}" stroke-width="${json.strokew}" stroke="${json.stroke2}" style="stroke-dasharray:628.3185307179587; stroke-dashoffset: ${num};"/>
+            </svg>
+            <div class="texts">
+                <h3 style="font-family:${json.ff};color:${json.color};font-size:${json.fontsize}px;text-shadow:${json.sx}px ${json.sy}px ${json.ss}px rgba(${shadowColor.join(',')});">${json.title}</h3>
+                <div style="font-family:${json.ff};color:${json.color};font-size:${json.fontsize-2}px;text-shadow:${json.sx}px ${json.sy}px ${json.ss}px rgba(${shadowColor.join(',')});">${json.num}/${json.total} ${(json.num/json.total * 100).toFixed(0)}%</div>
+            </div>`;
+            document.getElementById('wrap').innerHTML = str;
+        }
+
+        set({
+            num:Number(getParam('num') || 1)
+            ,total:Number(getParam('total') || 1)
+            ,title:getParam('title') || '今日任务'
+
+            
+            
+            ,fill:'#'+(getParam('fill') || '000')
+            ,fo:Number(getParam('fo') || 30)
+
+            ,strokew:Number(getParam('strokew') || 5)//圈
+            ,stroke1:'#'+(getParam('stroke1') || 'ccc')
+            ,stroke2:'#'+(getParam('stroke2') || 'f00')
+            ,so1:Number(getParam('so1') || 80)
+            
+            ,ff:getParam('ff') || '微软雅黑'//字
+            ,color:'#'+(getParam('color') || 'fff')
+            ,fontsize:Number(getParam('fontsize') || 16) 
+            ,sx:Number(getParam('sx') || 1)  //阴影
+            ,sy:Number(getParam('sy') || 1) 
+            ,ss:Number(getParam('ss') || 4) 
+            ,sc:'#'+(getParam('sc') || '000')
+            ,so:Number(getParam('so') || 100) 
+        });
+
+        let host = getParam('address');
+        let port = getParam('port');
+        let secret = getParam('secret');
+        let source = getParam('obssource');
+        
+        var obs = new OBSWebSocket();
+        obs.connect({ address: `${host}:${port}`, password:secret }).then(() => {
+        }).catch(() => {
+        });
+        obs.on('BroadcastCustomMessage', (data) => {
+            if(data.realm == 'plugin-set-'+source){
+                set(data.data);
+            }
+        });
+        
+    </script>
+</body>
+</html>

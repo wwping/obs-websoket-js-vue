@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 13:39:46
- * @LastEditTime: 2020-07-28 17:37:06
+ * @LastEditTime: 2020-07-31 11:20:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\config\index.js

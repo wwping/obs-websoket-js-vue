@@ -10,15 +10,18 @@
     .wrap{position: absolute;background-color: rgba(0,0,0,0.5); left: 1px;top: 1px;right: 1px;bottom: 1px;box-sizing: border-box; overflow: hidden;color:#fff}
     .wrap>h3{display: none; color:#fff;border-bottom: 1px solid #ddd;padding: 6px;font-size: 14px;text-shadow: 1px 1px 1px rgba(0,0,0,1);}
     ul{padding: 0 10px;}
-    li{padding: 4px 0; text-shadow: 1px 1px 1px rgba(0,0,0,1); white-space:nowrap;overflow: hidden;font-size: 20px;}
-    span.uname{color:#00ff4e}
-    span.level{border: 1px solid #ddd;background-color: #eee;padding:0 4px;border-radius: 2px; color:#333;text-shadow: none;}
-    span.pz{background-color: #fff;color:#666;border-radius:4px 2px 2px 4px;padding: 2px 2px 2px 0px;text-shadow: none;}
+    li{padding: 10px 0; text-shadow: 1px 1px 1px rgba(0,0,0,1);white-space: nowrap; overflow: hidden;font-size: 20px;}
+    span.uname{color:#b9b9b9;}
+    span.level{font-size: 16px; border: 1px solid #9ac5ad;padding:0 4px;border-radius: 2px; color:#fbfbfb;display: inline-block;height: 20px;line-height: 20px;}
+    span.pz{margin-right: 6px;background-color: #fff;color:#666;border-radius:4px 2px 2px 4px;padding: 2px 2px 2px 0px;text-shadow: none;}
     span.pz span{background-color: green;color:#fff;margin: -2px 0 -2px 0; padding: 2px 4px;margin-right: 2px;border-radius: 4px 0 0 4px;}
     .ly .name{color:red;}
     .jz .name{color: orange;} 
     .gift{color: orange;} 
     span.msg{margin-left: 6px;}
+    span.xz{vertical-align: middle;}
+    .tw .uname,.lj .uname{color:greenyellow;}
+    span.fg{font-size: 16px; border: 1px solid orange;padding:0 4px;border-radius: 2px; color:orange;display: inline-block;height: 20px;line-height: 20px;}
     </style>
 </head>
 <body>
@@ -29,9 +32,18 @@
                 <ul>
                     <li v-for="(item,index) in msgs" :key="index">
                         <div v-if="item.type == 'dm'" class="dm">
-                            <span class="pz" v-if="item.pz.name && label"><span>{{item.pz.name}}</span>{{item.pz.level}}</span>
-                            <span class="uname" :style="{color:item.user.color}">{{item.user.name}} : <span class="level" v-if="slevel">{{item.user.level}}</span></span>
+                            <span v-if="item.user.jd" class="xz">
+                                <img :src="'https://i0.hdslb.com/bfs/activity-plat/static/20200716/1d0c5a1b042efb59f46d4ba1286c6727/icon-guard'+item.user.jd1+'.png@30w_30h.webp'" alt="">
+                            </span>
+                            <span v-if="item.user.fg" class="fg">房</span>
+                            <span class="pz" v-if="item.pz.name && label">
+                                <span>{{item.pz.name}}</span>{{item.pz.level}}
+                            </span>
+                            <span class="uname" :style="{color:item.user.color}">{{item.user.name}} : <span class="level" v-if="slevel">UL {{item.user.level}}</span></span>
                             <span class="msg">{{item.msg}}</span>
+                        </div>
+                        <div v-else-if="item.type == 'sj'" class="sj">
+                            <span><span class="uname">{{item.user.name}}</span> 上 {{item.gift.gift_name}}x <strong class="gift">{{item.gift.num}}</strong></span>
                         </div>
                         <div v-else-if="item.type=='ly'" class="ly">
                             <span><span class="name" >{{item.user.name}} {{item.user.svip?'年费':''}}姥爷</span> 进入房间</span>
@@ -75,6 +87,8 @@
         const ly = (getParam('ly') || 'true') == 'true';
         const jz = (getParam('jz') || 'true') == 'true';
         const dm = (getParam('dm') || 'true') == 'true';
+        const jzdm = (getParam('jzdm') || 'true') == 'true';
+        const sj = (getParam('sj') || 'true') == 'true';
 
         var app = new Vue({
             el: '#app',
@@ -158,8 +172,25 @@
                         for(let i = 0; i < body.length; i++){
                             let item = body[i];
                             switch(item.cmd){
+                                case 'GUARD_BUY':
+                                    if(sj){
+                                        this.msgs.push({
+                                            type:'sj',
+                                            user:{
+                                                
+                                                name:item.data.username
+                                            },
+                                            gift:{
+                                                guard_level:item.data.guard_level,
+                                                gift_name:item.data.gift_name,
+                                                num:item.data.num,
+                                            }
+                                        })
+                                    }
+                                    console.log(item);
+                                break;
                                 case 'DANMU_MSG':
-                                    if(item.info[4][0] > level && dm){
+                                    if((item.info[4][0] > level && dm) || (jzdm &&item.info[7] > 0)){
                                         this.msgs.push({
                                             type:'dm',
                                             pz:{
@@ -169,12 +200,14 @@
                                             user:{
                                                 level:item.info[4][0],
                                                 name:item.info[2][1],
-                                                color:`rgb(${randomNum(128,255)},${randomNum(128,255)},${randomNum(128,255)})`
+                                                color:item.info[2][7],
+                                                fg:item.info[2][2] == 1,
+                                                jd:{0:'',1:'总督',2:'提督',3:'舰长'}[item.info[7]],
+                                                jd1:item.info[7],
                                             },
                                             msg:item.info[1]
                                         })
                                     }
-                                    console.log(item);
                                     break;
                                 case 'WELCOME':
                                     if(ly){

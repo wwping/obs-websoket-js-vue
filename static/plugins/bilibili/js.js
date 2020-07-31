@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-07-30 21:47:00
+ * @LastEditTime: 2020-08-01 00:41:24
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \obs\static\plugins\bilibili\js.js
+ */ 
 const textEncoder = new TextEncoder('utf-8');
 const textDecoder = new TextDecoder('utf-8');
 
@@ -52,7 +60,11 @@ const decode = function(blob){
                      *    https://github.com/nodeca/pako/blob/master/dist/pako.js
                      * 2. message文本中截断掉不需要的部分，避免JSON.parse时出现问题
                      */
-                    let body = textDecoder.decode(pako.inflate(data));
+                    let body = null;
+                    try{
+                        body = textDecoder.decode(pako.inflate(data));
+                    }catch(e){
+                    }
                     if (body) {
                         try{
                             result.body.push(JSON.parse(body.slice(body.indexOf("{"))));
@@ -63,7 +75,12 @@ const decode = function(blob){
                                 let item = '{"cmd"' + arr[i];
                                 item = item.substring(0,item.lastIndexOf("}")+1);
                                 if(item){
-                                    result.body.push(JSON.parse(item));
+                                    try{
+                                        result.body.push(JSON.parse(item));
+                                    }catch(e){
+                                        result.body.push(JSON.parse(item.replace(/\]\}.{1,}\}$/g,']}}').replace(/\}\}.{1,}\}$/g,'}}}')));
+                                    }
+                                    
                                 }
                             }
                         }

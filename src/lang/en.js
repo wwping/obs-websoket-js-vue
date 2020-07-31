@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:46
- * @LastEditTime: 2020-07-30 22:45:38
+ * @LastEditTime: 2020-07-31 16:26:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\en.js
@@ -39,5 +39,7 @@ export default {
 
         'rerender':'re render',
         'obsshutdown':'obs obsshutdown',
+
+        'tasks':'tasks',
     }
 }

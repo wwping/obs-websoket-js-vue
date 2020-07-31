@@ -1,6 +1,106 @@
 [
     {
         "name":"index",
+        "path":"progress2/",
+        "text":"简单进度条",
+        "size":{"w":200,"h":200},
+        "update":true,
+        "preview":"progress2.jpg",
+        "params":{
+            "title":{
+                "type":"text",
+                "text":"标题",
+                "default":"标题"
+            },
+            "_0":{
+                "child":{
+                    "num":{
+                        "type":"number",
+                        "text":"当前值",
+                        "default":0
+                    },
+                    "total":{
+                        "type":"number",
+                        "text":"期望值",
+                        "default":1
+                    }
+                }
+            },
+            "ff":{
+                "type":"font",
+                "text":"字体",
+                "options":"",
+                "default":"微软雅黑"
+            },
+            "_1":{
+                "child":{
+                    "fcolor":{
+                        "type":"color",
+                        "text":"字色",
+                        "default":"#000"
+                    }
+                }
+            },
+            "_2":{
+                "child":{
+                    "bcolor":{
+                        "type":"color",
+                        "text":"背景色",
+                        "default":"#393a3d"
+                    },
+                    "bopacity":{
+                        "type":"number",
+                        "text":"背景透明",
+                        "default":100
+                    }
+                }
+            },
+            "_3":{
+                "child":{
+                    "gbcolor":{
+                        "type":"color",
+                        "text":"底条色",
+                        "default":"#57595f"
+                    },
+                    "gbopacity":{
+                        "type":"number",
+                        "text":"底条透明",
+                        "default":100
+                    }
+                }
+            },
+            "_4":{
+                "child":{
+                    "vbcolor":{
+                        "type":"color",
+                        "text":"值条色",
+                        "default":"#21da9a"
+                    },
+                    "vbopacity":{
+                        "type":"number",
+                        "text":"值条透明",
+                        "default":100
+                    }
+                }
+            },
+            "_5":{
+                "child":{
+                    "width":{
+                        "type":"number",
+                        "text":"框宽度",
+                        "default":400
+                    },
+                    "height":{
+                        "type":"number",
+                        "text":"框高度",
+                        "default":76
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name":"index",
         "path":"progress/",
         "text":"简单进度环",
         "size":{"w":200,"h":200},
@@ -608,6 +708,20 @@
                     "jz":{
                         "type":"bool",
                         "text":"舰长提示",
+                        "default":true
+                    }
+                }
+            },
+            "_0001":{
+                "child":{
+                    "jzdm":{
+                        "type":"bool",
+                        "text":"舰长弹幕",
+                        "default":true
+                    },
+                    "sj":{
+                        "type":"bool",
+                        "text":"上舰提示",
                         "default":true
                     }
                 }

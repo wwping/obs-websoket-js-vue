@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 13:51:17
- * @LastEditTime: 2020-07-30 23:01:17
+ * @LastEditTime: 2020-07-31 17:02:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\store\index.js
@@ -28,7 +28,8 @@ const store = new Vuex.Store({
         transition_duration:0,
         sounds:[],
         my_plugins:JSON.parse(localStorage.getItem('my_plugins') || JSON.stringify({})),
-        fonts:JSON.parse(localStorage.getItem('fonts') || JSON.stringify([]))
+        fonts:JSON.parse(localStorage.getItem('fonts') || JSON.stringify([])),
+        tasks:JSON.parse(localStorage.getItem('tasks') || JSON.stringify({})),
     },
     getters: {
     },
@@ -63,6 +64,10 @@ const store = new Vuex.Store({
             }
             localStorage.setItem('fonts',JSON.stringify(state.fonts));
         },
+        tasks:(state,jsonVal)=>{
+            state.tasks[jsonVal.name] = jsonVal;
+            localStorage.setItem('tasks',JSON.stringify(state.tasks));
+        },
     },
     actions: {
         connecting:(context,boolVal) =>context.commit("connecting",boolVal),
@@ -79,6 +84,7 @@ const store = new Vuex.Store({
         my_plugins :(context,jsonVal) =>context.commit("my_plugins",jsonVal),
         del_plugin :(context,strVal) =>context.commit("del_plugin",strVal),
         fonts :(context,strVal) =>context.commit("fonts",strVal),
+        tasks :(context,jsonVal) =>context.commit("tasks",jsonVal),
         
     }
 });

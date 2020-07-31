@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:52
- * @LastEditTime: 2020-07-30 22:45:18
+ * @LastEditTime: 2020-07-31 16:26:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\zh.js
@@ -38,5 +38,7 @@ export default {
 
         'rerender':'显示刷新',
         'obsshutdown':'不可见时关闭源',
+
+        'tasks':'任务',
     }
 }

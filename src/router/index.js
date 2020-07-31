@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 13:39:46
- * @LastEditTime: 2020-07-28 16:26:34
+ * @LastEditTime: 2020-07-31 16:23:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\router\index.js
@@ -22,6 +22,11 @@ export default new Router({
         path: '/setting.html',
         name: 'Setting',
         component:  require('@/pages/Setting').default
+    },
+    {
+        path: '/tasks.html',
+        name: 'Tasks',
+        component:  require('@/pages/Tasks').default
     },
     {
         path: '/plugins.html',

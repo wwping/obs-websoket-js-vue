@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-30 21:47:00
- * @LastEditTime: 2020-08-01 00:41:24
+ * @LastEditTime: 2020-08-01 10:39:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\static\plugins\bilibili\js.js
@@ -51,8 +51,8 @@ const decode = function(blob){
                 let offset = 0;
                 while(offset < buffer.length){
                     let packetLen = readInt(buffer,offset + 0,4)
-                    let headerLen = 16// readInt(buffer,offset + 4,4)
-                    let data = buffer.slice(offset + headerLen, offset + packetLen);
+                    //let headerLen = 16// readInt(buffer,offset + 4,4)
+                    let data = buffer.slice(offset + result.headerLen, offset + packetLen);
 
                     /**
                      * 仅有两处更改
@@ -78,7 +78,12 @@ const decode = function(blob){
                                     try{
                                         result.body.push(JSON.parse(item));
                                     }catch(e){
-                                        result.body.push(JSON.parse(item.replace(/\]\}.{1,}\}$/g,']}}').replace(/\}\}.{1,}\}$/g,'}}}')));
+                                        
+                                        try{
+                                            result.body.push(JSON.parse(item.replace(/\]\}.{1,}\}$/,']}}').replace(/\}\}.{1,}\}$/,'}}')));
+                                        }catch(e){
+                                            console.log(item);
+                                        }
                                     }
                                     
                                 }

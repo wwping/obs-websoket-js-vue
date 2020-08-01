@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="../reset.css">
     <style type="text/css">
     /* body{background-color: rgba(0,0,0,0.5);} */
-    .wrap{position: absolute;background-color: rgba(0,0,0,0.5); left: 1px;top: 1px;right: 1px;bottom: 1px;box-sizing: border-box; overflow: hidden;color:#fff}
+    .wrap{position: absolute;background-color: rgba(0,0,0,0.5); left: 1px;top: 1px;right: 1px;bottom: 1px;box-sizing: border-box; overflow: auto;color:#fff}
+    .scroll2::-webkit-scrollbar {width: 1px;height: 1px;}
+.scroll2::-webkit-scrollbar-thumb {background: rgba(0,0,0,0);border-radius: 4px;}
     .wrap>h3{display: none; color:#fff;border-bottom: 1px solid #ddd;padding: 6px;font-size: 14px;text-shadow: 1px 1px 1px rgba(0,0,0,1);}
     ul{padding: 0 10px;}
-    li{padding: 10px 0; text-shadow: 1px 1px 1px rgba(0,0,0,1);white-space: nowrap; overflow: hidden;font-size: 20px;}
+    li{padding: 10px 0; text-shadow: 1px 1px 1px rgba(0,0,0,1); overflow: hidden;font-size: 20px;}
     span.uname{color:#b9b9b9;}
     span.level{font-size: 16px; border: 1px solid #9ac5ad;padding:0 4px;border-radius: 2px; color:#fbfbfb;display: inline-block;height: 20px;line-height: 20px;}
     span.pz{margin-right: 6px;background-color: #fff;color:#666;border-radius:4px 2px 2px 4px;padding: 2px 2px 2px 0px;text-shadow: none;}
@@ -26,8 +28,8 @@
 </head>
 <body>
     <div>
-        <div id="app">
-            <div class="wrap" :style="{'background-color':'rgba(0,0,0,'+(opacity/100)+')','border-color':bcolor?('1px solid #'+bcolor):'none'}">
+        <div id="app" >
+            <div class="wrap scroll2" ref="wrap" :style="{'background-color':'rgba(0,0,0,'+(opacity/100)+')','border-color':bcolor?('1px solid #'+bcolor):'none'}">
                 <h3 :style="{'border-bottom':bcolor?('1px solid rgba(255,255,255,'+(1-opacity/100)+')'):'none'}">房间号 : {{rid}}</h3>
                 <ul>
                     <li v-for="(item,index) in msgs" :key="index">
@@ -166,6 +168,11 @@
                 })
             },
             methods: {
+                scrollBottom () {
+                    this.$nextTick(() => {
+                        this.$refs.wrap.scrollTop = this.$refs.wrap.scrollHeight;
+                    })
+                },
                 onmessage(packet){
                     if(packet.op == 5){
                         let body = packet.body;
@@ -292,6 +299,7 @@
                             if(this.msgs.length > row){
                                 this.msgs.splice(0,1);
                             }
+                            this.scrollBottom();
                         }
                     }else if(packet.op == 3){
                         this.renqi = packet.body.count;

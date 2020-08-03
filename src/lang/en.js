@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:46
- * @LastEditTime: 2020-07-31 16:26:11
+ * @LastEditTime: 2020-08-03 20:02:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\en.js
@@ -38,8 +38,42 @@ export default {
         'myPlugin':'my plugin',
 
         'rerender':'re render',
-        'obsshutdown':'obs obsshutdown',
+        'obsshutdown':'obs shutdown',
 
         'tasks':'tasks',
+
+        'newTask':'new task',
+        'saveTask':'save task',
+        'taskName':'task name',
+        'excuteTask':'excute task',
+
+        'saveSuccess':'save success'
+    },
+    'blockly':{
+        'whenRun':'when run',
+        'repeat':'repeat',
+        'times':'times',
+        'delay':'delay',
+        'pleaseSelect':'please select',
+        'changeTransitionTo':'set transition',
+        'changeTransitionDurationTo':'set transition duration to',
+        'set':'set to',
+        'to':'to',
+        'scene':'scene',
+        'source':'source',
+        'sound':'sound',
+        'hidden':'hidden',
+        'show':'show',
+        'lock':'lock',
+        'unlock':'unlock',
+        'muted':'muted',
+        'unmuted':'unmuted',
+        'startRecord':'start record',
+        'stopRecord':'stop record',
+        'pauseRecord':'pause record',
+        'resumeRecord':'resume record',
+
+        'control':'control',
+        'record':'record',
     }
 }

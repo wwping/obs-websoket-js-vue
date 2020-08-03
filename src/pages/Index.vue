@@ -22,8 +22,6 @@
 <script>
 import Manager from '../components/index/Manager'
 import Preview from '../components/index/Preview'
-// import axios from 'axios'
-// import pako from 'pako'
 export default {
     name: 'Index',
     components: { Manager, Preview },

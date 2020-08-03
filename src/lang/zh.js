@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:52
- * @LastEditTime: 2020-07-31 16:26:04
+ * @LastEditTime: 2020-08-03 19:59:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\zh.js
@@ -40,5 +40,39 @@ export default {
         'obsshutdown':'不可见时关闭源',
 
         'tasks':'任务',
+
+        'newTask':'新任务',
+        'saveTask':'保存任务',
+        'taskName':'任务名称',
+        'excuteTask':'执行任务',
+
+        'saveSuccess':'保存成功'
+    },
+    'blockly':{
+        'whenRun':'当运行时',
+        'repeat':'重复',
+        'times':'次',
+        'delay':'延迟',
+        'pleaseSelect':'请选择',
+        'changeTransitionTo':'设置转场特效',
+        'changeTransitionDurationTo':'设置转场时长',
+        'set':'设为',
+        'to':'为',
+        'scene':'场景',
+        'source':'来源',
+        'sound':'声音',
+        'hidden':'隐藏',
+        'show':'显示',
+        'lock':'锁定',
+        'unlock':'未锁定',
+        'muted':'静音',
+        'unmuted':'未静音',
+        'startRecord':'开始录制',
+        'stopRecord':'停止录制',
+        'pauseRecord':'暂停录制',
+        'resumeRecord':'恢复录制',
+
+        'control':'控制',
+        'record':'录制',
     }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 13:51:17
- * @LastEditTime: 2020-07-31 17:02:16
+ * @LastEditTime: 2020-08-03 15:22:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\store\index.js
@@ -30,8 +30,14 @@ const store = new Vuex.Store({
         my_plugins:JSON.parse(localStorage.getItem('my_plugins') || JSON.stringify({})),
         fonts:JSON.parse(localStorage.getItem('fonts') || JSON.stringify([])),
         tasks:JSON.parse(localStorage.getItem('tasks') || JSON.stringify({})),
+        opens:JSON.parse(localStorage.getItem('opens') || JSON.stringify({})),
+        special_sources:[],
+        audio_types:[],
     },
     getters: {
+        transitionDuration:(state)=>()=>{
+            return state.transition_duration;
+        }
     },
     mutations: {
         connecting:(state,boolVal) =>state.connecting = boolVal,
@@ -62,12 +68,20 @@ const store = new Vuex.Store({
             if(state.fonts.indexOf(strVal) == -1){
                 state.fonts.push(strVal);
             }
+            state.fonts = JSON.parse(JSON.stringify(state.fonts));
             localStorage.setItem('fonts',JSON.stringify(state.fonts));
         },
         tasks:(state,jsonVal)=>{
             state.tasks[jsonVal.name] = jsonVal;
             localStorage.setItem('tasks',JSON.stringify(state.tasks));
         },
+        opens:(state,jsonVal)=>{
+            state.opens[jsonVal.name] = jsonVal.val;
+            state.opens = JSON.parse(JSON.stringify(state.opens));
+            localStorage.setItem('opens',JSON.stringify(state.opens));
+        },
+        special_sources:(state,arrayVal)=>state.special_sources = JSON.parse(JSON.stringify(arrayVal)),
+        audio_types:(state,arrayVal)=>state.audio_types = JSON.parse(JSON.stringify(arrayVal)),
     },
     actions: {
         connecting:(context,boolVal) =>context.commit("connecting",boolVal),
@@ -85,6 +99,9 @@ const store = new Vuex.Store({
         del_plugin :(context,strVal) =>context.commit("del_plugin",strVal),
         fonts :(context,strVal) =>context.commit("fonts",strVal),
         tasks :(context,jsonVal) =>context.commit("tasks",jsonVal),
+        opens :(context,jsonVal) =>context.commit("opens",jsonVal),
+        special_sources :(context,arrayVal) =>context.commit("special_sources",arrayVal),
+        audio_types :(context,arrayVal) =>context.commit("audio_types",arrayVal),
         
     }
 });

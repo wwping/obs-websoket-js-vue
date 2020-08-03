@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:27:20
- * @LastEditTime: 2020-07-27 13:35:15
+ * @LastEditTime: 2020-08-03 15:23:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Connect.vue
@@ -144,12 +144,15 @@ export default {
                                 _audios.push(data[j]);
                             }
                         }
+                        this.$store.dispatch('special_sources',_audios);
 
                         this.command({
                             cmd: 'GetSourceTypesList',
                             callback: (data) => {
                                 if (data.status == 'ok') {
                                     let types = data.types.filter(c => c.caps.hasAudio == true).map(c => c.typeId);
+                                    this.$store.dispatch('audio_types',types);
+
 
                                     let currentSources = this.scenes.filter(c => c.name == this.current_scene)[0];
                                     let allAudios = currentSources.sources.filter(c => types.indexOf(c.type) >= 0 && c.render == true).map(c => c.name);

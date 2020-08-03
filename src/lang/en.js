@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:46
- * @LastEditTime: 2020-08-03 20:02:14
+ * @LastEditTime: 2020-08-03 20:29:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\en.js
@@ -55,9 +55,10 @@ export default {
         'times':'times',
         'delay':'delay',
         'pleaseSelect':'please select',
-        'changeTransitionTo':'set transition',
-        'changeTransitionDurationTo':'set transition duration to',
-        'set':'set to',
+        'changeTransitionTo':'transition set to',
+        'changeTransitionDurationTo':'transition duration set to',
+        'set':'set',
+        'set2':'set to',
         'to':'to',
         'scene':'scene',
         'source':'source',
@@ -66,6 +67,7 @@ export default {
         'show':'show',
         'lock':'lock',
         'unlock':'unlock',
+        'volume':'volume',
         'muted':'muted',
         'unmuted':'unmuted',
         'startRecord':'start record',

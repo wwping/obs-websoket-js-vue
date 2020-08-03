@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:52
- * @LastEditTime: 2020-08-03 19:59:41
+ * @LastEditTime: 2020-08-03 20:26:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\zh.js
@@ -56,7 +56,8 @@ export default {
         'pleaseSelect':'请选择',
         'changeTransitionTo':'设置转场特效',
         'changeTransitionDurationTo':'设置转场时长',
-        'set':'设为',
+        'set':'设',
+        'set2':'设为',
         'to':'为',
         'scene':'场景',
         'source':'来源',
@@ -65,6 +66,7 @@ export default {
         'show':'显示',
         'lock':'锁定',
         'unlock':'未锁定',
+        'volume':'音量',
         'muted':'静音',
         'unmuted':'未静音',
         'startRecord':'开始录制',

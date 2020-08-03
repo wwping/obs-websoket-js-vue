@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-03 13:14:01
- * @LastEditTime: 2020-08-03 20:15:34
+ * @LastEditTime: 2020-08-03 20:27:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\tasks\blocks.js
@@ -78,7 +78,7 @@ Blockly.Blocks['changeScene'] = {
         }
 
         this.appendDummyInput()
-            .appendField(`${i18n.t('blockly.set')}  ${i18n.t('blockly.scene')} ${i18n.t('blockly.to')}`)
+            .appendField(`${i18n.t('blockly.scene')} ${i18n.t('blockly.set2')}`)
             .appendField(new Blockly.FieldDropdown(options), "scene");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -153,7 +153,7 @@ Blockly.Blocks['sourceVisible'] = {
             .appendField(new Blockly.FieldDropdown(()=>{
                 return sourceVisible_sources;
             }), "source")
-            .appendField(i18n.t('blockly.set'))
+            .appendField(i18n.t('blockly.set2'))
             .appendField(new Blockly.FieldDropdown([[i18n.t('blockly.hidden'), "hidden"], [i18n.t('blockly.show'), "show"],[i18n.t('blockly.lock'), "lock"], [i18n.t('blockly.unlock'), "unlock"]]), "visible");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -199,7 +199,7 @@ Blockly.Blocks['sourceMuted'] = {
             .appendField(new Blockly.FieldDropdown(()=>{
                 return sourceVisible_sounds;
             }), "sound")
-            .appendField(i18n.t('blockly.set'))
+            .appendField(i18n.t('blockly.set2'))
             .appendField(new Blockly.FieldDropdown([[i18n.t('blockly.muted'), "1"], [i18n.t('blockly.unmuted'), "0"]]), "unmuted");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -225,7 +225,8 @@ Blockly.Blocks['sourceVolume'] = {
             .appendField(new Blockly.FieldDropdown(()=>{
                 return sourceVisible_sounds;
             }), "sound")
-            .appendField(i18n.t('blockly.set'))
+            .appendField(i18n.t('blockly.volume'))
+            .appendField(i18n.t('blockly.set2'))
             .appendField(new Blockly.FieldNumber(0.5, 0, 99999), "volume");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);

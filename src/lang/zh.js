@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:52
- * @LastEditTime: 2020-08-03 20:26:31
+ * @LastEditTime: 2020-08-03 20:32:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\zh.js
@@ -54,8 +54,8 @@ export default {
         'times':'次',
         'delay':'延迟',
         'pleaseSelect':'请选择',
-        'changeTransitionTo':'设置转场特效',
-        'changeTransitionDurationTo':'设置转场时长',
+        'changeTransitionTo':'转场特效设置为',
+        'changeTransitionDurationTo':'转场时长设置为',
         'set':'设',
         'set2':'设为',
         'to':'为',

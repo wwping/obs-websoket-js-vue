@@ -1,81 +1,82 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:46
- * @LastEditTime: 2020-08-03 20:29:15
+ * @LastEditTime: 2020-08-04 12:21:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\en.js
  */
 export default {
     'df': {
-        'unconnecting':'not connect',
-        'connecting':'connected',
-        'connect':'connect',
-        'unconnect':'disconnect',
-        'address':'address',
-        'port':'port',
-        'secret':'password',
+        'unconnecting': 'not connect',
+        'connecting': 'connected',
+        'connect': 'connect',
+        'unconnect': 'disconnect',
+        'address': 'address',
+        'port': 'port',
+        'secret': 'password',
 
-        'scenes':'scenes',
-        'sources':'sources',
-        'sounds':'sounds',
-        'transtions':'transtions',
-        'controls':'controls',
+        'scenes': 'scenes',
+        'sources': 'sources',
+        'sounds': 'sounds',
+        'transtions': 'transtions',
+        'controls': 'controls',
 
-        'startStream':'start stream',
-        'stopStream':'stop stream',
-        'startRecord':'start record',
-        'stopRecord':'stop record',
-        'pauseRecord':'pause record',
-        'resumeRecord':'resume record',
-        
+        'startStream': 'start stream',
+        'stopStream': 'stop stream',
+        'startRecord': 'start record',
+        'stopRecord': 'stop record',
+        'pauseRecord': 'pause record',
+        'resumeRecord': 'resume record',
 
-        'manager':'view',
-        'connectSetting':'connect setting',
-        'save':'save',
 
-        'pluginStore':'plugin store',
-        'myPlugin':'my plugin',
+        'manager': 'view',
+        'connectSetting': 'connect setting',
+        'save': 'save',
 
-        'rerender':'re render',
-        'obsshutdown':'obs shutdown',
+        'pluginStore': 'plugin store',
+        'myPlugin': 'my plugin',
 
-        'tasks':'tasks',
+        'rerender': 're render',
+        'obsshutdown': 'obs shutdown',
 
-        'newTask':'new task',
-        'saveTask':'save task',
-        'taskName':'task name',
-        'excuteTask':'excute task',
+        'tasks': 'tasks',
 
-        'saveSuccess':'save success'
+        'newTask': 'new task',
+        'saveTask': 'save task',
+        'taskName': 'task name',
+        'excuteTask': 'excute task',
+
+        'saveSuccess': 'save success',
+        'confirmDel': 'delete ？'
     },
-    'blockly':{
-        'whenRun':'when run',
-        'repeat':'repeat',
-        'times':'times',
-        'delay':'delay',
-        'pleaseSelect':'please select',
-        'changeTransitionTo':'transition set to',
-        'changeTransitionDurationTo':'transition duration set to',
-        'set':'set',
-        'set2':'set to',
-        'to':'to',
-        'scene':'scene',
-        'source':'source',
-        'sound':'sound',
-        'hidden':'hidden',
-        'show':'show',
-        'lock':'lock',
-        'unlock':'unlock',
-        'volume':'volume',
-        'muted':'muted',
-        'unmuted':'unmuted',
-        'startRecord':'start record',
-        'stopRecord':'stop record',
-        'pauseRecord':'pause record',
-        'resumeRecord':'resume record',
+    'blockly': {
+        'whenRun': 'when run',
+        'repeat': 'repeat',
+        'times': 'times',
+        'delay': 'delay',
+        'pleaseSelect': 'please select',
+        'changeTransitionTo': 'transition set to',
+        'changeTransitionDurationTo': 'transition duration set to',
+        'set': 'set',
+        'set2': 'set to',
+        'to': 'to',
+        'scene': 'scene',
+        'source': 'source',
+        'sound': 'sound',
+        'hidden': 'hidden',
+        'show': 'show',
+        'lock': 'lock',
+        'unlock': 'unlock',
+        'volume': 'volume',
+        'muted': 'muted',
+        'unmuted': 'unmuted',
+        'startRecord': 'start record',
+        'stopRecord': 'stop record',
+        'pauseRecord': 'pause record',
+        'resumeRecord': 'resume record',
 
-        'control':'control',
-        'record':'record',
+        'control': 'control',
+        'record': 'record',
     }
 }

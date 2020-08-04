@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:27:20
- * @LastEditTime: 2020-08-03 15:23:48
+ * @LastEditTime: 2020-08-03 23:24:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Connect.vue
@@ -28,8 +28,8 @@ export default {
             current_scene: state => state.current_scene,
         }),
     },
-    watch:{
-        connecting(val){
+    watch: {
+        connecting (val) {
             this.updateSources();
         }
     },
@@ -51,24 +51,23 @@ export default {
         });
 
         //listener events to update sources
-        let updateEvenets = [
-            'SwitchScenes','ScenesChanged'
+        [
+            'SwitchScenes', 'ScenesChanged'
             , 'SceneCollectionChanged', 'SceneCollectionListChanged'
             , 'TransitionListChanged', 'TransitionDurationChanged'
             , 'ProfileChanged', 'ProfileListChanged'
-            , 'StreamStarted' , 'StreamStopped', 'StreamStatus'
+            , 'StreamStarted', 'StreamStopped', 'StreamStatus'
             , 'RecordingStarted', 'RecordingStopped', 'RecordingPaused', 'RecordingResumed'
             , 'ReplayStarted', 'ReplayStopped'
             , 'SourceCreated', 'SourceDestroyed', 'SourceVolumeChanged', 'SourceMuteStateChanged'
-            , 'SourceAudioActivated', 'SourceAudioDeactivated' , 'SourceAudioActivated', 'SourceAudioSyncOffsetChanged', 'SourceAudioMixersChanged'
+            , 'SourceAudioActivated', 'SourceAudioDeactivated', 'SourceAudioActivated', 'SourceAudioSyncOffsetChanged', 'SourceAudioMixersChanged'
             , 'SourceRenamed', 'SourceFilterAdded', 'SourceFilterRemoved', 'SourceFilterVisibilityChanged', 'SourceFiltersReordered'
             , 'MediaPaused', 'MediaStopped', 'MediaNext', 'MediaPrevious', 'MediaStarted', 'MediaEnded'
             , 'SourceOrderChanged', 'SceneItemAdded', 'SceneItemRemoved', 'SceneItemVisibilityChanged', 'SceneItemLockChanged'
-            , 'SceneItemTransformChanged', 'SceneItemSelected' , 'SceneItemDeselected'
+            , 'SceneItemTransformChanged', 'SceneItemSelected', 'SceneItemDeselected'
             , 'PreviewSceneChanged', 'StudioModeSwitched'
-        ];
-        updateEvenets.map(c=>{
-            this.obs.on(c,()=>{
+        ].map(c => {
+            this.obs.on(c, () => {
                 this.updateSources();
             })
         })
@@ -87,7 +86,7 @@ export default {
                 this.success();
             }).catch(() => {
                 this.error();
-                setTimeout(this.connect,1000);
+                setTimeout(this.connect, 1000);
             });
         },
         disconnect () {
@@ -101,7 +100,7 @@ export default {
         },
         error () { this.setConnecting(false) },
         close () { this.setConnecting(false) },
-        exiting () { this.setConnecting(false);},
+        exiting () { this.setConnecting(false); },
 
         //scenes
         setCurrentScene (name) {
@@ -144,14 +143,14 @@ export default {
                                 _audios.push(data[j]);
                             }
                         }
-                        this.$store.dispatch('special_sources',_audios);
+                        this.$store.dispatch('special_sources', _audios);
 
                         this.command({
                             cmd: 'GetSourceTypesList',
                             callback: (data) => {
                                 if (data.status == 'ok') {
                                     let types = data.types.filter(c => c.caps.hasAudio == true).map(c => c.typeId);
-                                    this.$store.dispatch('audio_types',types);
+                                    this.$store.dispatch('audio_types', types);
 
 
                                     let currentSources = this.scenes.filter(c => c.name == this.current_scene)[0];
@@ -162,7 +161,7 @@ export default {
                                         return new Promise((a, b) => {
                                             this.command({
                                                 cmd: 'GetVolume',
-                                                params: { source: c,useDecibel:true },
+                                                params: { source: c, useDecibel: true },
                                                 callback: (data) => {
                                                     if (data.status == 'ok') {
                                                         a(data);
@@ -182,13 +181,13 @@ export default {
                                             }
                                         }))
                                     })
-                                }else{
-                                    this.$store.dispatch('sounds',[]);
+                                } else {
+                                    this.$store.dispatch('sounds', []);
                                 }
                             }
                         })
-                    }else{
-                        this.$store.dispatch('sounds',[]);
+                    } else {
+                        this.$store.dispatch('sounds', []);
                     }
                 }
             });
@@ -222,17 +221,17 @@ export default {
         setStreaming (boolVal) { this.$store.dispatch('streaming', boolVal) },
         streamStarted () { this.setStreaming(true) },
         streamStopped () { this.setStreaming(false) },
-        getStreamingStatus(){
+        getStreamingStatus () {
             this.command({
-                cmd:'GetStreamingStatus',
-                callback:(data)=>{
-                    if(data.status == 'ok'){
+                cmd: 'GetStreamingStatus',
+                callback: (data) => {
+                    if (data.status == 'ok') {
                         this.setStreaming(data.streaming);
                     }
                 }
             })
         },
-        
+
         //record
         setRecording (boolVal) { this.$store.dispatch('recording', boolVal) },
         setRecordingPause (boolVal) { this.$store.dispatch('record_paused', boolVal) },
@@ -240,11 +239,11 @@ export default {
         recordingStopped () { this.setRecording(false) },
         recordingPaused () { this.setRecordingPause(true) },
         recordingResumed () { this.setRecordingPause(false) },
-        getRecordStatus(){
+        getRecordStatus () {
             this.command({
-                cmd:'GetRecordingStatus',
-                callback:(data)=>{
-                    if(data.status == 'ok'){
+                cmd: 'GetRecordingStatus',
+                callback: (data) => {
+                    if (data.status == 'ok') {
                         this.setRecording(data.isRecording);
                         this.setRecordingPause(data.isRecordingPaused);
                     }

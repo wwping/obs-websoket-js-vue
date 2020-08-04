@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 14:06:43
- * @LastEditTime: 2020-07-28 17:21:09
+ * @LastEditTime: 2020-08-03 23:21:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Title.vue
@@ -9,19 +9,31 @@
 <template>
     <div class="wrap-title flex-display">
         <div>
-            <div class="status" :class="{connecting:connecting}">
-                <span><Icon type="ios-infinite" size="16" /></span>
+            <div class="status"
+                 :class="{connecting:connecting}">
+                <span>
+                    <Icon type="ios-infinite"
+                          size="16" /></span>
                 <span>{{connectText}}</span>
                 <span class="status-btn">
-                    <a class="error" v-if="connecting" @click="disconnect">{{$t('df.unconnect')}}</a>
-                    <a href="javascript:;" v-else @click="connect">{{$t('df.connect')}}</a>
+                    <a class="error"
+                       v-if="connecting"
+                       @click="disconnect">{{$t('df.unconnect')}}</a>
+                    <a href="javascript:;"
+                       v-else
+                       @click="connect">{{$t('df.connect')}}</a>
                 </span>
             </div>
         </div>
         <div class="flex-1"></div>
         <div>
-            <Select v-model="language" style="width:auto;position:relative; z-index:99999" size="small" @on-change="languageChange">
-                <Option v-for="item in languages" :value="item.name" :key="item.name">{{ item.txt }}</Option>
+            <Select v-model="language"
+                    style="width:auto;position:relative; z-index:99999"
+                    size="small"
+                    @on-change="languageChange">
+                <Option v-for="item in languages"
+                        :value="item.name"
+                        :key="item.name">{{ item.txt }}</Option>
             </Select>
         </div>
     </div>
@@ -30,35 +42,35 @@
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import msgSubPusher from '../lib/msgSubPusher'
 export default {
-    name:'Title',
-    data(){
+    name: 'Title',
+    data () {
         return {
-            language:localStorage.getItem('local') || 'zh',
-            languages:[
-                {name:'en',txt:'English'},
-                {name:'zh',txt:'简体中文'},
+            language: localStorage.getItem('local') || 'zh',
+            languages: [
+                { name: 'en', txt: 'English' },
+                { name: 'zh', txt: '简体中文' },
             ],
         }
     },
-    computed:{
-        connectText:function(){
-            return this.connecting?this.$t("df.connecting"):this.$t("df.unconnecting")
+    computed: {
+        connectText: function () {
+            return this.connecting ? this.$t("df.connecting") : this.$t("df.unconnecting")
         },
         ...mapState({
-            connecting:state => state.connecting,
+            connecting: state => state.connecting,
         })
     },
-    mounted(){
+    mounted () {
     },
-    methods:{
-        connect(){
+    methods: {
+        connect () {
             msgSubPusher.push('obs-connect')
         },
-        disconnect(){
+        disconnect () {
             msgSubPusher.push('obs-disconnect')
         },
-        languageChange(val){
-            localStorage.setItem('local',val);
+        languageChange (val) {
+            localStorage.setItem('local', val);
             window.location.reload();
         }
     }

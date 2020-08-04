@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-27 22:39:41
- * @LastEditTime: 2020-07-28 17:24:12
+ * @LastEditTime: 2020-08-04 00:26:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Plugins.vue
@@ -13,7 +13,8 @@
                 <div slot="left">
                     <ul class="flex-display">
                         <li v-for="(item,index) in pluginsPage"
-                            :key="index" @click="select(item)">
+                            :key="index"
+                            @click="select(item)">
                             <dl>
                                 <dt>
                                     <img :src="path + item.path + item.preview">
@@ -50,10 +51,10 @@ export default {
             pageSize: 6,
             split: 0.6,
             path: './static/plugins/',
-            info:''
+            info: ''
         }
     },
-    components:{Setting},
+    components: { Setting },
     computed: {
         pluginsPage () {
             let min = (this.pageIndex - 1) * this.pageSize;
@@ -64,13 +65,13 @@ export default {
     mounted () {
         axios.get(`${this.path}config.json`).then((res) => {
             this.plugins = res.data || [];
-            if(this.plugins.length > 0){
+            if (this.plugins.length > 0) {
                 this.select(this.plugins[0])
             }
         });
     },
-    methods:{
-        select(item){
+    methods: {
+        select (item) {
             this.info = JSON.stringify(item);
         }
     }

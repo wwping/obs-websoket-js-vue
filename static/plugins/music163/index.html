@@ -1,0 +1,619 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-04 22:21:47
+ * @LastEditTime: 2020-08-05 16:49:11
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \obs\static\plugins\music163\index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网易云歌单音乐</title>
+    <link rel="stylesheet" href="../reset.css" />
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+        }
+
+        .wrap {
+            border: 1px solid #fff;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+        div.icon {
+            width: 20px;
+            height: 20px;
+            text-align: right;
+            opacity: .8;
+        }
+
+        .icon-right {
+            transform: rotate(180deg);
+        }
+
+        .info {
+            margin-left: 114px;
+        }
+
+        .play-icon {
+            width: 95px;
+            height: 95px;
+            position: absolute;
+            left: 10px;
+        }
+
+        .icon-rotate {
+            width: 95px;
+            height: 95px;
+        }
+
+        .icon-rotate img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .icon-rotate.rotate {
+            animation: icon 5s infinite linear;
+        }
+
+        .play-icon .icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            opacity: .8;
+        }
+
+        .name {
+            font-size: 20px;
+            text-align: center;
+            padding-top: 6px;
+            overflow: hidden;
+
+        }
+
+        .name>div {
+            white-space: nowrap;
+            /* overflow: hidden; */
+            width: 100%;
+        }
+
+        .control {
+            margin-top: 10px;
+        }
+
+        .control .icon {
+            margin-left: 10px;
+        }
+
+        .lyric {
+            line-height: 22px;
+            font-size: 14px;
+            margin-top: 10px;
+            width: 100%;
+            min-height: 22px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .music-wrap {
+            flex-wrap: nowrap;
+        }
+
+        @keyframes icon {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+
+
+
+        .progress {
+            padding-top: 13px;
+        }
+
+        .progress .inner {
+            height: 4px;
+            border-radius: 4px;
+            /* background-color: rgba(0, 0, 0, 0.2); */
+            background-color: #eee;
+            position: relative;
+        }
+
+        .progress .inner .value {
+            height: 4px;
+            border-radius: 4px;
+            width: 50%;
+            background-color: #50ce50;
+            position: relative;
+        }
+
+        .progress .inner .value::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            box-sizing: border-box;
+            border: 2px solid #50ce50;
+            border-radius: 50%;
+            position: absolute;
+            right: 0%;
+            top: -3px;
+            background-color: #fff;
+        }
+
+        .time {
+            padding-top: 6px;
+            margin-left: 6px;
+        }
+
+        .volume {
+            font-size: 14px;
+            margin: 0 20px;
+            line-height: 24px;
+        }
+
+        .volume .down,
+        .volume .up {
+            font-size: 20px;
+        }
+
+        .volume .val {
+            margin: 0 10px;
+        }
+
+        .wrap:hover .progress {
+            display: block;
+        }
+
+        .pn,
+        .ptype {
+            padding-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <audio src="" id="music"></audio>
+        <div class="wrap"
+            :style="{'border-color':'rgba('+bcolor.join(',')+')','border-width':bwidth,'background-color':'rgba('+bcolor1.join(',')+')','border-radius':bradius}">
+            <div class="music-wrap">
+                <div class="play-icon" @click="play" @dblclick="reset">
+                    <div class="icon-rotate" :class="{rotate:playing}">
+                        <img :src="current.pic" alt="">
+                    </div>
+                    <!-- 播放 -->
+                    <div class="icon" v-if="!playing">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-8 0 32 32">
+                            <path fill="#fff"
+                                d="M15.552 15.168q0.448 0.32 0.448 0.832 0 0.448-0.448 0.768l-13.696 8.512q-0.768 0.512-1.312 0.192t-0.544-1.28v-16.448q0-0.96 0.544-1.28t1.312 0.192z">
+                            </path>
+                        </svg>
+                    </div>
+                    <!-- 暂停 -->
+                    <div class="icon" v-if="playing">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-8 0 32 32">
+                            <path fill="#fff"
+                                d="M14.080 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048zM2.88 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="name" id="name-wrap"
+                        :style="{'font-family':fontFamily,color:fontColor1,'font-size':fontSize1}">
+                        <div :style="{transform: 'translateX('+nameSroll.x+'px)'}">
+                            <span id="name-scroll">{{current.title}} -
+                                {{current.author}}</span>
+                        </div>
+                    </div>
+                    <div class="lyric">
+                        <span
+                            :style="{'font-family':fontFamily,color:fontColor2,'font-size':fontSize2}">{{lrcText}}</span>
+                    </div>
+                    <div class="control flex-display" v-if="control">
+                        <div class="progress flex-1" v-if="showControl.progress">
+                            <div class="inner">
+                                <div class="value" :style="{width:currentTimeValue + '%'}"></div>
+                            </div>
+                        </div>
+                        <span class="time" v-if="showControl.progress">{{timeStr}}</span>
+                        <div class="volume" v-if="showControl.control">
+                            <span class="down" @click="downVolume">-</span>
+                            <span class="val">{{volume}}</span>
+                            <span class="up" @click="upVolume">+</span>
+                        </div>
+                        <div class="ptype">
+                            <div class="icon" v-if="ptype == '顺序播放'" @click="changePType('随机播放')">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+                                    <path fill="#fff"
+                                        d="M0.622 18.334h19.54v7.55l11.052-9.412-11.052-9.413v7.549h-19.54v3.725z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="icon" v-else @click="changePType('顺序播放')">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+                                    <path fill="#fff"
+                                        d="M22.667 4l7 6-7 6 7 6-7 6v-4h-3.653l-3.76-3.76 2.827-2.827 2.587 2.587h2v-8h-2l-12 12h-6v-4h4.347l12-12h3.653v-4zM2.667 8h6l3.76 3.76-2.827 2.827-2.587-2.587h-4.347v-4z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="pn flex-display" v-if="showControl.control">
+                            <div class="icon" @click="prev">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+                                    <path fill="#fff"
+                                        d="M25.468 6.947c-0.326-0.172-0.724-0.151-1.030 0.057l-6.438 4.38v-3.553c0-0.371-0.205-0.71-0.532-0.884-0.326-0.172-0.724-0.151-1.030 0.057l-12 8.164c-0.274 0.186-0.438 0.496-0.438 0.827s0.164 0.641 0.438 0.827l12 8.168c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-3.556l6.438 4.382c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-16.333c0-0.371-0.205-0.71-0.532-0.884z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="icon icon-right" @click="next">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+                                    <path fill="#fff"
+                                        d="M25.468 6.947c-0.326-0.172-0.724-0.151-1.030 0.057l-6.438 4.38v-3.553c0-0.371-0.205-0.71-0.532-0.884-0.326-0.172-0.724-0.151-1.030 0.057l-12 8.164c-0.274 0.186-0.438 0.496-0.438 0.827s0.164 0.641 0.438 0.827l12 8.168c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-3.556l6.438 4.382c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-16.333c0-0.371-0.205-0.71-0.532-0.884z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js.js"></script>
+    <script src="../axios.min.js"></script>
+    <script src="../obs-websocket.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+
+        let id = getParam('id') || '5155012212';
+        let ptype = getParam('ptype') || '顺序播放';
+        let mtype = getParam('mtype') || '网易云音乐';
+
+        let volume = Number(getParam('volume') || 0.5);
+
+
+        let namescroll = (getParam('namescroll') || 'true') == 'true';
+
+
+        let autoplay = (getParam('autoplay') || 'true') == 'true';
+        let iscontrol = (getParam('control') || 'true') == 'true';
+        let isprogress = (getParam('progress') || 'true') == 'true';
+
+        let bcolor = '#' + (getParam('bcolor') || 'fff');
+        let bopacity = Number(getParam('bopacity') || '100');
+        bcolor = bcolor.hex2rgb();
+        bcolor.push(bopacity / 100);
+
+        let bwidth = (getParam('bwidth') || '1') + 'px';
+        let bradius = (getParam('bradius') || '4') + 'px';
+
+        let bcolor1 = '#' + (getParam('bcolor1') || '000');
+        let bopacity1 = Number(getParam('bopacity1') || '20');
+        bcolor1 = bcolor1.hex2rgb();
+        bcolor1.push(bopacity1 / 100);
+
+        let fontFamily = getParam('fontfamily') || '微软雅黑';
+        let fontColor1 = '#' + (getParam('fontcolor1') || 'fff');
+        let fontColor2 = '#' + (getParam('fontcolor2') || 'fff');
+        let fontSize1 = (getParam('fontsize1') || '20') + 'px';
+        let fontSize2 = (getParam('fontsize2') || '14') + 'px';
+
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    list: [],
+                    currentIndex: 0,
+                    control: true,
+                    playing: false,
+                    music: null,
+                    clickTimer: 0,
+                    timeStr: '00:00 / 00:00',
+                    currentTimeValue: 0,
+                    lrcArr: [],
+                    lrcText: '歌词显示',
+                    volume: volume,
+
+                    id: id,
+                    showControl: {
+                        control: iscontrol,
+                        progress: isprogress
+                    },
+                    fontFamily: fontFamily,
+                    fontColor1: fontColor1,
+                    fontColor2: fontColor2,
+                    fontSize1: fontSize1,
+                    fontSize2: fontSize2,
+
+                    bcolor: bcolor,
+                    bwidth: bwidth,
+                    bradius: bradius,
+
+                    bcolor1: bcolor1,
+                    ptype: ptype,
+                    mtype: mtype,
+
+                    nameSroll: {
+                        nameWidth: 0,
+                        wrapWidth: 0,
+                        timer: 0,
+                        x: 0,
+                        scroll: namescroll
+                    }
+                }
+            },
+            computed: {
+                current() {
+                    return this.list[this.currentIndex] || { title: '', author: '', pic: '' };
+                }
+            },
+            mounted() {
+                this.music = document.getElementById('music');
+                this.music.ontimeupdate = this.timeStrInterval;
+                this.music.oncanplay = (e) => {
+                    if (autoplay) {
+                        this.music.volume = this.volume;
+                        this.music.play();
+                        this.playing = true;
+                    }
+                };
+                this.getList();
+
+
+                let host = getParam('address');
+                let port = getParam('port');
+                let secret = getParam('secret');
+                let source = getParam('obssource');
+
+                var obs = new OBSWebSocket();
+                obs.connect({ address: `${host}:${port}`, password: secret }).then(() => {
+                }).catch(() => {
+                });
+                obs.on('BroadcastCustomMessage', (data) => {
+                    if (data.realm == 'plugin-set-' + source) {
+
+                        this.id = data.data.id
+                        if (data.data.id != this.id) {
+                            this.id = data.data.id;
+                            this.getList();
+                        }
+                        // this.$set(this.showControl, 'control', data.data.control)
+                        this.$set(this.showControl, 'progress', data.data.progress)
+                        this.$set(this.nameSroll, 'scroll', data.data.namescroll);
+
+                        this.fontFamily = data.data.fontfamily
+
+                        this.fontColor1 = data.data.fontcolor1;
+                        this.fontSize1 = data.data.fontsize1 + 'px';
+                        this.fontColor2 = data.data.fontcolor2
+                        this.fontSize2 = data.data.fontsize2 + 'px';
+
+                        let bcolor = data.data.bcolor
+                        bcolor = bcolor.hex2rgb();
+                        bcolor.push(data.data.bopacity / 100);
+                        this.bcolor = bcolor;
+                        this.bwidth = data.data.bwidth + 'px';
+                        this.bradius = data.data.bradius + 'px';
+
+                        let bcolor1 = data.data.bcolor1
+                        bcolor1 = bcolor1.hex2rgb();
+                        bcolor1.push(data.data.bopacity1 / 100);
+                        this.bcolor1 = bcolor1;
+
+                        this.ptype = data.data.ptype
+                        this.mtype = data.data.mtype
+
+                        this.volume = data.data.volume;
+                        this.music.volume = this.volume;
+                    }
+                });
+
+            },
+            methods: {
+                reload() {
+                    if (!this.list[this.currentIndex].url) {
+                        axios.get(this.list[this.currentIndex]._url).then((res) => {
+                            this.list[this.currentIndex].url = res.data.data[0];
+                            this.reload();
+                        })
+                    } else {
+                        this.music.src = this.list[this.currentIndex].url;
+                        axios.get(this.current.lrc).then((res) => {
+                            let result = [];
+
+                            let arr = res.data.split('\n');
+                            for (let i = 0; i < arr.length; i++) {
+                                let item = arr[i];
+                                if (/^\[[0-9\.\:]{1,}\]/.test(item)) {
+                                    let index = item.indexOf(']');
+                                    let [m, s] = item.substring(1, index).split(':');
+                                    result.push([
+                                        parseFloat(m) * 60 + parseFloat(s),
+                                        item.substring(index + 1)
+                                    ])
+                                }
+                            }
+                            this.lrcArr = result;
+                        });
+                    }
+
+                    this.$nextTick(() => {
+                        this.nameSroll.wrapWidth = document.getElementById('name-wrap').offsetWidth;
+                        this.nameSroll.nameWidth = document.getElementById('name-scroll').offsetWidth;
+                        console.log(this.nameSroll.nameWidth, this.nameSroll.wrapWidth);
+                        clearTimeout(this.nameSroll.timer);
+                        this.nameSroll.x = 0;
+                        if (this.nameSroll.nameWidth > this.nameSroll.wrapWidth && this.nameSroll.namescroll) {
+                            this.nameScroll();
+                        }
+                    })
+                },
+                nameScroll() {
+                    this.nameSroll.x = this.nameSroll.x - 1;
+                    if (this.nameSroll.x < -this.nameSroll.nameWidth) {
+                        this.nameSroll.x = this.nameSroll.wrapWidth;
+                    }
+                    this.nameSroll.timer = setTimeout(this.nameScroll, 1000 / 60);
+                },
+                //播放 暂停
+                play() {
+                    clearTimeout(this.clickTimer);
+                    this.clickTimer = setTimeout(() => {
+                        if (this.music.paused) {
+                            try {
+                                this.music.play();
+                                this.playing = true;
+                            } catch (e) {
+                                this.next();
+                            }
+                        } else {
+                            this.music.pause();
+                            this.playing = false;
+                        }
+                    }, 300);
+                },
+                //重置播放进度
+                reset() {
+                    clearTimeout(this.clickTimer);
+                    this.music.currentTime = 0;
+                },
+                //定时显示进度
+                timeStrInterval() {
+                    if (!isNaN(this.music.duration)) {
+                        this.timeStr = `${this.music.currentTime.toMinuteStr()} / ${this.music.duration.toMinuteStr()}`;
+                        this.currentTimeValue = this.music.currentTime / this.music.duration * 100;
+                        this.updateLrc();
+                        if (this.music.ended) {
+                            if (this.ptype == '顺序播放') {
+                                this.next();
+                            } else {
+                                this.random();
+                            }
+                        }
+                    }
+                },
+                next() {
+                    if (this.currentIndex < this.list.length - 1) {
+                        this.currentIndex++;
+                    } else {
+                        this.currentIndex = 0;
+                    }
+                    this.reload();
+
+                    this.music.onerror = () => {
+                        setTimeout(this.next(), 100);
+                    }
+                },
+                random() {
+                    this.currentIndex = randomNum(0, this.list.length - 1);
+                    this.reload();
+                },
+                prev() {
+                    if (this.currentIndex > 0) {
+                        this.currentIndex--;
+                    } else {
+                        this.currentIndex = this.list.length - 1;
+                    }
+                    this.reload();
+                },
+                changePType(type) {
+                    this.ptype = type;
+                },
+                downVolume() {
+                    if (this.volume > 0) {
+                        this.volume -= 0.1;
+                    }
+                    this.volume = parseFloat(this.volume.toFixed(1));
+                    this.music.volume = this.volume;
+                },
+                upVolume() {
+                    if (this.volume < 1) {
+                        this.volume += 0.1;
+                    }
+                    this.volume = parseFloat(this.volume.toFixed(1));
+                    this.music.volume = this.volume;
+                },
+                //更新歌词显示
+                updateLrc() {
+                    for (let i = this.lrcArr.length - 1; i >= 0; i--) {
+                        if (this.music.currentTime > this.lrcArr[i][0]) {
+                            this.lrcText = this.lrcArr[i][1];
+                            break;
+                        }
+                    }
+                },
+                //获取歌单歌曲列表
+                getList() {
+
+                    if (this.mtype == '网易云音乐') {
+                        const url = `https://api.i-meto.com/meting/api?server=netease&type=playlist&id=${this.id}&r=${Math.random()}`;
+                        axios.get(url).then((res) => {
+                            this.list = res.data;
+                            this.reload();
+                        });
+                    } else if (this.mtype == 'QQ音乐') {
+                        const url2 = `https://api.itooi.cn/tencent/songList?id=${this.id}&pageSize=99999&page=1`;
+                        axios.get(url2).then((res) => {
+                            if (res.data.data) {
+                                let list = res.data.data[0].songlist.map(c => {
+                                    return {
+                                        title: c.title,
+                                        url: `https://api.itooi.cn/tencent/url?id=${c.mid}&quality=48`,
+                                        pic: `https://api.itooi.cn/tencent/pic?id=${c.mid}`,
+                                        lrc: `https://api.itooi.cn/tencent/lrc?id=${c.mid}`,
+                                        author: c.singer.reduce((a, b) => {
+                                            a.push(b.name);
+                                            return a;
+                                        }, []).join(',')
+                                    }
+                                });
+                                this.list = list;
+                                this.reload();
+                            }
+                        });
+                    } else if (this.mtype == '酷狗音乐') {
+                        axios.get(`https://api.itooi.cn/kugou/songList?id=${id}&pageSize=99999&page=1`).then((res) => {
+                            if (res.data.data.info) {
+                                this.list = res.data.data.info.map(c => {
+                                    return {
+                                        title: c.remark,
+                                        url: `https://api.itooi.cn/kugou/url?id=${c.hash}&quality=128`,
+                                        pic: `https://api.itooi.cn/kugou/pic?id=${c.hash}`,
+                                        lrc: `https://api.itooi.cn/kugou/lrc?id=${c.hash}`,
+                                        author: c.filename
+                                    }
+                                });
+                                this.reload();
+                            }
+                        })
+                    }
+                }
+            },
+        });
+    </script>
+    <!-- <link rel="stylesheet" href="https://blog-static.cnblogs.com/files/elkyo/APlayer.min.css">
+    <div id="player" class="aplayer aplayer-withlist aplayer-fixed" data-id="5155012212" data-server="netease"
+        data-type="playlist" data-order="random" data-fixed="true" data-listfolded="true" data-theme="#2D8CF0"
+        autoplay="true"></div>
+    <script src="https://blog-static.cnblogs.com/files/elkyo/APlayer.min.js"></script>
+    <script src="https://blog-static.cnblogs.com/files/elkyo/Meting.min.js"></script> -->
+</body>
+
+</html>

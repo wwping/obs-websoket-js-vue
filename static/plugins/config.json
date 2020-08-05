@@ -1,888 +1,1060 @@
 [
     {
-        "name":"index",
-        "path":"progress2/",
-        "text":"简单进度条",
-        "size":{"w":200,"h":200},
-        "update":true,
-        "preview":"progress2.jpg",
-        "params":{
-            "title":{
-                "type":"text",
-                "text":"标题",
-                "default":"标题"
+        "name": "index",
+        "path": "music163/",
+        "text": "播放网易，QQ，酷狗音乐歌单",
+        "size": {
+            "w": 200,
+            "h": 200
+        },
+        "update": true,
+        "preview": "music163.jpg",
+        "params": {
+            "id": {
+                "type": "text",
+                "text": "歌单号",
+                "default": "5155012212"
             },
-            "_0":{
-                "child":{
-                    "num":{
-                        "type":"number",
-                        "text":"当前值",
-                        "default":0
+            "mtype": {
+                "type": "select",
+                "options": "网易云音乐|QQ音乐|酷狗音乐",
+                "text": "音乐平台",
+                "default": "网易云音乐"
+            },
+            "ptype": {
+                "type": "select",
+                "options": "顺序播放|随机播放",
+                "text": "播放模式",
+                "default": "顺序播放"
+            },
+            "fontfamily": {
+                "type": "font",
+                "text": "字体",
+                "options": "",
+                "default": "微软雅黑"
+            },
+            "_00": {
+                "child": {
+                    "volume": {
+                        "type": "number",
+                        "text": "音量",
+                        "default": 0.5,
+                        "min": 0,
+                        "max": 1,
+                        "step": 0.1
                     },
-                    "total":{
-                        "type":"number",
-                        "text":"期望值",
-                        "default":1
+                    "namescroll": {
+                        "type": "bool",
+                        "text": "歌名滚动",
+                        "default": true
                     }
                 }
             },
-            "ff":{
-                "type":"font",
-                "text":"字体",
-                "options":"",
-                "default":"微软雅黑"
-            },
-            "_1":{
-                "child":{
-                    "fcolor":{
-                        "type":"color",
-                        "text":"字色",
-                        "default":"#000"
+            "_0": {
+                "child": {
+                    "autoplay": {
+                        "type": "bool",
+                        "text": "自动播放",
+                        "default": true
+                    },
+                    "progress": {
+                        "type": "bool",
+                        "text": "进度条",
+                        "default": true
                     }
                 }
             },
-            "_2":{
-                "child":{
-                    "bcolor":{
-                        "type":"color",
-                        "text":"背景色",
-                        "default":"#393a3d"
+            "_1": {
+                "child": {
+                    "bcolor": {
+                        "type": "color",
+                        "text": "边框色",
+                        "default": "#fff"
                     },
-                    "bopacity":{
-                        "type":"number",
-                        "text":"背景透明",
-                        "default":100
+                    "bopacity": {
+                        "type": "number",
+                        "text": "边框透明",
+                        "default": 100
                     }
                 }
             },
-            "_3":{
-                "child":{
-                    "gbcolor":{
-                        "type":"color",
-                        "text":"底条色",
-                        "default":"#57595f"
+            "_2": {
+                "child": {
+                    "bwidth": {
+                        "type": "number",
+                        "text": "边框宽",
+                        "default": 1
                     },
-                    "gbopacity":{
-                        "type":"number",
-                        "text":"底条透明",
-                        "default":100
+                    "bradius": {
+                        "type": "number",
+                        "text": "边框圆角",
+                        "default": 4
                     }
                 }
             },
-            "_4":{
-                "child":{
-                    "vbcolor":{
-                        "type":"color",
-                        "text":"值条色",
-                        "default":"#21da9a"
+            "_3": {
+                "child": {
+                    "bcolor1": {
+                        "type": "color",
+                        "text": "背景色",
+                        "default": "#000"
                     },
-                    "vbopacity":{
-                        "type":"number",
-                        "text":"值条透明",
-                        "default":100
+                    "bopacity1": {
+                        "type": "number",
+                        "text": "背景透明",
+                        "default": 20
                     }
                 }
             },
-            "_5":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":400
+            "_4": {
+                "child": {
+                    "fontcolor1": {
+                        "type": "color",
+                        "text": "标题色",
+                        "default": "#fff"
                     },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":76
+                    "fontsize1": {
+                        "type": "number",
+                        "text": "标题大小",
+                        "default": 20
+                    }
+                }
+            },
+            "_5": {
+                "child": {
+                    "fontcolor2": {
+                        "type": "color",
+                        "text": "歌词色",
+                        "default": "#fff"
+                    },
+                    "fontsize2": {
+                        "type": "number",
+                        "text": "歌词大小",
+                        "default": 14
+                    }
+                }
+            },
+            "_6": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 600
+                    },
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 120
                     }
                 }
             }
         }
     },
     {
-        "name":"index",
-        "path":"progress/",
-        "text":"简单进度环",
-        "size":{"w":200,"h":200},
-        "update":true,
-        "preview":"progress.jpg",
-        "params":{
-            "title":{
-                "type":"text",
-                "text":"标题",
-                "default":"标题"
+        "name": "index",
+        "path": "progress2/",
+        "text": "简单进度条",
+        "size": {
+            "w": 200,
+            "h": 200
+        },
+        "update": true,
+        "preview": "progress2.jpg",
+        "params": {
+            "title": {
+                "type": "text",
+                "text": "标题",
+                "default": "标题"
             },
-            "_0":{
-                "child":{
-                    "num":{
-                        "type":"number",
-                        "text":"当前值",
-                        "default":1
+            "_0": {
+                "child": {
+                    "num": {
+                        "type": "number",
+                        "text": "当前值",
+                        "default": 0
                     },
-                    "total":{
-                        "type":"number",
-                        "text":"期望值",
-                        "default":1
+                    "total": {
+                        "type": "number",
+                        "text": "期望值",
+                        "default": 1
                     }
                 }
             },
-            "ff":{
-                "type":"font",
-                "text":"字体",
-                "options":"",
-                "default":"微软雅黑"
+            "ff": {
+                "type": "font",
+                "text": "字体",
+                "options": "",
+                "default": "微软雅黑"
             },
-            "_00":{
-                "child":{
-                    "color":{
-                        "type":"color",
-                        "text":"字色",
-                        "default":"#000"
-                    },
-                    "fontsize":{
-                        "type":"number",
-                        "text":"字大小",
-                        "default":16
+            "_1": {
+                "child": {
+                    "fcolor": {
+                        "type": "color",
+                        "text": "字色",
+                        "default": "#000"
                     }
                 }
             },
-            "_000":{
-                "child":{
-                    "sx":{
-                        "type":"number",
-                        "text":"阴影偏移x",
-                        "default":0
+            "_2": {
+                "child": {
+                    "bcolor": {
+                        "type": "color",
+                        "text": "背景色",
+                        "default": "#393a3d"
                     },
-                    "sy":{
-                        "type":"number",
-                        "text":"阴影偏移y",
-                        "default":0
+                    "bopacity": {
+                        "type": "number",
+                        "text": "背景透明",
+                        "default": 100
                     }
                 }
             },
-            "_0000":{
-                "child":{
-                    "ss":{
-                        "type":"number",
-                        "text":"阴影距离",
-                        "default":0
+            "_3": {
+                "child": {
+                    "gbcolor": {
+                        "type": "color",
+                        "text": "底条色",
+                        "default": "#57595f"
                     },
-                    "so":{
-                        "type":"number",
-                        "text":"阴影透明",
-                        "default":100
+                    "gbopacity": {
+                        "type": "number",
+                        "text": "底条透明",
+                        "default": 100
                     }
                 }
             },
-            "_00000":{
-                "child":{
-                    "sc":{
-                        "type":"color",
-                        "text":"阴影色",
-                        "default":"#000"
+            "_4": {
+                "child": {
+                    "vbcolor": {
+                        "type": "color",
+                        "text": "值条色",
+                        "default": "#21da9a"
+                    },
+                    "vbopacity": {
+                        "type": "number",
+                        "text": "值条透明",
+                        "default": 100
                     }
                 }
             },
-            
-            "_1":{
-                "child":{
-                    "fill":{
-                        "type":"color",
-                        "text":"背景色",
-                        "default":"#fff"
+            "_5": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 400
                     },
-                    "fo":{
-                        "type":"number",
-                        "text":"背景透明",
-                        "default":100
-                    }
-                }
-            },
-            "_2":{
-                "child":{
-                    "stroke1":{
-                        "type":"color",
-                        "text":"底圈色",
-                        "default":"#fff"
-                    },
-                    "stroke2":{
-                        "type":"color",
-                        "text":"外圈色",
-                        "default":"#f00"
-                    }
-                }
-            },
-            "_4":{
-                "child":{
-                    "strokew":{
-                        "type":"number",
-                        "text":"圈宽",
-                        "default":5
-                    },
-                    "so1":{
-                        "type":"number",
-                        "text":"圈透明",
-                        "default":100
-                    }
-                }
-            },
-            "_100":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":200
-                    },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":200
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 76
                     }
                 }
             }
         }
     },
     {
-        "name":"index",
-        "path":"xiayu/",
-        "text":"下雨动画1",
-        "size":{"w":1920,"h":1080},
-        "preview":"xueyu.jpg",
-        "params":{
-            "_3":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":1920
+        "name": "index",
+        "path": "progress/",
+        "text": "简单进度环",
+        "size": {
+            "w": 200,
+            "h": 200
+        },
+        "update": true,
+        "preview": "progress.jpg",
+        "params": {
+            "title": {
+                "type": "text",
+                "text": "标题",
+                "default": "标题"
+            },
+            "_0": {
+                "child": {
+                    "num": {
+                        "type": "number",
+                        "text": "当前值",
+                        "default": 1
                     },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":1080
+                    "total": {
+                        "type": "number",
+                        "text": "期望值",
+                        "default": 1
+                    }
+                }
+            },
+            "ff": {
+                "type": "font",
+                "text": "字体",
+                "options": "",
+                "default": "微软雅黑"
+            },
+            "_00": {
+                "child": {
+                    "color": {
+                        "type": "color",
+                        "text": "字色",
+                        "default": "#000"
+                    },
+                    "fontsize": {
+                        "type": "number",
+                        "text": "字大小",
+                        "default": 16
+                    }
+                }
+            },
+            "_000": {
+                "child": {
+                    "sx": {
+                        "type": "number",
+                        "text": "阴影偏移x",
+                        "default": 0
+                    },
+                    "sy": {
+                        "type": "number",
+                        "text": "阴影偏移y",
+                        "default": 0
+                    }
+                }
+            },
+            "_0000": {
+                "child": {
+                    "ss": {
+                        "type": "number",
+                        "text": "阴影距离",
+                        "default": 0
+                    },
+                    "so": {
+                        "type": "number",
+                        "text": "阴影透明",
+                        "default": 100
+                    }
+                }
+            },
+            "_00000": {
+                "child": {
+                    "sc": {
+                        "type": "color",
+                        "text": "阴影色",
+                        "default": "#000"
+                    }
+                }
+            },
+            "_1": {
+                "child": {
+                    "fill": {
+                        "type": "color",
+                        "text": "背景色",
+                        "default": "#fff"
+                    },
+                    "fo": {
+                        "type": "number",
+                        "text": "背景透明",
+                        "default": 100
+                    }
+                }
+            },
+            "_2": {
+                "child": {
+                    "stroke1": {
+                        "type": "color",
+                        "text": "底圈色",
+                        "default": "#fff"
+                    },
+                    "stroke2": {
+                        "type": "color",
+                        "text": "外圈色",
+                        "default": "#f00"
+                    }
+                }
+            },
+            "_4": {
+                "child": {
+                    "strokew": {
+                        "type": "number",
+                        "text": "圈宽",
+                        "default": 5
+                    },
+                    "so1": {
+                        "type": "number",
+                        "text": "圈透明",
+                        "default": 100
+                    }
+                }
+            },
+            "_100": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 200
+                    },
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 200
                     }
                 }
             }
         }
     },
     {
-        "name":"index",
-        "path":"xiaxue/",
-        "text":"下雪动画1",
-        "size":{"w":1920,"h":1080},
-        "preview":"xiaxue.jpg",
-        "params":{
-            "_3":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":1920
+        "name": "index",
+        "path": "xiayu/",
+        "text": "下雨动画1",
+        "size": {
+            "w": 1920,
+            "h": 1080
+        },
+        "preview": "xueyu.jpg",
+        "params": {
+            "_3": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 1920
                     },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":1080
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 1080
                     }
                 }
             }
         }
     },
     {
-        "name":"index",
-        "path":"loading/",
-        "text":"简单动画",
-        "size":{"w":200,"h":200},
-        "preview":"loading.jpg",
-        "params":{
-            "index":{
-                "type":"select",
-                "text":"下标",
-                "options":"1|2|3|4|5|6",
-                "default":"1"
-            },
-            "_3":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":200
+        "name": "index",
+        "path": "xiaxue/",
+        "text": "下雪动画1",
+        "size": {
+            "w": 1920,
+            "h": 1080
+        },
+        "preview": "xiaxue.jpg",
+        "params": {
+            "_3": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 1920
                     },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":200
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 1080
                     }
                 }
             }
         }
     },
     {
-        "name":"index",
-        "path":"panel/",
-        "text":"简单面板",
-        "size":{},
-        "preview":"panel.jpg",
-        "params":{
-            "title":{
-                "type":"text",
-                "text":"标题",
-                "default":"标题示例"
+        "name": "index",
+        "path": "loading/",
+        "text": "简单动画",
+        "size": {
+            "w": 200,
+            "h": 200
+        },
+        "preview": "loading.jpg",
+        "params": {
+            "index": {
+                "type": "select",
+                "text": "下标",
+                "options": "1|2|3|4|5|6",
+                "default": "1"
             },
-            "_00":{
-                "child":{
-                    "radius":{
-                        "type":"number",
-                        "text":"圆角",
-                        "default":4
+            "_3": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 200
                     },
-                    "fontsize":{
-                        "type":"number",
-                        "text":"字大小",
-                        "default":16
-                    }
-                }
-            },
-            "_0":{
-                "child":{
-                    "c_bcolor":{
-                        "type":"color",
-                        "text":"背景色",
-                        "default":"#fff"
-                    },
-                    "c_opacity":{
-                        "type":"number",
-                        "text":"背景透明",
-                        "default":100
-                    }
-                }
-            },
-            "_1":{
-                "child":{
-                    "t_bcolor":{
-                        "type":"color",
-                        "text":"标题背景色",
-                        "default":"#fff"
-                    },
-                    "t_height":{
-                        "type":"number",
-                        "text":"标题高度",
-                        "default":40
-                    }
-                }
-            },
-            "_2":{
-                "child":{
-                    "t_color":{
-                        "type":"color",
-                        "text":"标题色",
-                        "default":"#000"
-                    },
-                    "t_opacity":{
-                        "type":"number",
-                        "text":"标题透明",
-                        "default":100
-                    }
-                }
-            },
-            "_3":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":200
-                    },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":200
-                    }
-                }
-            }
-            
-        }
-    },
-    {
-        "name":"remark",
-        "path":"remark/",
-        "text":"简单色块",
-        "size":{},
-        "preview":"remark.jpg",
-        "params":{
-            "_0":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":1920
-                    },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":1080
-                    }
-                }
-            },
-            "_1":{
-                "child":{
-                    "color":{
-                        "type":"color",
-                        "text":"背景色",
-                        "default":"#fff"
-                    },
-                    "opacity":{
-                        "type":"number",
-                        "text":"透明度",
-                        "default":100
-                    }
-                }
-            },
-            "bs":{
-                "type":"select",
-                "options":"solid|dotted|dashed|double|none",
-                "text":"边框类型",
-                "default":"solid"
-            },
-            "_2":{
-                "child":{
-                    "bw":{
-                        "type":"number",
-                        "text":"边框宽",
-                        "default":0
-                    },
-                    "bc":{
-                        "type":"color",
-                        "text":"边框颜色",
-                        "default":"#fff"
-                    }
-                }
-            },
-            "_3":{
-                "child":{
-                    "br1":{
-                        "type":"number",
-                        "text":"圆角1",
-                        "default":0
-                    },
-                    "br2":{
-                        "type":"number",
-                        "text":"圆角2",
-                        "default":0
-                    }
-                }
-            },
-            "_4":{
-                "child":{
-                    "br3":{
-                        "type":"number",
-                        "text":"圆角3",
-                        "default":0
-                    },
-                    "br4":{
-                        "type":"number",
-                        "text":"圆角4",
-                        "default":0
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 200
                     }
                 }
             }
         }
     },
     {
-        "name":"clock",
-        "path":"clock/",
-        "text":"炫彩时钟",
-        "size":{"w":440,"h":120},
-        "preview":"color.jpg"
-    },
-    {
-        "name":"countdown",
-        "path":"countdown/",
-        "text":"炫彩倒计时",
-        "size":{"w":440,"h":120},
-        "preview":"countdown.jpg",
-        "params":{
-            "h":{
-                "type":"number",
-                "text":"时",
-                "default":0
+        "name": "index",
+        "path": "panel/",
+        "text": "简单面板",
+        "size": {},
+        "preview": "panel.jpg",
+        "params": {
+            "title": {
+                "type": "text",
+                "text": "标题",
+                "default": "标题示例"
             },
-            "m":{
-                "type":"number",
-                "text":"分",
-                "default":0
-            },
-            "s":{
-                "type":"number",
-                "text":"秒",
-                "default":0
-            }
-        }
-    },
-    {
-        "name":"index",
-        "path":"text/",
-        "text":"粒子文字",
-        "size":{"w":1920,"h":1080},
-        "preview":"text.jpg",
-        "params":{
-            "type":{
-                "type":"select",
-                "text":"类型",
-                "options":"text|time|countdown",
-                "default":"text"
-            },
-            "text":{
-                "type":"text",
-                "text":"文字",
-                "default":"测试"
-            },
-            "color":{
-                "type":"color",
-                "text":"颜色",
-                "default":"#fff"
-            }
-        }
-    },
-    {
-        "name":"scroll_text",
-        "path":"scroll_text/",
-        "text":"高级文字",
-        "size":{},
-        "preview":"scroll_text.jpg",
-        "params":{
-            
-            "text":{
-                "type":"text",
-                "text":"文字",
-                "default":"示例文字"
-            },
-            "_0":{
-                "child":{
-                    "fsize":{
-                        "type":"number",
-                        "text":"字体大小",
-                        "default":20
-                    }
-                    
-                }
-            },
-            "font":{
-                "type":"font",
-                "options":"",
-                "text":"字体",
-                "default":"微软雅黑"
-            },
-            "_1":{
-                "child":{
-                    "scroll":{
-                        "type":"bool",
-                        "text":"横向滚动",
-                        "default":true
+            "_00": {
+                "child": {
+                    "radius": {
+                        "type": "number",
+                        "text": "圆角",
+                        "default": 4
                     },
-                    "speed":{
-                        "type":"number",
-                        "text":"滚动速度",
-                        "default":1
+                    "fontsize": {
+                        "type": "number",
+                        "text": "字大小",
+                        "default": 16
                     }
                 }
             },
-            "_11":{
-                "child":{
-                    "scroll_y":{
-                        "type":"bool",
-                        "text":"纵向滚动",
-                        "default":true
+            "_0": {
+                "child": {
+                    "c_bcolor": {
+                        "type": "color",
+                        "text": "背景色",
+                        "default": "#fff"
                     },
-                    "speed_y":{
-                        "type":"number",
-                        "text":"滚动速度",
-                        "default":1
+                    "c_opacity": {
+                        "type": "number",
+                        "text": "背景透明",
+                        "default": 100
                     }
                 }
             },
-            "_2":{
-                "child":{
-                    "color":{
-                        "type":"color",
-                        "text":"字体颜色",
-                        "default":"#fff"
+            "_1": {
+                "child": {
+                    "t_bcolor": {
+                        "type": "color",
+                        "text": "标题背景色",
+                        "default": "#fff"
                     },
-                    "s":{
-                        "type":"color",
-                        "text":"阴影颜色",
-                        "default":"#000"
+                    "t_height": {
+                        "type": "number",
+                        "text": "标题高度",
+                        "default": 40
                     }
                 }
             },
-            "_3":{
-                "child":{
-                    "s_x":{
-                        "type":"number",
-                        "text":"阴影x距离",
-                        "default":1
+            "_2": {
+                "child": {
+                    "t_color": {
+                        "type": "color",
+                        "text": "标题色",
+                        "default": "#000"
                     },
-                    "s_y":{
-                        "type":"number",
-                        "text":"阴影y距离",
-                        "default":1
+                    "t_opacity": {
+                        "type": "number",
+                        "text": "标题透明",
+                        "default": 100
                     }
                 }
             },
-            "_4":{
-                "child":{
-                    "s_size":{
-                        "type":"number",
-                        "text":"阴影模糊",
-                        "default":1
+            "_3": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 200
                     },
-                    "s_opacity":{
-                        "type":"number",
-                        "text":"阴影透明",
-                        "default":100
-                    }
-                }
-            },
-            "_5":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":500
-                    },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":100
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 200
                     }
                 }
             }
         }
     },
     {
-        "name":"index",
-        "path":"bilibili/",
-        "text":"B站弹幕-混合",
-        "size":{"w":400},
-        "preview":"bilibili.jpg",
-        "params":{
-            "rid":{
-                "type":"text",
-                "text":"房间号",
-                "default":"0"
-            },
-            "_0":{
-                "child":{
-                    "row":{
-                        "type":"number",
-                        "text":"显示行数",
-                        "default":10
+        "name": "remark",
+        "path": "remark/",
+        "text": "简单色块",
+        "size": {},
+        "preview": "remark.jpg",
+        "params": {
+            "_0": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 1920
                     },
-                    "slevel":{
-                        "type":"bool",
-                        "text":"等级",
-                        "default":true
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 1080
                     }
                 }
             },
-            "_00":{
-                "child":{
-                    "silver":{
-                        "type":"bool",
-                        "text":"银瓜子",
-                        "default":true
+            "_1": {
+                "child": {
+                    "color": {
+                        "type": "color",
+                        "text": "背景色",
+                        "default": "#fff"
                     },
-                    "gold":{
-                        "type":"bool",
-                        "text":"金瓜子",
-                        "default":true
+                    "opacity": {
+                        "type": "number",
+                        "text": "透明度",
+                        "default": 100
                     }
                 }
             },
-            "_000":{
-                "child":{
-                    "ly":{
-                        "type":"bool",
-                        "text":"姥爷提示",
-                        "default":true
+            "bs": {
+                "type": "select",
+                "options": "solid|dotted|dashed|double|none",
+                "text": "边框类型",
+                "default": "solid"
+            },
+            "_2": {
+                "child": {
+                    "bw": {
+                        "type": "number",
+                        "text": "边框宽",
+                        "default": 0
                     },
-                    "jz":{
-                        "type":"bool",
-                        "text":"舰长提示",
-                        "default":true
+                    "bc": {
+                        "type": "color",
+                        "text": "边框颜色",
+                        "default": "#fff"
                     }
                 }
             },
-            "_0001":{
-                "child":{
-                    "jzdm":{
-                        "type":"bool",
-                        "text":"舰长弹幕",
-                        "default":true
+            "_3": {
+                "child": {
+                    "br1": {
+                        "type": "number",
+                        "text": "圆角1",
+                        "default": 0
                     },
-                    "sj":{
-                        "type":"bool",
-                        "text":"上舰提示",
-                        "default":true
+                    "br2": {
+                        "type": "number",
+                        "text": "圆角2",
+                        "default": 0
                     }
                 }
             },
-            "_0000":{
-                "child":{
-                    "dm":{
-                        "type":"bool",
-                        "text":"发言",
-                        "default":true
+            "_4": {
+                "child": {
+                    "br3": {
+                        "type": "number",
+                        "text": "圆角3",
+                        "default": 0
                     },
-                    "label":{
-                        "type":"bool",
-                        "text":"牌子",
-                        "default":true
-                    }
-                }
-            },
-            "_1":{
-                "child":{
-                    "level":{
-                        "type":"number",
-                        "text":"发言等级",
-                        "default":0
-                    },
-                    "price":{
-                        "type":"number",
-                        "text":"礼物价格",
-                        "default":0
-                    }
-                }
-            },
-            "_2":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":400
-                    },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":380
-                    }
-                }
-            },
-            "_3":{
-                "child":{
-                    "bcolor":{
-                        "type":"color",
-                        "text":"边框色",
-                        "default":"#fff"
-                    },
-                    "opacity":{
-                        "type":"number",
-                        "text":"透明度",
-                        "default":100
+                    "br4": {
+                        "type": "number",
+                        "text": "圆角4",
+                        "default": 0
                     }
                 }
             }
-            
         }
     },
     {
-        "name":"index",
-        "path":"douyu/",
-        "text":"斗鱼弹幕-混合",
-        "size":{"w":400},
-        "preview":"douyu.jpg",
-        "params":{
-            "rid":{
-                "type":"text",
-                "text":"房间号",
-                "default":"0"
+        "name": "clock",
+        "path": "clock/",
+        "text": "炫彩时钟",
+        "size": {
+            "w": 440,
+            "h": 120
+        },
+        "preview": "color.jpg"
+    },
+    {
+        "name": "countdown",
+        "path": "countdown/",
+        "text": "炫彩倒计时",
+        "size": {
+            "w": 440,
+            "h": 120
+        },
+        "preview": "countdown.jpg",
+        "params": {
+            "h": {
+                "type": "number",
+                "text": "时",
+                "default": 0
             },
-            "_0":{
-                "child":{
-                    "row":{
-                        "type":"number",
-                        "text":"显示行数",
-                        "default":10
-                    },
-                    "slevel":{
-                        "type":"bool",
-                        "text":"等级",
-                        "default":true
+            "m": {
+                "type": "number",
+                "text": "分",
+                "default": 0
+            },
+            "s": {
+                "type": "number",
+                "text": "秒",
+                "default": 0
+            }
+        }
+    },
+    {
+        "name": "index",
+        "path": "text/",
+        "text": "粒子文字",
+        "size": {
+            "w": 1920,
+            "h": 1080
+        },
+        "preview": "text.jpg",
+        "params": {
+            "type": {
+                "type": "select",
+                "text": "类型",
+                "options": "text|time|countdown",
+                "default": "text"
+            },
+            "text": {
+                "type": "text",
+                "text": "文字",
+                "default": "测试"
+            },
+            "color": {
+                "type": "color",
+                "text": "颜色",
+                "default": "#fff"
+            }
+        }
+    },
+    {
+        "name": "scroll_text",
+        "path": "scroll_text/",
+        "text": "高级文字",
+        "size": {},
+        "preview": "scroll_text.jpg",
+        "params": {
+            "text": {
+                "type": "text",
+                "text": "文字",
+                "default": "示例文字"
+            },
+            "_0": {
+                "child": {
+                    "fsize": {
+                        "type": "number",
+                        "text": "字体大小",
+                        "default": 20
                     }
                 }
             },
-            "_0000":{
-                "child":{
-                    "dm":{
-                        "type":"bool",
-                        "text":"发言",
-                        "default":true
+            "font": {
+                "type": "font",
+                "options": "",
+                "text": "字体",
+                "default": "微软雅黑"
+            },
+            "_1": {
+                "child": {
+                    "scroll": {
+                        "type": "bool",
+                        "text": "横向滚动",
+                        "default": true
                     },
-                    "label":{
-                        "type":"bool",
-                        "text":"牌子",
-                        "default":true
+                    "speed": {
+                        "type": "number",
+                        "text": "滚动速度",
+                        "default": 1
                     }
                 }
             },
-            "_1":{
-                "child":{
-                    "level":{
-                        "type":"number",
-                        "text":"发言等级",
-                        "default":0
+            "_11": {
+                "child": {
+                    "scroll_y": {
+                        "type": "bool",
+                        "text": "纵向滚动",
+                        "default": true
                     },
-                    "price":{
-                        "type":"number",
-                        "text":"礼物价格",
-                        "default":0
+                    "speed_y": {
+                        "type": "number",
+                        "text": "滚动速度",
+                        "default": 1
                     }
                 }
             },
-            "_11":{
-                "child":{
-                    "lw":{
-                        "type":"bool",
-                        "text":"礼物提醒",
-                        "default":true
+            "_2": {
+                "child": {
+                    "color": {
+                        "type": "color",
+                        "text": "字体颜色",
+                        "default": "#fff"
                     },
-                    "jf":{
-                        "type":"bool",
-                        "text":"进房提醒",
-                        "default":true
+                    "s": {
+                        "type": "color",
+                        "text": "阴影颜色",
+                        "default": "#000"
                     }
                 }
             },
-            
-            "_2":{
-                "child":{
-                    "width":{
-                        "type":"number",
-                        "text":"框宽度",
-                        "default":400
+            "_3": {
+                "child": {
+                    "s_x": {
+                        "type": "number",
+                        "text": "阴影x距离",
+                        "default": 1
                     },
-                    "height":{
-                        "type":"number",
-                        "text":"框高度",
-                        "default":380
+                    "s_y": {
+                        "type": "number",
+                        "text": "阴影y距离",
+                        "default": 1
                     }
                 }
             },
-            "_3":{
-                "child":{
-                    "bcolor":{
-                        "type":"color",
-                        "text":"边框色",
-                        "default":"#fff"
+            "_4": {
+                "child": {
+                    "s_size": {
+                        "type": "number",
+                        "text": "阴影模糊",
+                        "default": 1
                     },
-                    "opacity":{
-                        "type":"number",
-                        "text":"透明度",
-                        "default":100
+                    "s_opacity": {
+                        "type": "number",
+                        "text": "阴影透明",
+                        "default": 100
+                    }
+                }
+            },
+            "_5": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 500
+                    },
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 100
                     }
                 }
             }
-            
+        }
+    },
+    {
+        "name": "index",
+        "path": "bilibili/",
+        "text": "B站弹幕-混合",
+        "size": {
+            "w": 400
+        },
+        "preview": "bilibili.jpg",
+        "params": {
+            "rid": {
+                "type": "text",
+                "text": "房间号",
+                "default": "0"
+            },
+            "_0": {
+                "child": {
+                    "row": {
+                        "type": "number",
+                        "text": "显示行数",
+                        "default": 10
+                    },
+                    "slevel": {
+                        "type": "bool",
+                        "text": "等级",
+                        "default": true
+                    }
+                }
+            },
+            "_00": {
+                "child": {
+                    "silver": {
+                        "type": "bool",
+                        "text": "银瓜子",
+                        "default": true
+                    },
+                    "gold": {
+                        "type": "bool",
+                        "text": "金瓜子",
+                        "default": true
+                    }
+                }
+            },
+            "_000": {
+                "child": {
+                    "ly": {
+                        "type": "bool",
+                        "text": "姥爷提示",
+                        "default": true
+                    },
+                    "jz": {
+                        "type": "bool",
+                        "text": "舰长提示",
+                        "default": true
+                    }
+                }
+            },
+            "_0001": {
+                "child": {
+                    "jzdm": {
+                        "type": "bool",
+                        "text": "舰长弹幕",
+                        "default": true
+                    },
+                    "sj": {
+                        "type": "bool",
+                        "text": "上舰提示",
+                        "default": true
+                    }
+                }
+            },
+            "_0000": {
+                "child": {
+                    "dm": {
+                        "type": "bool",
+                        "text": "发言",
+                        "default": true
+                    },
+                    "label": {
+                        "type": "bool",
+                        "text": "牌子",
+                        "default": true
+                    }
+                }
+            },
+            "_1": {
+                "child": {
+                    "level": {
+                        "type": "number",
+                        "text": "发言等级",
+                        "default": 0
+                    },
+                    "price": {
+                        "type": "number",
+                        "text": "礼物价格",
+                        "default": 0
+                    }
+                }
+            },
+            "_2": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 400
+                    },
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 380
+                    }
+                }
+            },
+            "_3": {
+                "child": {
+                    "bcolor": {
+                        "type": "color",
+                        "text": "边框色",
+                        "default": "#fff"
+                    },
+                    "opacity": {
+                        "type": "number",
+                        "text": "透明度",
+                        "default": 100
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "index",
+        "path": "douyu/",
+        "text": "斗鱼弹幕-混合",
+        "size": {
+            "w": 400
+        },
+        "preview": "douyu.jpg",
+        "params": {
+            "rid": {
+                "type": "text",
+                "text": "房间号",
+                "default": "0"
+            },
+            "_0": {
+                "child": {
+                    "row": {
+                        "type": "number",
+                        "text": "显示行数",
+                        "default": 10
+                    },
+                    "slevel": {
+                        "type": "bool",
+                        "text": "等级",
+                        "default": true
+                    }
+                }
+            },
+            "_0000": {
+                "child": {
+                    "dm": {
+                        "type": "bool",
+                        "text": "发言",
+                        "default": true
+                    },
+                    "label": {
+                        "type": "bool",
+                        "text": "牌子",
+                        "default": true
+                    }
+                }
+            },
+            "_1": {
+                "child": {
+                    "level": {
+                        "type": "number",
+                        "text": "发言等级",
+                        "default": 0
+                    },
+                    "price": {
+                        "type": "number",
+                        "text": "礼物价格",
+                        "default": 0
+                    }
+                }
+            },
+            "_11": {
+                "child": {
+                    "lw": {
+                        "type": "bool",
+                        "text": "礼物提醒",
+                        "default": true
+                    },
+                    "jf": {
+                        "type": "bool",
+                        "text": "进房提醒",
+                        "default": true
+                    }
+                }
+            },
+            "_2": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 400
+                    },
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 380
+                    }
+                }
+            },
+            "_3": {
+                "child": {
+                    "bcolor": {
+                        "type": "color",
+                        "text": "边框色",
+                        "default": "#fff"
+                    },
+                    "opacity": {
+                        "type": "number",
+                        "text": "透明度",
+                        "default": 100
+                    }
+                }
+            }
         }
     }
 ]

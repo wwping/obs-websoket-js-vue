@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-27 22:39:41
- * @LastEditTime: 2020-08-05 19:18:02
+ * @LastEditTime: 2020-08-05 19:23:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Plugins.vue
@@ -23,8 +23,7 @@
                             :key="index"
                             @click="select(item)">
                             <dl>
-                                <dt>
-                                    <img :src="path + item.path + item.preview">
+                                <dt :style="{'background-image':'url('+(path + item.path + item.preview)+')'}">
                                 </dt>
                                 <dd>
                                     <h3>{{item.text}}</h3>
@@ -120,7 +119,7 @@ ul{padding: 10px;}
 ul li{width: 50%;padding: 6px;}
 ul li dl{border: 1px solid #eee;transition: .3s;}
 ul li dl:hover{box-shadow: 1px 1px 4px rgba(0,0,0,0.1);cursor: pointer;}
-ul li dt{overflow-x:hidden;text-align: center;}
+ul li dt{overflow-x:hidden;text-align: center;height: 120px;background-size: cover;}
 ul li img{height: 120px;}
-dd h3{font-size: 13px;padding: 0 6px 6px 6px;}
+dd h3{font-size: 13px;padding: 6px 6px 6px 6px;}
 </style>

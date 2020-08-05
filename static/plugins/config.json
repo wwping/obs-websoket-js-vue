@@ -3,6 +3,7 @@
         "name": "index",
         "path": "music163/",
         "text": "播放网易，QQ，酷狗音乐歌单",
+        "tags": "音乐",
         "size": {
             "w": 200,
             "h": 200
@@ -154,6 +155,7 @@
         "name": "index",
         "path": "progress2/",
         "text": "简单进度条",
+        "tags": "美化,进度条",
         "size": {
             "w": 200,
             "h": 200
@@ -257,6 +259,7 @@
         "name": "index",
         "path": "progress/",
         "text": "简单进度环",
+        "tags": "美化,进度条",
         "size": {
             "w": 200,
             "h": 200
@@ -402,6 +405,7 @@
         "name": "index",
         "path": "xiayu/",
         "text": "下雨动画1",
+        "tags": "美化,动画",
         "size": {
             "w": 1920,
             "h": 1080
@@ -428,6 +432,7 @@
         "name": "index",
         "path": "xiaxue/",
         "text": "下雪动画1",
+        "tags": "美化,动画",
         "size": {
             "w": 1920,
             "h": 1080
@@ -454,6 +459,7 @@
         "name": "index",
         "path": "loading/",
         "text": "简单动画",
+        "tags": "动画",
         "size": {
             "w": 200,
             "h": 200
@@ -486,6 +492,7 @@
         "name": "index",
         "path": "panel/",
         "text": "简单面板",
+        "tags": "美化",
         "size": {},
         "preview": "panel.jpg",
         "params": {
@@ -570,6 +577,7 @@
         "name": "remark",
         "path": "remark/",
         "text": "简单色块",
+        "tags": "美化",
         "size": {},
         "preview": "remark.jpg",
         "params": {
@@ -655,6 +663,7 @@
         "name": "clock",
         "path": "clock/",
         "text": "炫彩时钟",
+        "tags": "时钟",
         "size": {
             "w": 440,
             "h": 120
@@ -665,6 +674,7 @@
         "name": "countdown",
         "path": "countdown/",
         "text": "炫彩倒计时",
+        "tags": "时钟,倒计时",
         "size": {
             "w": 440,
             "h": 120
@@ -692,6 +702,7 @@
         "name": "index",
         "path": "text/",
         "text": "粒子文字",
+        "tags": "文字,动画,倒计时",
         "size": {
             "w": 1920,
             "h": 1080
@@ -720,6 +731,7 @@
         "name": "scroll_text",
         "path": "scroll_text/",
         "text": "高级文字",
+        "tags": "文字",
         "size": {},
         "preview": "scroll_text.jpg",
         "params": {
@@ -833,6 +845,7 @@
         "name": "index",
         "path": "bilibili/",
         "text": "B站弹幕-混合",
+        "tags": "弹幕",
         "size": {
             "w": 400
         },
@@ -961,6 +974,7 @@
         "name": "index",
         "path": "douyu/",
         "text": "斗鱼弹幕-混合",
+        "tags": "弹幕",
         "size": {
             "w": 400
         },

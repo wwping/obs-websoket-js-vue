@@ -1,0 +1,166 @@
+body {
+    background: #000;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+}
+
+.wrap {
+    border: 1px solid #fff;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.info {
+    margin-left: 114px;
+}
+
+div.icon {
+    width: 20px;
+    height: 20px;
+    text-align: right;
+    opacity: .8;
+}
+
+.icon-right {
+    transform: rotate(180deg);
+}
+
+.play-icon {
+    width: 95px;
+    height: 95px;
+    position: absolute;
+    left: 10px;
+}
+
+.icon-rotate {
+    width: 95px;
+    height: 95px;
+}
+
+.icon-rotate img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.icon-rotate.rotate {
+    animation: icon 5s infinite linear;
+}
+@keyframes icon {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.play-icon .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    opacity: .8;
+}
+
+.name {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 6px;
+    overflow: hidden;
+
+}
+
+.name>div {
+    white-space: nowrap;
+    /* overflow: hidden; */
+    width: 100%;
+}
+
+.control {
+    margin-top: 10px;
+}
+
+.control .icon {
+    margin-left: 10px;
+}
+
+.lyric {
+    line-height: 22px;
+    font-size: 14px;
+    margin-top: 10px;
+    width: 100%;
+    min-height: 22px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.music-wrap {
+    flex-wrap: nowrap;
+}
+
+
+
+.progress {
+    padding-top: 13px;
+}
+
+.progress .inner {
+    height: 4px;
+    border-radius: 4px;
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    background-color: #eee;
+    position: relative;
+}
+
+.progress .inner .value {
+    height: 4px;
+    border-radius: 4px;
+    width: 50%;
+    background-color: #50ce50;
+    position: relative;
+}
+
+.progress .inner .value::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    box-sizing: border-box;
+    border: 2px solid #50ce50;
+    border-radius: 50%;
+    position: absolute;
+    right: 0%;
+    top: -3px;
+    background-color: #fff;
+}
+
+.time {
+    padding-top: 6px;
+    margin-left: 6px;
+}
+
+.volume {
+    font-size: 14px;
+    margin: 0 20px;
+    line-height: 24px;
+}
+
+.volume .down,
+.volume .up {
+    font-size: 20px;
+}
+
+.volume .val {
+    margin: 0 10px;
+}
+
+.wrap:hover .progress {
+    display: block;
+}
+
+.pn,
+.ptype {
+    padding-top: 4px;
+}

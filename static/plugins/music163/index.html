@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-08-04 22:21:47
- * @LastEditTime: 2020-08-05 20:57:03
+ * @LastEditTime: 2020-08-05 21:13:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\static\plugins\music163\index.html
@@ -14,185 +14,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>网易云歌单音乐</title>
     <link rel="stylesheet" href="../reset.css" />
-    <style>
-        body {
-            background: #000;
-            color: #fff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
-        }
-
-        .wrap {
-            border: 1px solid #fff;
-            background-color: rgba(0, 0, 0, 0.2);
-            padding: 6px;
-            border-radius: 4px;
-        }
-
-        div.icon {
-            width: 20px;
-            height: 20px;
-            text-align: right;
-            opacity: .8;
-        }
-
-        .icon-right {
-            transform: rotate(180deg);
-        }
-
-        .info {
-            margin-left: 114px;
-        }
-
-        .play-icon {
-            width: 95px;
-            height: 95px;
-            position: absolute;
-            left: 10px;
-        }
-
-        .icon-rotate {
-            width: 95px;
-            height: 95px;
-        }
-
-        .icon-rotate img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-        }
-
-        .icon-rotate.rotate {
-            animation: icon 5s infinite linear;
-        }
-
-        .play-icon .icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-50%);
-            opacity: .8;
-        }
-
-        .name {
-            font-size: 20px;
-            text-align: center;
-            padding-top: 6px;
-            overflow: hidden;
-
-        }
-
-        .name>div {
-            white-space: nowrap;
-            /* overflow: hidden; */
-            width: 100%;
-        }
-
-        .control {
-            margin-top: 10px;
-        }
-
-        .control .icon {
-            margin-left: 10px;
-        }
-
-        .lyric {
-            line-height: 22px;
-            font-size: 14px;
-            margin-top: 10px;
-            width: 100%;
-            min-height: 22px;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .music-wrap {
-            flex-wrap: nowrap;
-        }
-
-        @keyframes icon {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-
-
-
-
-        .progress {
-            padding-top: 13px;
-        }
-
-        .progress .inner {
-            height: 4px;
-            border-radius: 4px;
-            /* background-color: rgba(0, 0, 0, 0.2); */
-            background-color: #eee;
-            position: relative;
-        }
-
-        .progress .inner .value {
-            height: 4px;
-            border-radius: 4px;
-            width: 50%;
-            background-color: #50ce50;
-            position: relative;
-        }
-
-        .progress .inner .value::after {
-            content: "";
-            width: 10px;
-            height: 10px;
-            box-sizing: border-box;
-            border: 2px solid #50ce50;
-            border-radius: 50%;
-            position: absolute;
-            right: 0%;
-            top: -3px;
-            background-color: #fff;
-        }
-
-        .time {
-            padding-top: 6px;
-            margin-left: 6px;
-        }
-
-        .volume {
-            font-size: 14px;
-            margin: 0 20px;
-            line-height: 24px;
-        }
-
-        .volume .down,
-        .volume .up {
-            font-size: 20px;
-        }
-
-        .volume .val {
-            margin: 0 10px;
-        }
-
-        .wrap:hover .progress {
-            display: block;
-        }
-
-        .pn,
-        .ptype {
-            padding-top: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="css.css" />
 </head>
 
 <body>
     <div id="app">
         <audio src="" id="music"></audio>
-        <div class="wrap"
-            :style="{'border-color':'rgba('+bcolor.join(',')+')','border-width':bwidth,'background-color':'rgba('+bcolor1.join(',')+')','border-radius':bradius}">
+        <div class="wrap" :style="wrapCss">
             <div class="music-wrap">
                 <div class="play-icon" @click="play" @dblclick="reset">
                     <div class="icon-rotate" :class="{rotate:!pause && playing}">
@@ -216,16 +44,13 @@
                     </div>
                 </div>
                 <div class="info">
-                    <div class="name" id="name-wrap"
-                        :style="{'font-family':fontFamily,color:fontColor1,'font-size':fontSize1}">
+                    <div class="name" id="name-wrap" :style="nameCss">
                         <div :style="{transform: 'translateX('+nameSroll.x+'px)'}">
-                            <span id="name-scroll">{{current.title}} -
-                                {{current.author}}</span>
+                            <span id="name-scroll">{{current.title}} - {{current.author}}</span>
                         </div>
                     </div>
                     <div class="lyric">
-                        <span
-                            :style="{'font-family':fontFamily,color:fontColor2,'font-size':fontSize2}">{{lrcText}}</span>
+                        <span :style="lrcCss">{{lrcText}}</span>
                     </div>
                     <div class="control flex-display">
                         <div class="progress flex-1" v-if="showControl.progress">
@@ -286,16 +111,18 @@
         let ptype = getParam('ptype') || '顺序播放';
         let mtype = getParam('mtype') || '网易云音乐';
 
+        //音量
         let volume = Number(getParam('volume') || 0.5);
-
-
+        //标题滚动
         let namescroll = (getParam('namescroll') || 'true') == 'true';
-
-
+        //自动播放
         let autoplay = (getParam('autoplay') || 'true') == 'true';
+        //显示控制按钮
         let iscontrol = (getParam('control') || 'true') == 'true';
+        //显示进度条
         let isprogress = (getParam('progress') || 'true') == 'true';
 
+        //边框
         let bcolor = '#' + (getParam('bcolor') || 'fff');
         let bopacity = Number(getParam('bopacity') || '100');
         bcolor = bcolor.hex2rgb();
@@ -304,15 +131,20 @@
         let bwidth = (getParam('bwidth') || '1') + 'px';
         let bradius = (getParam('bradius') || '4') + 'px';
 
+        //背景
         let bcolor1 = '#' + (getParam('bcolor1') || '000');
         let bopacity1 = Number(getParam('bopacity1') || '20');
         bcolor1 = bcolor1.hex2rgb();
         bcolor1.push(bopacity1 / 100);
 
+        //字体
         let fontFamily = getParam('fontfamily') || '微软雅黑';
+
+        //标题
         let fontColor1 = '#' + (getParam('fontcolor1') || 'fff');
-        let fontColor2 = '#' + (getParam('fontcolor2') || 'fff');
         let fontSize1 = (getParam('fontsize1') || '20') + 'px';
+        //歌词
+        let fontColor2 = '#' + (getParam('fontcolor2') || 'fff');
         let fontSize2 = (getParam('fontsize2') || '14') + 'px';
 
         var app = new Vue({
@@ -379,7 +211,6 @@
                 },
                 pause(val) {
                     if (this.music) {
-                        console.log(val);
                         if (val) {
                             this.music.pause();
                         } else {
@@ -401,6 +232,28 @@
             computed: {
                 current() {
                     return this.list[this.currentIndex] || { title: '', author: '', pic: '' };
+                },
+                wrapCss() {
+                    return {
+                        'border-color': 'rgba(' + this.bcolor.join(',') + ')'
+                        , 'border-width': this.bwidth
+                        , 'background-color': 'rgba(' + this.bcolor1.join(',') + ')'
+                        , 'border-radius': this.bradius
+                    }
+                },
+                nameCss() {
+                    return {
+                        'font-family': this.fontFamily
+                        , 'color': this.fontColor1
+                        , 'font-size': this.fontSize1
+                    }
+                },
+                lrcCss() {
+                    return {
+                        'font-family': this.fontFamily
+                        , 'color': this.fontColor2
+                        , 'font-size': this.fontSize2
+                    }
                 }
             },
             mounted() {

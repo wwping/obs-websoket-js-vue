@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:52
- * @LastEditTime: 2020-08-04 12:20:58
+ * @LastEditTime: 2020-08-07 18:59:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\zh.js
@@ -50,11 +50,15 @@ export default {
         'confirmDel': '确定删除吗？'
     },
     'blockly': {
+        'event': '事件',
+        'anyTransition': '任何过渡动画',
+
         'whenRun': '当运行时',
         'repeat': '重复',
         'times': '次',
         'delay': '延迟',
         'pleaseSelect': '请选择',
+        'waitTransition': '等待转场结束',
         'changeTransitionTo': '转场特效设置为',
         'changeTransitionDurationTo': '转场时长设置为',
         'set': '设',
@@ -77,5 +81,9 @@ export default {
 
         'control': '控制',
         'record': '录制',
+
+        'onTransition': '开始时',
+        'onTransitionEnd': '结束时',
+        'onTransitionVideoEnd': '视频结束时',
     }
 }

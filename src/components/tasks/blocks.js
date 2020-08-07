@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-03 13:14:01
- * @LastEditTime: 2020-08-03 20:27:51
+ * @LastEditTime: 2020-08-07 18:58:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\tasks\blocks.js
@@ -44,7 +44,7 @@ Blockly.Blocks['repeat'] = {
 Blockly.Blocks['print'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("打印");
+            .appendField("打印").appendField(new Blockly.FieldTextInput("hello"), "text");;
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -55,26 +55,26 @@ Blockly.Blocks['print'] = {
 
 
 Blockly.Blocks['delay'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField(i18n.t('blockly.delay'))
-          .appendField(new Blockly.FieldNumber(1000, 0, 9999999), "time").appendField("ms");
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour('#cd2377');
-      this.setTooltip('');
-      this.setHelpUrl('http://www.example.com/');
+    init: function () {
+        this.appendDummyInput()
+            .appendField(i18n.t('blockly.delay'))
+            .appendField(new Blockly.FieldNumber(1000, 0, 9999999), "time").appendField("ms");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour('#cd2377');
+        this.setTooltip('');
+        this.setHelpUrl('http://www.example.com/');
     }
-  };
+};
 
 Blockly.Blocks['changeScene'] = {
-    init: function() {
+    init: function () {
 
-        let options = store.state.scenes.map(c=>{
-            return [c.name,c.name];
-        }) ;
-        if(options.length == 0){
-            options = [[i18n.t('blockly.pleaseSelect'),i18n.t('blockly.pleaseSelect')]]
+        let options = store.state.scenes.map(c => {
+            return [c.name, c.name];
+        });
+        if (options.length == 0) {
+            options = [[i18n.t('blockly.pleaseSelect'), i18n.t('blockly.pleaseSelect')]]
         }
 
         this.appendDummyInput()
@@ -89,13 +89,13 @@ Blockly.Blocks['changeScene'] = {
 };
 
 Blockly.Blocks['changeTransition'] = {
-    init: function() {
+    init: function () {
 
-        let options = store.state.transitions.map(c=>{
-            return [c.name,c.name];
-        }) ;
-        if(options.length == 0){
-            options = [[i18n.t('blockly.pleaseSelect'),i18n.t('blockly.pleaseSelect')]]
+        let options = store.state.transitions.map(c => {
+            return [c.name, c.name];
+        });
+        if (options.length == 0) {
+            options = [[i18n.t('blockly.pleaseSelect'), i18n.t('blockly.pleaseSelect')]]
         }
 
         this.appendDummyInput()
@@ -111,7 +111,7 @@ Blockly.Blocks['changeTransition'] = {
 
 
 Blockly.Blocks['changeDuration'] = {
-    init: function() {
+    init: function () {
         this.appendDummyInput()
             .appendField(i18n.t('blockly.changeTransitionDurationTo'))
             .appendField(new Blockly.FieldNumber(store.state.transition_duration, 0, 99999), "duration")
@@ -124,37 +124,49 @@ Blockly.Blocks['changeDuration'] = {
     }
 };
 
+Blockly.Blocks['waitTransition'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField(i18n.t('blockly.waitTransition'))
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(120);
+        this.setTooltip('');
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
 
-var sourceVisible_sources = [[i18n.t('blockly.pleaseSelect'),i18n.t('blockly.pleaseSelect')]];
-const sourceValidate = (newValue)=>{
-    let scene =  store.state.scenes.filter(c=>c.name == newValue)[0];
-    if(scene){
-        sourceVisible_sources =  scene.sources.map(c=>{
-            return [c.name,c.name];
+
+var sourceVisible_sources = [[i18n.t('blockly.pleaseSelect'), i18n.t('blockly.pleaseSelect')]];
+const sourceValidate = (newValue) => {
+    let scene = store.state.scenes.filter(c => c.name == newValue)[0];
+    if (scene) {
+        sourceVisible_sources = scene.sources.map(c => {
+            return [c.name, c.name];
         });
-    }else{
-        sourceVisible_sources =  [[i18n.t('blockly.pleaseSelect'),i18n.t('blockly.pleaseSelect')]];
+    } else {
+        sourceVisible_sources = [[i18n.t('blockly.pleaseSelect'), i18n.t('blockly.pleaseSelect')]];
     }
     return newValue;
 }
 Blockly.Blocks['sourceVisible'] = {
-    validate:sourceValidate,
-    init: function() {
+    validate: sourceValidate,
+    init: function () {
         this.appendDummyInput()
             .appendField(i18n.t('blockly.scene') + ':')
-            .appendField(new Blockly.FieldDropdown(()=>{
-                let scenes = store.state.scenes.map(c=>{
-                    return [c.name,c.name];
-                }) ;
-                scenes.splice(0,0,[i18n.t('blockly.pleaseSelect'),i18n.t('blockly.pleaseSelect')]);
+            .appendField(new Blockly.FieldDropdown(() => {
+                let scenes = store.state.scenes.map(c => {
+                    return [c.name, c.name];
+                });
+                scenes.splice(0, 0, [i18n.t('blockly.pleaseSelect'), i18n.t('blockly.pleaseSelect')]);
                 return scenes;
-            },this.validate), "scene")
-            .appendField(i18n.t('blockly.source')+":")
-            .appendField(new Blockly.FieldDropdown(()=>{
+            }, this.validate), "scene")
+            .appendField(i18n.t('blockly.source') + ":")
+            .appendField(new Blockly.FieldDropdown(() => {
                 return sourceVisible_sources;
             }), "source")
             .appendField(i18n.t('blockly.set2'))
-            .appendField(new Blockly.FieldDropdown([[i18n.t('blockly.hidden'), "hidden"], [i18n.t('blockly.show'), "show"],[i18n.t('blockly.lock'), "lock"], [i18n.t('blockly.unlock'), "unlock"]]), "visible");
+            .appendField(new Blockly.FieldDropdown([[i18n.t('blockly.hidden'), "hidden"], [i18n.t('blockly.show'), "show"], [i18n.t('blockly.lock'), "lock"], [i18n.t('blockly.unlock'), "unlock"]]), "visible");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour(65);
@@ -164,39 +176,36 @@ Blockly.Blocks['sourceVisible'] = {
 };
 
 
-
-
-
-var sourceVisible_sounds = [[i18n.t('blockly.pleaseSelect'),i18n.t('blockly.pleaseSelect')]];
-const soundValidate = (newValue)=>{
+var sourceVisible_sounds = [[i18n.t('blockly.pleaseSelect'), i18n.t('blockly.pleaseSelect')]];
+const soundValidate = (newValue) => {
     let currentSources = store.state.scenes.filter(c => c.name == newValue)[0];
-        if(currentSources){
-            let allAudios = currentSources.sources.filter(c => store.state.audio_types.indexOf(c.type) >= 0 && c.render == true).map(c => c.name);
-            allAudios = allAudios.concat(store.state.special_sources);
+    if (currentSources) {
+        let allAudios = currentSources.sources.filter(c => store.state.audio_types.indexOf(c.type) >= 0 && c.render == true).map(c => c.name);
+        allAudios = allAudios.concat(store.state.special_sources);
 
-            sourceVisible_sounds =  allAudios.map(c=>{
-                return [c,c];
-            });
-        }else{
-            sourceVisible_sounds =  [[i18n.t('blockly.pleaseSelect'),i18n.t('blockly.pleaseSelect')]];
-        }
-        return newValue;
+        sourceVisible_sounds = allAudios.map(c => {
+            return [c, c];
+        });
+    } else {
+        sourceVisible_sounds = [[i18n.t('blockly.pleaseSelect'), i18n.t('blockly.pleaseSelect')]];
+    }
+    return newValue;
 }
 Blockly.Blocks['sourceMuted'] = {
-    validate:soundValidate,
-    init: function() {
+    validate: soundValidate,
+    init: function () {
 
         this.appendDummyInput()
             .appendField(i18n.t('blockly.scene') + ':')
-            .appendField(new Blockly.FieldDropdown(()=>{
-                let scenes = store.state.scenes.map(c=>{
-                    return [c.name,c.name];
-                }) ;
-                scenes.splice(0,0,[i18n.t('blockly.pleaseSelect'),i18n.t('blockly.pleaseSelect')]);
+            .appendField(new Blockly.FieldDropdown(() => {
+                let scenes = store.state.scenes.map(c => {
+                    return [c.name, c.name];
+                });
+                scenes.splice(0, 0, [i18n.t('blockly.pleaseSelect'), i18n.t('blockly.pleaseSelect')]);
                 return scenes;
-            },this.validate), "scene")
-            .appendField(i18n.t('blockly.sound')+":")
-            .appendField(new Blockly.FieldDropdown(()=>{
+            }, this.validate), "scene")
+            .appendField(i18n.t('blockly.sound') + ":")
+            .appendField(new Blockly.FieldDropdown(() => {
                 return sourceVisible_sounds;
             }), "sound")
             .appendField(i18n.t('blockly.set2'))
@@ -210,19 +219,19 @@ Blockly.Blocks['sourceMuted'] = {
 };
 
 Blockly.Blocks['sourceVolume'] = {
-    validate:soundValidate,
-    init: function() {
+    validate: soundValidate,
+    init: function () {
         this.appendDummyInput()
             .appendField(i18n.t('blockly.scene') + ':')
-            .appendField(new Blockly.FieldDropdown(()=>{
-                let scenes = store.state.scenes.map(c=>{
-                    return [c.name,c.name];
-                }) ;
-                scenes.splice(0,0,[i18n.t('blockly.pleaseSelect'),i18n.t('blockly.pleaseSelect')]);
+            .appendField(new Blockly.FieldDropdown(() => {
+                let scenes = store.state.scenes.map(c => {
+                    return [c.name, c.name];
+                });
+                scenes.splice(0, 0, [i18n.t('blockly.pleaseSelect'), i18n.t('blockly.pleaseSelect')]);
                 return scenes;
-            },this.validate), "scene")
-            .appendField(i18n.t('blockly.sound')+":")
-            .appendField(new Blockly.FieldDropdown(()=>{
+            }, this.validate), "scene")
+            .appendField(i18n.t('blockly.sound') + ":")
+            .appendField(new Blockly.FieldDropdown(() => {
                 return sourceVisible_sounds;
             }), "sound")
             .appendField(i18n.t('blockly.volume'))
@@ -239,7 +248,7 @@ Blockly.Blocks['sourceVolume'] = {
 
 
 Blockly.Blocks['startRecord'] = {
-    init: function() {
+    init: function () {
 
         this.appendDummyInput()
             .appendField(i18n.t('blockly.startRecord'))
@@ -251,7 +260,7 @@ Blockly.Blocks['startRecord'] = {
     }
 };
 Blockly.Blocks['stopRecord'] = {
-    init: function() {
+    init: function () {
 
         this.appendDummyInput()
             .appendField(i18n.t('blockly.stopRecord'))
@@ -263,7 +272,7 @@ Blockly.Blocks['stopRecord'] = {
     }
 };
 Blockly.Blocks['pauseRecord'] = {
-    init: function() {
+    init: function () {
 
         this.appendDummyInput()
             .appendField(i18n.t('blockly.pauseRecord'))
@@ -275,7 +284,7 @@ Blockly.Blocks['pauseRecord'] = {
     }
 };
 Blockly.Blocks['resumeRecord'] = {
-    init: function() {
+    init: function () {
 
         this.appendDummyInput()
             .appendField(i18n.t('blockly.resumeRecord'))
@@ -286,3 +295,50 @@ Blockly.Blocks['resumeRecord'] = {
         this.setHelpUrl('http://www.example.com/');
     }
 };
+
+
+const transitionDropdownOptions = () => {
+    let transitions = store.state.transitions.map(c => {
+        return [c.name, c.name];
+    })
+    transitions.splice(0, 0, [i18n.t('blockly.anyTransition'), 'any']);
+    return transitions;
+}
+
+//当过度开始的时候执行以下代码
+Blockly.Blocks['onTransition'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown(transitionDropdownOptions), "transition")
+            .appendField(i18n.t('blockly.onTransition'));
+        this.setNextStatement(true, null);
+        this.setColour('#e69303');
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
+};
+//当过度结束的时候之下以下代码
+Blockly.Blocks['onTransitionEnd'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown(transitionDropdownOptions), "transition")
+            .appendField(i18n.t('blockly.onTransitionEnd'));
+        this.setNextStatement(true, null);
+        this.setColour('#e69303');
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
+};
+//当过度播放的视频播放结束的时候执行
+Blockly.Blocks['onTransitionVideoEnd'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown(transitionDropdownOptions), "transition")
+            .appendField(i18n.t('blockly.onTransitionVideoEnd'));
+        this.setNextStatement(true, null);
+        this.setColour('#e69303');
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
+};
+

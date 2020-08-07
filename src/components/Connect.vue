@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:27:20
- * @LastEditTime: 2020-08-03 23:24:59
+ * @LastEditTime: 2020-08-07 17:06:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Connect.vue
@@ -70,7 +70,19 @@ export default {
             this.obs.on(c, () => {
                 this.updateSources();
             })
-        })
+        });
+
+        //监听obs过渡事件，发送消息 给任务代码
+        [
+            { event: 'TransitionBegin', name: 'begin' },
+            { event: 'TransitionEnd', name: 'end' },
+            { event: 'TransitionVideoEnd', name: 'videoEnd' },
+        ].map(c => {
+            this.obs.on(c.event, (data) => {
+                msgSubPusher.push(`obs-on-transition-${c.name}`, data);
+            });
+        });
+
 
         msgSubPusher.add('obs-command', this.command);
         msgSubPusher.add('obs-connect', this.connect);

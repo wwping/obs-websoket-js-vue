@@ -1,73 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B站弹幕</title>
     <link rel="stylesheet" href="../reset.css">
-    <style type="text/css">
-    /* body{background-color: rgba(0,0,0,0.5);} */
-    .wrap{position: absolute;background-color: rgba(0,0,0,0.5); left: 1px;top: 1px;right: 1px;bottom: 1px;box-sizing: border-box; overflow: auto;color:#fff}
-    .scroll2::-webkit-scrollbar {width: 1px;height: 1px;}
-.scroll2::-webkit-scrollbar-thumb {background: rgba(0,0,0,0);border-radius: 4px;}
-    .wrap>h3{display: none; color:#fff;border-bottom: 1px solid #ddd;padding: 6px;font-size: 14px;text-shadow: 1px 1px 1px rgba(0,0,0,1);}
-    ul{padding: 0 10px;}
-    li{padding: 10px 0; text-shadow: 1px 1px 1px rgba(0,0,0,1); overflow: hidden;font-size: 20px;}
-    span.uname{color:#b9b9b9;}
-    span.level{font-size: 16px; border: 1px solid #9ac5ad;padding:0 4px;border-radius: 2px; color:#fbfbfb;display: inline-block;height: 20px;line-height: 20px;}
-    span.pz{margin-right: 6px;background-color: #fff;color:#666;border-radius:4px 2px 2px 4px;padding: 2px 2px 2px 0px;text-shadow: none;}
-    span.pz span{background-color: green;color:#fff;margin: -2px 0 -2px 0; padding: 2px 4px;margin-right: 2px;border-radius: 4px 0 0 4px;}
-    .ly .name{color:red;}
-    .jz .name{color: orange;} 
-    .gift{color: orange;} 
-    span.msg{margin-left: 6px;}
-    span.xz{vertical-align: middle;}
-    .tw .uname,.lj .uname{color:greenyellow;}
-    span.fg{font-size: 16px; border: 1px solid orange;padding:0 4px;border-radius: 2px; color:orange;display: inline-block;height: 20px;line-height: 20px;}
-    </style>
+    <link rel="stylesheet" href="css.css">
 </head>
+
 <body>
     <div>
-        <div id="app" >
-            <div class="wrap scroll2" ref="wrap" :style="{'background-color':'rgba(0,0,0,'+(opacity/100)+')','border-color':bcolor?('1px solid #'+bcolor):'none'}">
-                <h3 :style="{'border-bottom':bcolor?('1px solid rgba(255,255,255,'+(1-opacity/100)+')'):'none'}">房间号 : {{rid}}</h3>
+        <div id="app">
+            <div class="wrap scroll2" ref="wrap"
+                :style="{'border-radius':bradius,'background-color':'rgba('+bcolor.join(',')+')','border':'1px solid rgba('+bcolor1.join(',')+')','font-family':ff}">
+                <h3>房间号 :
+                    {{rid}}</h3>
                 <ul>
                     <li v-for="(item,index) in msgs" :key="index">
                         <div v-if="item.type == 'dm'" class="dm">
                             <span v-if="item.user.jd" class="xz">
-                                <img :src="'https://i0.hdslb.com/bfs/activity-plat/static/20200716/1d0c5a1b042efb59f46d4ba1286c6727/icon-guard'+item.user.jd1+'.png@30w_30h.webp'" alt="">
+                                <img :src="item.user.jd1+'.webp'" alt="">
                             </span>
-                            <span v-if="item.user.fg" class="fg">房</span>
                             <span class="pz" v-if="item.pz.name && label">
                                 <span>{{item.pz.name}}</span>{{item.pz.level}}
                             </span>
-                            <span class="uname" :style="{color:item.user.color}">{{item.user.name}} : <span class="level" v-if="slevel">UL {{item.user.level}}</span></span>
-                            <span class="msg">{{item.msg}}</span>
+                            <span v-if="item.user.jd" class="jd">{{item.user.jd}}</span>
+                            <span v-if="item.user.fg" class="fg">房</span>
+                            <span class="level" v-if="slevel">UL {{item.user.level}}</span>
+                            <span class="uname" :style="{color:item.user.color}">{{item.user.name}} : </span>
+                            <span class="msg" :style="{color:fcolor}">{{item.msg}}</span>
                         </div>
                         <div v-else-if="item.type == 'sj'" class="sj">
-                            <span><span class="uname">{{item.user.name}}</span> 上 {{item.gift.gift_name}}x <strong class="gift">{{item.gift.num}}</strong></span>
+                            <span><span class="uname">{{item.user.name}}</span> 上 {{item.gift.gift_name}}x <strong
+                                    class="gift">{{item.gift.num}}</strong></span>
                         </div>
                         <div v-else-if="item.type=='ly'" class="ly">
-                            <span><span class="name" >{{item.user.name}} {{item.user.svip?'年费':''}}姥爷</span> 进入房间</span>
+                            <span><span class="name">{{item.user.name}} {{item.user.svip?'年费':''}}姥爷</span> 进入直播间</span>
                         </div>
                         <div v-else-if="item.type == 'jz'" class="jz">
-                            <span><span class="name">{{item.user.name}} 舰长</span> 进入房间</span>
+                            <span><span class="name">{{item.user.name}} 舰长</span> 进入直播间</span>
+                        </div>
+                        <div v-else-if="item.type == 'jf'" class="jf">
+                            <span><span class="name"
+                                    :style="{color:item.user.color?item.user.color:'#daf6ff'}">{{item.user.name}}
+                                </span> 进入直播间</span>
+                        </div>
+                        <div v-else-if="item.type == 'gz'" class="gz">
+                            <span><span class="name"
+                                    :style="{color:item.user.color?item.user.color:'#d860ff'}">{{item.user.name}}
+                                </span> 关注了直播间</span>
                         </div>
                         <div v-else-if="item.type == 'jy'" class="jy">
                             <span><span class="name">{{item.user.name}}</span> 被房管禁言</span>
                         </div>
                         <div v-else-if="item.type == 'tw'" class="tw">
-                            <span><span class="uname">{{item.user.name}}</span> 投喂 <strong class="gift">{{item.gift.name}}</strong> x <strong class="gift">{{item.gift.num}}</strong></span>
+                            <span><span class="uname">{{item.user.name}}</span> 投喂 <strong
+                                    class="gift">{{item.gift.name}}</strong> x <strong
+                                    class="gift">{{item.gift.num}}</strong></span>
                         </div>
                         <div v-else-if="item.type == 'lj'" class="lj">
-                            <span><span class="uname">{{item.user.name}}</span> 连击 <strong class="gift">{{item.gift.name}}</strong> x <strong class="gift">{{item.gift.num}}</strong></span>
+                            <span><span class="uname">{{item.user.name}}</span> 连击 <strong
+                                    class="gift">{{item.gift.name}}</strong> x <strong
+                                    class="gift">{{item.gift.num}}</strong></span>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    
+
     <script src="js.js"></script>
     <script src="../js.js"></script>
     <script src="../pako.min.js"></script>
@@ -80,60 +82,81 @@
         const row = Number(getParam('row') || '5');
         const price = Number(getParam('price') || '0');
         const silver = (getParam('silver') || 'true') == 'true';
+        //const opacity = Number(getParam('opacity') || '100');
+
+        let bcolor = '#' + (getParam('bcolor') || '000');
+        let fcolor = '#' + (getParam('fcolor') || 'fff');
+
         const opacity = Number(getParam('opacity') || '100');
-        const bcolor = getParam('bcolor') || '';
+        bcolor = bcolor.hex2rgb();
+        bcolor.push(opacity / 100);
+
+        let bcolor1 = '#' + (getParam('bcolor1') || 'fff');
+        const opacity1 = Number(getParam('opacity1') || '100');
+        bcolor1 = bcolor1.hex2rgb();
+        bcolor1.push(opacity1 / 100);
+
+        const bradius = (getParam('bradius') || '4') + 'px';
+
+        const ff = getParam('ff') || '微软雅黑';
+
 
         const gold = (getParam('gold') || 'true') == 'true';
         const slevel = (getParam('slevel') || 'true') == 'true';
         const label = (getParam('label') || 'true') == 'true';
+        const gz = (getParam('gz') || 'true') == 'true';
         const ly = (getParam('ly') || 'true') == 'true';
         const jz = (getParam('jz') || 'true') == 'true';
         const dm = (getParam('dm') || 'true') == 'true';
         const jzdm = (getParam('jzdm') || 'true') == 'true';
         const sj = (getParam('sj') || 'true') == 'true';
+        const jf = (getParam('jf') || 'true') == 'true';
 
         var app = new Vue({
             el: '#app',
-            data(){
+            data() {
                 return {
-                    renqi:0,
-                    rid:0,
-                    msgs:[],
-                    opacity:opacity,
-                    bcolor:bcolor,
-                    gifts:{},
-                    slevel:slevel,
-                    label:label
+                    renqi: 0,
+                    rid: 0,
+                    msgs: [],
+                    bcolor: bcolor,
+                    bcolor1: bcolor1,
+                    bradius: bradius,
+                    fcolor: fcolor,
+                    gifts: {},
+                    slevel: slevel,
+                    label: label,
+                    ff: ff
                 }
             },
-            mounted(){
+            mounted() {
 
                 this.rid = rid;
 
-                axios.get('http://obs.qbcode.cn:8000/bilibili/init?id='+rid).then((res)=>{
-                    if(res.data.code == 0){
+                axios.get('http://obs.qbcode.cn:8000/bilibili/init?id=' + rid).then((res) => {
+                    if (res.data.code == 0) {
                         let rid = res.data.data.room_id;
 
-                        axios.get('http://obs.qbcode.cn:8000/bilibili/gifts?id='+rid).then((res)=>{
-                            if(res.data.code == 0){
+                        axios.get('http://obs.qbcode.cn:8000/bilibili/gifts?id=' + rid).then((res) => {
+                            if (res.data.code == 0) {
                                 let list = res.data.data.list;;
                                 let json = {};
-                                for(let i = 0; i < list.length; i++){
+                                for (let i = 0; i < list.length; i++) {
                                     let item = list[i];
                                     json[item.name] = {
-                                        gif:item.gif,
-                                        img_basic:item.img_basic,
-                                        img_dynamic:item.img_dynamic,
-                                        webp:item.webp,
-                                        coin_type:item.coin_type,
+                                        gif: item.gif,
+                                        img_basic: item.img_basic,
+                                        img_dynamic: item.img_dynamic,
+                                        webp: item.webp,
+                                        coin_type: item.coin_type,
                                     };
                                 }
                                 this.gifts = json;
                             }
                         });
 
-                        axios.get('http://obs.qbcode.cn:8000/bilibili/info?id='+rid).then((res)=>{
-                            if(res.data.code == 0){
+                        axios.get('http://obs.qbcode.cn:8000/bilibili/info?id=' + rid).then((res) => {
+                            if (res.data.code == 0) {
                                 let host_list = res.data.data.host_list;
                                 let token = res.data.data.token;
 
@@ -154,154 +177,174 @@
                                         ws.send(encode('', 2));
                                     }, 30000);
                                 };
-                                ws.onmessage = async (msgEvent)=> {
+                                ws.onmessage = async (msgEvent) => {
                                     this.onmessage(await decode(msgEvent.data));
                                 }
 
-                            }else{
+                            } else {
                                 console.error('获取信息失败!');
                             }
                         })
-                    }else{
+                    } else {
                         console.error('获取房间号失败!');
                     }
                 })
             },
             methods: {
-                scrollBottom () {
+                scrollBottom() {
                     this.$nextTick(() => {
                         this.$refs.wrap.scrollTop = this.$refs.wrap.scrollHeight;
                     })
                 },
-                onmessage(packet){
-                    if(packet.op == 5){
+                onmessage(packet) {
+                    if (packet.op == 5) {
                         let body = packet.body;
-                        for(let i = 0; i < body.length; i++){
+                        for (let i = 0; i < body.length; i++) {
                             let item = body[i];
-                            switch(item.cmd){
-                                case 'GUARD_BUY':
-                                    if(sj){
+                            switch (item.cmd) {
+                                case 'INTERACT_WORD':
+                                    if (jf && item.data.msg_type == 1) {
                                         this.msgs.push({
-                                            type:'sj',
-                                            user:{
-                                                
-                                                name:item.data.username
-                                            },
-                                            gift:{
-                                                guard_level:item.data.guard_level,
-                                                gift_name:item.data.gift_name,
-                                                num:item.data.num,
+                                            type: 'jf',
+                                            user: {
+                                                name: item.data.uname,
+                                                color: item.data.uname_color
                                             }
                                         })
                                     }
-                                    console.log(item);
-                                break;
-                                case 'DANMU_MSG':
-                                    if((item.info[4][0] > level && dm) || (jzdm &&item.info[7] > 0)){
+                                    if (gz && item.data.msg_type == 2) {
                                         this.msgs.push({
-                                            type:'dm',
-                                            pz:{
-                                                name:item.info[3][1],
-                                                level:item.info[3][0],
+                                            type: 'gz',
+                                            user: {
+                                                name: item.data.uname,
+                                                color: item.data.uname_color
+                                            }
+                                        })
+                                    }
+                                    break;
+                                case 'GUARD_BUY':
+                                    if (sj) {
+                                        this.msgs.push({
+                                            type: 'sj',
+                                            user: {
+
+                                                name: item.data.username
                                             },
-                                            user:{
-                                                level:item.info[4][0],
-                                                name:item.info[2][1],
-                                                color:item.info[2][7],
-                                                fg:item.info[2][2] == 1,
-                                                jd:{0:'',1:'总督',2:'提督',3:'舰长'}[item.info[7]],
-                                                jd1:item.info[7],
+                                            gift: {
+                                                guard_level: item.data.guard_level,
+                                                gift_name: item.data.gift_name,
+                                                num: item.data.num,
+                                            }
+                                        })
+                                    }
+
+                                    break;
+                                case 'DANMU_MSG':
+                                    if ((item.info[4][0] > level && dm) || (jzdm && item.info[7] > 0)) {
+                                        this.msgs.push({
+                                            type: 'dm',
+                                            pz: {
+                                                name: item.info[3][1],
+                                                level: item.info[3][0],
                                             },
-                                            msg:item.info[1]
+                                            user: {
+                                                level: item.info[4][0],
+                                                name: item.info[2][1],
+                                                color: item.info[2][7],
+                                                fg: item.info[2][2] == 1,
+                                                jd: { 0: '', 1: '总督', 2: '提督', 3: '舰长' }[item.info[7]],
+                                                jd1: item.info[7],
+                                            },
+                                            msg: item.info[1]
                                         })
                                     }
                                     break;
                                 case 'WELCOME':
-                                    if(ly){
+                                    if (ly) {
                                         this.msgs.push({
-                                            type:'ly',
-                                            user:{
-                                                svip:item.data.svip,
-                                                name:item.data.uname
+                                            type: 'ly',
+                                            user: {
+                                                svip: item.data.svip,
+                                                name: item.data.uname
                                             },
                                         })
                                     }
                                     break;
                                 case 'WELCOME_GUARD':
-                                    if(jz){
+                                    if (jz) {
                                         this.msgs.push({
-                                            type:'jz',
-                                            user:{
-                                                name:item.data.username
+                                            type: 'jz',
+                                            user: {
+                                                name: item.data.username
                                             },
                                         })
                                     }
                                     break;
                                 case 'ROOM_BLOCK_MSG':
                                     this.msgs.push({
-                                        type:'jy',
-                                        user:{
-                                            name:item.data.uname
+                                        type: 'jy',
+                                        user: {
+                                            name: item.data.uname
                                         },
                                     })
                                     break;
                                 case 'SEND_GIFT':
-                                    if(item.data.coin_type == 'silver'){
-                                        if(silver){
+                                    if (item.data.coin_type == 'silver') {
+                                        if (silver) {
                                             this.msgs.push({
-                                                type:'tw',
-                                                gift:{
-                                                    type:'投喂',
-                                                    name:item.data.giftName,
-                                                    num:item.data.num
+                                                type: 'tw',
+                                                gift: {
+                                                    type: '投喂',
+                                                    name: item.data.giftName,
+                                                    num: item.data.num
                                                 },
-                                                user:{
-                                                    name:item.data.uname
+                                                user: {
+                                                    name: item.data.uname
                                                 },
                                             });
                                         }
-                                    }else{
-                                        if(gold){
+                                    } else {
+                                        if (gold) {
                                             this.msgs.push({
-                                                type:'tw',
-                                                gift:{
-                                                    type:'投喂',
-                                                    name:item.data.giftName,
-                                                    num:item.data.num
+                                                type: 'tw',
+                                                gift: {
+                                                    type: '投喂',
+                                                    name: item.data.giftName,
+                                                    num: item.data.num
                                                 },
-                                                user:{
-                                                    name:item.data.uname
+                                                user: {
+                                                    name: item.data.uname
                                                 },
                                             });
                                         }
                                     }
                                     break;
                                 case 'COMBO_END':
-                                    if(item.data.price > price && gold){
+                                    if (item.data.price > price && gold) {
                                         this.msgs.push({
-                                            type:'lj',
-                                            gift:{
-                                                type:'连击',
-                                                name:item.data.gift_name,
-                                                num:item.data.gift_num
+                                            type: 'lj',
+                                            gift: {
+                                                type: '连击',
+                                                name: item.data.gift_name,
+                                                num: item.data.gift_num
                                             },
-                                            user:{
-                                                name:item.data.uname
+                                            user: {
+                                                name: item.data.uname
                                             },
                                         });
                                     }
                                     break;
                                 default:
-                                //   console.log(item);
+                                    //   console.log(item);
                                     break;
                             }
-                           
-                            if(this.msgs.length > row){
-                                this.msgs.splice(0,1);
+
+                            if (this.msgs.length > row) {
+                                this.msgs.splice(0, 1);
                             }
                             this.scrollBottom();
                         }
-                    }else if(packet.op == 3){
+                    } else if (packet.op == 3) {
                         this.renqi = packet.body.count;
                     }
                 }
@@ -309,4 +352,5 @@
         })
     </script>
 </body>
+
 </html>

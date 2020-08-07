@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-31 16:24:00
- * @LastEditTime: 2020-08-04 22:50:12
+ * @LastEditTime: 2020-08-07 15:31:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\pages\Tasks.vue
@@ -94,9 +94,7 @@ export default {
     methods: {
         // blockly 
         runCode () {
-            let code = Blockly.JavaScript.workspaceToCode(this.blocklys.workspace).split('\n').filter(c => c.indexOf('onStart') > 0)[0];
-            code = JSON.parse('[' + code + ']');
-            this.runtime.run(code, this.highlightBlock);
+            this.runtime.parseCode(Blockly.JavaScript.workspaceToCode(this.blocklys.workspace), this.highlightBlock);
         },
         getDom () {
             return Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(this.blocklys.workspace));

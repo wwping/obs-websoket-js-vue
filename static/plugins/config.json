@@ -472,6 +472,11 @@
                 "options": "1|2|3|4|5|6",
                 "default": "1"
             },
+            "color3": {
+                "type": "color",
+                "text": "3颜色",
+                "default": "#fff"
+            },
             "_3": {
                 "child": {
                     "width": {
@@ -856,6 +861,12 @@
                 "text": "房间号",
                 "default": "0"
             },
+            "ff": {
+                "type": "font",
+                "text": "字体",
+                "options": "",
+                "default": "微软雅黑"
+            },
             "_0": {
                 "child": {
                     "row": {
@@ -865,7 +876,7 @@
                     },
                     "slevel": {
                         "type": "bool",
-                        "text": "等级",
+                        "text": "显示等级",
                         "default": true
                     }
                 }
@@ -912,16 +923,30 @@
                     }
                 }
             },
-            "_0000": {
+            "_0002": {
                 "child": {
                     "dm": {
                         "type": "bool",
-                        "text": "发言",
+                        "text": "用户发言",
                         "default": true
                     },
+                    "jf": {
+                        "type": "bool",
+                        "text": "用户进房",
+                        "default": true
+                    }
+                }
+            },
+            "_0000": {
+                "child": {
                     "label": {
                         "type": "bool",
-                        "text": "牌子",
+                        "text": "显示牌子",
+                        "default": true
+                    },
+                    "gz": {
+                        "type": "bool",
+                        "text": "关注消息",
                         "default": true
                     }
                 }
@@ -940,6 +965,48 @@
                     }
                 }
             },
+            "_3333": {
+                "child": {
+                    "fcolor": {
+                        "type": "color",
+                        "text": "弹幕颜色",
+                        "default": "#fff"
+                    },
+                    "bradius": {
+                        "type": "number",
+                        "text": "边框圆角",
+                        "default": 4
+                    }
+                }
+            },
+            "_33": {
+                "child": {
+                    "bcolor1": {
+                        "type": "color",
+                        "text": "边框色",
+                        "default": "#fff"
+                    },
+                    "opacity1": {
+                        "type": "number",
+                        "text": "边框透明",
+                        "default": 100
+                    }
+                }
+            },
+            "_333": {
+                "child": {
+                    "bcolor": {
+                        "type": "color",
+                        "text": "背景色",
+                        "default": "#000"
+                    },
+                    "opacity": {
+                        "type": "number",
+                        "text": "背景透明",
+                        "default": 20
+                    }
+                }
+            },
             "_2": {
                 "child": {
                     "width": {
@@ -951,20 +1018,6 @@
                         "type": "number",
                         "text": "框高度",
                         "default": 380
-                    }
-                }
-            },
-            "_3": {
-                "child": {
-                    "bcolor": {
-                        "type": "color",
-                        "text": "边框色",
-                        "default": "#fff"
-                    },
-                    "opacity": {
-                        "type": "number",
-                        "text": "透明度",
-                        "default": 100
                     }
                 }
             }
@@ -1013,20 +1066,6 @@
                     }
                 }
             },
-            "_1": {
-                "child": {
-                    "level": {
-                        "type": "number",
-                        "text": "发言等级",
-                        "default": 0
-                    },
-                    "price": {
-                        "type": "number",
-                        "text": "礼物价格",
-                        "default": 0
-                    }
-                }
-            },
             "_11": {
                 "child": {
                     "lw": {
@@ -1041,6 +1080,62 @@
                     }
                 }
             },
+            "_1": {
+                "child": {
+                    "level": {
+                        "type": "number",
+                        "text": "发言等级",
+                        "default": 0
+                    },
+                    "price": {
+                        "type": "number",
+                        "text": "礼物价格",
+                        "default": 0
+                    }
+                }
+            },
+            "_3333": {
+                "child": {
+                    "fcolor": {
+                        "type": "color",
+                        "text": "弹幕颜色",
+                        "default": "#fff"
+                    },
+                    "bradius": {
+                        "type": "number",
+                        "text": "边框圆角",
+                        "default": 4
+                    }
+                }
+            },
+            "_33": {
+                "child": {
+                    "bcolor1": {
+                        "type": "color",
+                        "text": "边框色",
+                        "default": "#fff"
+                    },
+                    "opacity1": {
+                        "type": "number",
+                        "text": "边框透明",
+                        "default": 100
+                    }
+                }
+            },
+            "_333": {
+                "child": {
+                    "bcolor": {
+                        "type": "color",
+                        "text": "背景色",
+                        "default": "#000"
+                    },
+                    "opacity": {
+                        "type": "number",
+                        "text": "背景透明",
+                        "default": 20
+                    }
+                }
+            },
             "_2": {
                 "child": {
                     "width": {
@@ -1052,20 +1147,6 @@
                         "type": "number",
                         "text": "框高度",
                         "default": 380
-                    }
-                }
-            },
-            "_3": {
-                "child": {
-                    "bcolor": {
-                        "type": "color",
-                        "text": "边框色",
-                        "default": "#fff"
-                    },
-                    "opacity": {
-                        "type": "number",
-                        "text": "透明度",
-                        "default": 100
                     }
                 }
             }

@@ -1,0 +1,141 @@
+        /* body{background-color: rgba(0,0,0,0.5);} */
+        .wrap {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.5);
+            left: 1px;
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            box-sizing: border-box;
+            overflow: auto;
+            color: #fff
+        }
+
+        .scroll2::-webkit-scrollbar {
+            width: 1px;
+            height: 1px;
+        }
+
+        .scroll2::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0);
+            border-radius: 4px;
+        }
+
+        .wrap>h3 {
+            display: none;
+            color: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 6px;
+            font-size: 14px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+        }
+
+        ul {
+            padding: 0 10px;
+        }
+
+        li {
+            padding: 10px 0;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+            overflow: hidden;
+            font-size: 20px;
+        }
+
+        @keyframes opacity {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        span.uname {
+            color: #afe8d7;
+        }
+
+        span.level {
+            font-size: 15px;
+            border: 1px solid #9ac5ad;
+            padding: 0 4px;
+            border-radius: 2px;
+            color: #fbfbfb;
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+        }
+
+        span.pz {
+            margin-right: 6px;
+            background-color: #fff;
+            color: #666;
+            border-radius: 2px;
+            padding: 0px 2px 0px 0px;
+            text-shadow: none;
+            height: 22px;
+            line-height: 22px;
+            font-size: 15px;
+        }
+
+        span.pz span {
+            background-color: green;
+            color: #fff;
+            padding: 0px 4px;
+            margin-right: 2px;
+            border-radius: 2px 0 0 2px;
+            height: 22px;
+            line-height: 22px;
+            display: inline-block;
+        }
+
+        .ly .name {
+            color: red;
+        }
+
+        .jz .name {
+            color: orange;
+        }
+
+        .jf .name {
+            color: rgb(171, 162, 255);
+        }
+
+        .gift {
+            color: orange;
+        }
+
+        span.msg {
+            margin-left: 6px;
+        }
+
+        span.xz {
+            vertical-align: middle;
+        }
+
+        .tw .uname,
+        .lj .uname {
+            color: greenyellow;
+        }
+
+        span.fg {
+            font-size: 16px;
+            border: 1px solid orange;
+            padding: 0 4px;
+            border-radius: 2px;
+            color: orange;
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+        }
+
+        span.jd {
+            font-size: 16px;
+            border: 1px solid rgb(10, 228, 2);
+            padding: 0 4px;
+            border-radius: 2px;
+            color: rgb(0, 255, 85);
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+        }

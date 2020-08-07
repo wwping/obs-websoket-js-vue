@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:46
- * @LastEditTime: 2020-08-04 12:21:17
+ * @LastEditTime: 2020-08-07 18:58:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\en.js
@@ -51,11 +51,15 @@ export default {
         'confirmDel': 'delete ？'
     },
     'blockly': {
+        'event': 'event',
+        'anyTransition': 'any transition',
+
         'whenRun': 'when run',
         'repeat': 'repeat',
         'times': 'times',
         'delay': 'delay',
         'pleaseSelect': 'please select',
+        'waitTransition': 'wait transition end',
         'changeTransitionTo': 'transition set to',
         'changeTransitionDurationTo': 'transition duration set to',
         'set': 'set',
@@ -78,5 +82,9 @@ export default {
 
         'control': 'control',
         'record': 'record',
+
+        'onTransition': 'transition on start',
+        'onTransitionEnd': 'transition on end',
+        'onTransitionVideoEnd': 'transition on video end',
     }
 }

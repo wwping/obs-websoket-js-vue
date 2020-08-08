@@ -1,0 +1,136 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-08 10:16:02
+ * @LastEditTime: 2020-08-08 17:08:41
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \obs\static\plugins\luckbrand\index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸运翻牌抽奖</title>
+    <link rel="stylesheet" href="../reset.css">
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body>
+    <div id="app" style="display: none;">
+        <div class="wrap">
+            <div class="brands" :style="{width:wrapWidth+'px',height:wrapHeight+'px'}">
+                <transition v-on:appear="initAnimate" v-for="(item,index) in brands">
+                    <div class="brand" :class="{open:item.attrs.open}" :style="item.style" :index="index"
+                        @click="click">
+                        <div class="bg" :style="{'font-size':fontsize + 'px',color:fontcolor,'font-family':font}">
+                            {{index+1}}</div>
+                        <div class="bg2" :style="{'font-size':fontsize + 'px',color:fontcolor,'font-family':font}">
+                            {{item.attrs.text}}
+                        </div>
+                    </div>
+                </transition>
+            </div>
+        </div>
+    </div>
+    <script src="../js.js"></script>
+    <script src="velocity.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        const text = (getParam('text') || '奖品1,奖品2,奖品3,奖品4').split(',').sort(() => Math.random() > 0.5 ? -1 : 1);
+        const fontsize = Number(getParam('fontsize') || '50');
+        const fontcolor = '#' + (getParam('fontcolor') || '149dca');
+        const font = getParam('font') || '微软雅黑'
+
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    num: text.length,
+
+                    brandWidth: 300,
+                    brandHeight: 421,
+                    lineMaxNum: 4,
+
+                    wrapHeight: 0,
+                    wrapWidth: 0,
+
+                    brands: [],
+
+                    originLeft: 0,
+                    originTop: 0,
+
+                    fontsize: fontsize,
+                    fontcolor: fontcolor,
+                    font: font
+                }
+            },
+            mounted() {
+
+                document.getElementById('app').style.display = 'block';
+
+                this.wrapHeight = (Math.ceil(this.num / this.lineMaxNum) * this.brandHeight);
+                this.wrapWidth = (
+                    this.num >= this.lineMaxNum
+                        ? this.lineMaxNum * this.brandWidth
+                        : this.num * this.brandWidth
+                );
+
+                let left = this.originLeft = (this.wrapWidth - this.brandWidth) / 2;
+                let top = this.originTop = (this.wrapHeight - this.brandHeight) / 2;
+
+                let brands = [];
+                for (let i = 0; i < this.num; i++) {
+                    brands.push({
+                        style: {
+                            width: this.brandWidth + 'px'
+                            , height: this.brandHeight + 'px'
+                            , 'line-height': this.brandHeight + 'px'
+                            , left: left + 'px'
+                            , top: top + 'px'
+                        },
+                        attrs: {
+                            left: (i % this.lineMaxNum) * this.brandWidth,
+                            top: Math.floor(i / this.lineMaxNum) * this.brandHeight,
+                            open: false,
+                            text: text[i]
+                        }
+                    });
+                }
+                this.brands = brands;
+
+            },
+            methods: {
+                initAnimate(el) {
+                    let item = this.brands[Number(el.getAttribute('index'))];
+                    Velocity(el, {
+                        left: item.attrs.left,
+                        top: item.attrs.top,
+                        rotateY: '360deg'
+                    }, {
+                        complete: () => {
+                            el.style.transform = 'rotateY(0deg)';
+                        }
+                    });
+                },
+                click($event) {
+
+                    let target = $event.currentTarget;
+                    let item = this.brands[Number(target.getAttribute('index'))];
+                    target.style.transform = 'rotateY(0deg)';
+                    Velocity($event.currentTarget, {
+                        rotateY: '360deg',
+                    }, {
+                        complete: () => {
+                            item.attrs.open = true;
+                            target.style.transform = 'rotateY(0deg)';
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

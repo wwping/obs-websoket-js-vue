@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-03 17:36:44
- * @LastEditTime: 2020-08-07 19:17:33
+ * @LastEditTime: 2020-08-07 22:59:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\tasks\runtime.js
@@ -13,6 +13,31 @@ export default class Runtime {
     threadTotal = 0
     threadNum = 0
     transitioning = false
+    //当开始过渡
+    onTransition (param) {
+        return new Promise((resolve, reject) => {
+            msgSubPusher.add(`obs-on-transition-begin`, (data) => {
+                resolve(data.name == param[0] || param[0] == 'any');
+            });
+        })
+    }
+    //当过渡结束
+    onTransitionEnd (param) {
+        return new Promise((resolve, reject) => {
+            msgSubPusher.add(`obs-on-transition-end`, (data) => {
+                resolve(data.name == param[0] || param[0] == 'any');
+            });
+        })
+    }
+    //当过渡播放的视频播放结束
+    onTransitionVideoEnd (param) {
+        return new Promise((resolve, reject) => {
+            msgSubPusher.add(`obs-on-transition-videoEnd`, (data) => {
+                resolve(data.name == param[0] || param[0] == 'any');
+            });
+        });
+    }
+
     //打印测试
     print (param) {
         return new Promise((resolve, reject) => {
@@ -47,6 +72,7 @@ export default class Runtime {
             fn();
         });
     }
+
     //切换场景
     changeScene (param) {
         return new Promise((resolve, reject) => {
@@ -106,6 +132,7 @@ export default class Runtime {
             fn();
         });
     }
+
     //源可见性
     sourceVisible (param) {
         return new Promise((resolve, reject) => {
@@ -167,30 +194,7 @@ export default class Runtime {
             })
         })
     }
-    //当开始过渡
-    onTransition (param) {
-        return new Promise((resolve, reject) => {
-            msgSubPusher.add(`obs-on-transition-begin`, (data) => {
-                resolve(data.name == param[0] || param[0] == 'any');
-            });
-        })
-    }
-    //当过渡结束
-    onTransitionEnd (param) {
-        return new Promise((resolve, reject) => {
-            msgSubPusher.add(`obs-on-transition-end`, (data) => {
-                resolve(data.name == param[0] || param[0] == 'any');
-            });
-        })
-    }
-    //当过渡播放的视频播放结束
-    onTransitionVideoEnd (param) {
-        return new Promise((resolve, reject) => {
-            msgSubPusher.add(`obs-on-transition-videoEnd`, (data) => {
-                resolve(data.name == param[0] || param[0] == 'any');
-            });
-        });
-    }
+
     //最后的代码
     lastCode (param) {
         return new Promise((resolve) => {
@@ -200,6 +204,29 @@ export default class Runtime {
             }
             resolve(true);
         })
+    }
+    start () {
+        this.isrunning = true;
+        msgSubPusher.add(`obs-on-transition-begin`, (data) => {
+            this.transitioning = true;
+            if (data.type == 'cut_transition') {
+                setTimeout(() => {
+                    msgSubPusher.push('obs-on-transition-end', {
+                        name: data.name
+                    })
+                })
+            }
+        });
+        msgSubPusher.add(`obs-on-transition-end`, (data) => {
+            this.transitioning = false;
+        });
+    }
+    stop () {
+        this.isrunning = false;
+        //先清除所有的过渡事件
+        ['begin', 'end', 'videoEnd'].map(c => {
+            msgSubPusher.clear(`obs-on-transition-${c}`);
+        });
     }
     parseCode (strCode, callback) {
 
@@ -234,29 +261,6 @@ export default class Runtime {
         for (let i = 0; i < codeList.length; i++) {
             this.run(codeList[i], callback);
         }
-    }
-    start () {
-        this.isrunning = true;
-        msgSubPusher.add(`obs-on-transition-begin`, (data) => {
-            this.transitioning = true;
-            if (data.type == 'cut_transition') {
-                setTimeout(() => {
-                    msgSubPusher.push('obs-on-transition-end', {
-                        name: data.name
-                    })
-                })
-            }
-        });
-        msgSubPusher.add(`obs-on-transition-end`, (data) => {
-            this.transitioning = false;
-        });
-    }
-    stop () {
-        this.isrunning = false;
-        //先清除所有的过渡事件
-        ['begin', 'end', 'videoEnd'].map(c => {
-            msgSubPusher.clear(`obs-on-transition-${c}`);
-        });
     }
     run (code, callback) {
 

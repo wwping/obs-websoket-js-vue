@@ -1,6 +1,40 @@
 [
     {
         "name": "index",
+        "path": "luckbrand/",
+        "preview": "luckbrand.jpg",
+        "text": "幸运翻牌",
+        "tags": "抽奖",
+        "size": {
+            "w": 1920,
+            "h": 1080
+        },
+        "params": {
+            "text": {
+                "type": "text",
+                "text": "奖品",
+                "default": "奖品1,奖品2,奖品3,奖品4"
+            },
+            "font": {
+                "type": "font",
+                "text": "字体",
+                "options": "",
+                "default": "微软雅黑"
+            },
+            "fontsize": {
+                "type": "number",
+                "text": "字体大小",
+                "default": 50
+            },
+            "fontcolor": {
+                "type": "color",
+                "text": "字体颜色",
+                "default": "#149dca"
+            }
+        }
+    },
+    {
+        "name": "index",
         "path": "music163/",
         "text": "播放网易，QQ，酷狗音乐歌单",
         "tags": "音乐",

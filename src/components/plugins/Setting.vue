@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-28 10:21:30
- * @LastEditTime: 2020-08-05 16:44:26
+ * @LastEditTime: 2020-08-08 16:53:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\plugins\Setting.vue
@@ -71,9 +71,9 @@
                         <div v-else>
                             <span v-if="item.type == 'number'">
                                 <InputNumber v-model="formValidate[key]"
-                                             :min="itemsub.min === undefined ?-Infinity : itemsub.min"
-                                             :max="itemsub.max || Infinity"
-                                             :step="itemsub.step || 1"></InputNumber>
+                                             :min="item.min === undefined ?-Infinity : item.min"
+                                             :max="item.max || Infinity"
+                                             :step="item.step || 1"></InputNumber>
                             </span>
                             <span v-else-if="item.type == 'text'">
                                 <Input v-model="formValidate[key]"></Input>

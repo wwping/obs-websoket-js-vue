@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:27:20
- * @LastEditTime: 2020-08-07 17:06:44
+ * @LastEditTime: 2020-08-07 19:21:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Connect.vue
@@ -101,15 +101,9 @@ export default {
                 setTimeout(this.connect, 1000);
             });
         },
-        disconnect () {
-            this.obs.disconnect();
-        },
-        setConnecting (boolVal) {
-            this.$store.dispatch('connecting', boolVal)
-        },
-        success () {
-            this.setConnecting(true);
-        },
+        disconnect () { this.obs.disconnect(); },
+        setConnecting (boolVal) { this.$store.dispatch('connecting', boolVal) },
+        success () { this.setConnecting(true); },
         error () { this.setConnecting(false) },
         close () { this.setConnecting(false) },
         exiting () { this.setConnecting(false); },

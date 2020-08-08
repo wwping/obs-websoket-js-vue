@@ -1,0 +1,29 @@
+.wrap{position: absolute; left: 0;top: 0;right: 0;bottom: 0;overflow: hidden;}
+
+.brands{position: absolute;left: 50%;top: 50%; transform: translateX(-50%) translateY(-50%); perspective: 800px;}
+.brands .brand{
+    
+    position: absolute;transition:.3s;box-sizing: border-box;padding: 10px;transform-origin: center;perspective: 800px;}
+.brands .brand.rotateX{animation: rotateX 1s;}
+.brands .brand.rotateY{animation: rotateY 1s;}
+.brands .brand .bg{position: absolute;left: 10px;top: 10px;right: 10px;bottom: 10px; text-shadow: 1px 1px 1px #123a39;font-size: 50px;color: #149dca;text-align: center;background-image: url(brand-f.png);background-size:contain;background-repeat: no-repeat;}
+.brands .brand .bg2{display: none; position: absolute;left: 10px;top: 10px;right: 10px;bottom: 10px; text-shadow: 1px 1px 1px #123a39;font-size: 50px;color: #149dca;text-align: center; background-image: url(brand-f.png);background-size:contain;background-repeat: no-repeat;}
+.brands .brand.open .bg{display: none;}
+.brands .brand.open .bg2{display: block;}
+
+@keyframes rotateX{
+    from{
+        transform: rotateX(0deg);
+    }
+    to{
+        transform: rotateX(360deg);
+    }
+}
+@keyframes rotateY{
+    from{
+        transform: rotateY(0deg);
+    }
+    to{
+        transform: rotateY(360deg);
+    }
+}

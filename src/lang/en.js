@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:46
- * @LastEditTime: 2020-08-07 18:58:44
+ * @LastEditTime: 2020-08-09 18:48:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\en.js
@@ -49,6 +49,12 @@ export default {
 
         'saveSuccess': 'save success',
         'confirmDel': 'delete ？'
+    },
+    'stats': {
+        'memory': 'memory',
+        'dropFrames': 'drop frames',
+        'streamSpeed': 'speed',
+        'streamTime': 'time'
     },
     'blockly': {
         'event': 'event',

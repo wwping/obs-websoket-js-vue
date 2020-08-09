@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:52
- * @LastEditTime: 2020-08-09 15:58:23
+ * @LastEditTime: 2020-08-09 18:47:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\zh.js
@@ -48,6 +48,12 @@ export default {
 
         'saveSuccess': '保存成功',
         'confirmDel': '确定删除吗？'
+    },
+    'stats': {
+        'memory': '内存',
+        'dropFrames': '丢帧',
+        'streamSpeed': '码率',
+        'streamTime': '时间'
     },
     'blockly': {
         'event': '事件',

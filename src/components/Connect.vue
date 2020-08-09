@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:27:20
- * @LastEditTime: 2020-08-09 16:31:23
+ * @LastEditTime: 2020-08-09 18:30:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Connect.vue
@@ -47,6 +47,9 @@ export default {
         this.obs.on('RecordingStopped', this.recordingStopped)
 
         this.obs.on('Exiting', this.exiting)
+        this.obs.on('StreamStatus', (data) => {
+            msgSubPusher.push('obs-on-streamStatus', data);
+        });
         this.obs.on('BroadcastCustomMessage', (data) => {
         });
 

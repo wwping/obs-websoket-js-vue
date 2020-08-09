@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 18:55:37
- * @LastEditTime: 2020-07-27 22:55:32
+ * @LastEditTime: 2020-08-09 17:15:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Preview.vue
@@ -9,7 +9,8 @@
 <template>
     <div>
         <div class="preview">
-            <img :src="src" alt="">
+            <img :src="src"
+                 alt="">
         </div>
     </div>
 </template>
@@ -17,35 +18,39 @@
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import msgSubPusher from '../../lib/msgSubPusher'
 export default {
-    name:'Preview',
-    data(){
+    name: 'Preview',
+    data () {
         return {
-            src:''
+            src: '',
+            timer: 0
         }
     },
-    mounted(){
-        this.takeScreenshot();
-    },
-    computed:{
+    computed: {
         ...mapState({
-            scenes:state => state.scenes,
-            current_scene:state=>state.current_scene
+            scenes: state => state.scenes,
+            current_scene: state => state.current_scene
         })
     },
-    methods:{
-        takeScreenshot(){
-            msgSubPusher.push('obs-command',{
-                cmd:'TakeSourceScreenshot',
-                params:{
-                    sourceName:this.current_scene,
-                    embedPictureFormat:'jpg',
-                    compressionQuality:100
+    mounted () {
+        this.takeScreenshot();
+    },
+    beforeDestroy () {
+        clearTimeout(this.timer);
+    },
+    methods: {
+        takeScreenshot () {
+            msgSubPusher.push('obs-command', {
+                cmd: 'TakeSourceScreenshot',
+                params: {
+                    sourceName: this.current_scene,
+                    embedPictureFormat: 'jpg',
+                    compressionQuality: 100
                 },
-                callback:(data)=>{
-                    if(data.status == 'ok'){
+                callback: (data) => {
+                    if (data.status == 'ok') {
                         this.src = data.img;
                     }
-                    setTimeout(this.takeScreenshot,1000);
+                    this.timer = setTimeout(this.takeScreenshot, 1000);
                 }
             })
         }
@@ -53,5 +58,5 @@ export default {
 }
 </script>
 <style scoped>
-img{max-width: 100%;}
+img{max-width: 100%;min-height: 490px;}
 </style>

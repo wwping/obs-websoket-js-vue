@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-26 15:06:52
- * @LastEditTime: 2020-08-07 18:59:00
+ * @LastEditTime: 2020-08-09 15:58:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\lang\zh.js
@@ -85,5 +85,31 @@ export default {
         'onTransition': '开始时',
         'onTransitionEnd': '结束时',
         'onTransitionVideoEnd': '视频结束时',
+    },
+    'sourceSetting': {
+        'text': {
+            'text': '文本',
+            'fontsize': '字大小',
+            'color': '颜色',
+            'opacity': '不透明',
+            'outline': '轮廓',
+            'outline_color': '轮廓色',
+            'outline_size': '轮廓大小',
+        },
+        'image': {
+            'file': '文件',
+            'unload': '当不显示时卸载图像'
+        },
+        'slideshow': {
+            'files': '文件',
+            'loop': '循环播放',
+            'hide': '播完隐藏',
+            'randomize': '随机播放',
+            'playback_behavior': '可见性行为',
+            'slide_mode': '幻灯片模式',
+            'slide_time': '幻灯片之间切换速度',
+            'transition_speed': '转场速度',
+            'transition': '转换特效'
+        }
     }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 15:27:20
- * @LastEditTime: 2020-08-07 19:21:47
+ * @LastEditTime: 2020-08-09 16:31:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\Connect.vue
@@ -70,6 +70,10 @@ export default {
             this.obs.on(c, () => {
                 this.updateSources();
             })
+        });
+
+        this.obs.on('StreamStatus', (data) => {
+            console.log(data);
         });
 
         //监听obs过渡事件，发送消息 给任务代码

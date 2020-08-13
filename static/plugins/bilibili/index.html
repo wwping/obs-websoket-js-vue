@@ -289,8 +289,10 @@
                                     })
                                     break;
                                 case 'SEND_GIFT':
+
                                     if (item.data.coin_type == 'silver') {
                                         if (silver) {
+                                            console.log(item.data.giftName);
                                             this.msgs.push({
                                                 type: 'tw',
                                                 gift: {
@@ -305,6 +307,7 @@
                                         }
                                     } else {
                                         if (gold) {
+                                            console.log(item.data.giftName);
                                             this.msgs.push({
                                                 type: 'tw',
                                                 gift: {
@@ -320,13 +323,15 @@
                                     }
                                     break;
                                 case 'COMBO_END':
+
                                     if (item.data.price > price && gold) {
+                                        console.log(item.data.gift_name);
                                         this.msgs.push({
                                             type: 'lj',
                                             gift: {
                                                 type: '连击',
                                                 name: item.data.gift_name,
-                                                num: item.data.gift_num
+                                                num: item.data.combo_num
                                             },
                                             user: {
                                                 name: item.data.uname

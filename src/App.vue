@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-26 13:39:46
- * @LastEditTime: 2020-08-09 18:14:48
+ * @LastEditTime: 2020-08-09 22:14:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\App.vue
@@ -31,9 +31,15 @@ import Connect from './components/Connect'
 import Menu from './components/Menu'
 import Title from './components/Title'
 import CopyRight from './components/CopyRight'
+import axios from 'axios'
 export default {
     name: 'App',
-    components: { Connect, MenuBar: Menu, Title, CopyRight }
+    components: { Connect, MenuBar: Menu, Title, CopyRight },
+    mounted () {
+        // axios.get('https://console.kuabo.cn/Widgets/play?id=6&widget=5').then((res) => {
+        //     console.log(res);
+        // })
+    }
 }
 </script>
 

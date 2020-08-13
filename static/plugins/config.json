@@ -1,6 +1,95 @@
 [
     {
         "name": "index",
+        "path": "bilibili/adm/",
+        "preview": "adm.jpg",
+        "text": "bilibili自动弹幕",
+        "tags": "弹幕",
+        "size": {
+            "w": 100,
+            "h": 100
+        },
+        "params": {
+            "rid": {
+                "type": "text",
+                "text": "房间号",
+                "default": "650",
+                "textarea": false
+            },
+            "time": {
+                "type": "number",
+                "text": "间隔秒",
+                "default": 10
+            },
+            "texts": {
+                "type": "text",
+                "text": "弹幕",
+                "default": "多条{|}间隔",
+                "textarea": true
+            },
+            "ck": {
+                "type": "text",
+                "text": "cookie",
+                "default": "",
+                "textarea": false
+            }
+        }
+    },
+    {
+        "name": "index",
+        "path": "time/",
+        "preview": "time.jpg",
+        "text": "简单时间",
+        "tags": "时间",
+        "size": {
+            "w": 1920,
+            "h": 1080
+        },
+        "params": {
+            "fm": {
+                "type": "text",
+                "text": "格式化",
+                "default": "yyyy-MM-dd hh:mm:ss"
+            },
+            "f": {
+                "type": "font",
+                "text": "字体",
+                "options": "",
+                "default": "微软雅黑"
+            },
+            "fs": {
+                "type": "number",
+                "text": "字体大小",
+                "default": 50
+            },
+            "c": {
+                "type": "color",
+                "text": "字体颜色",
+                "default": "#fff"
+            },
+            "o": {
+                "type": "number",
+                "text": "不透明度",
+                "default": 100
+            },
+            "_6": {
+                "child": {
+                    "width": {
+                        "type": "number",
+                        "text": "框宽度",
+                        "default": 500
+                    },
+                    "height": {
+                        "type": "number",
+                        "text": "框高度",
+                        "default": 55
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "index",
         "path": "luckbrand/",
         "preview": "luckbrand.jpg",
         "text": "幸运翻牌",
@@ -1107,9 +1196,23 @@
                         "text": "礼物提醒",
                         "default": true
                     },
-                    "jf": {
+                    "price": {
+                        "type": "number",
+                        "text": "礼物价格",
+                        "default": 0
+                    }
+                }
+            },
+            "_111": {
+                "child": {
+                    "yuchi": {
                         "type": "bool",
-                        "text": "进房提醒",
+                        "text": "鱼翅礼物",
+                        "default": true
+                    },
+                    "free": {
+                        "type": "bool",
+                        "text": "免费礼物",
                         "default": true
                     }
                 }
@@ -1121,10 +1224,10 @@
                         "text": "发言等级",
                         "default": 0
                     },
-                    "price": {
-                        "type": "number",
-                        "text": "礼物价格",
-                        "default": 0
+                    "jf": {
+                        "type": "bool",
+                        "text": "进房提醒",
+                        "default": true
                     }
                 }
             },

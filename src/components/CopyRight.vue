@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-08-09 18:09:57
- * @LastEditTime: 2020-08-09 18:57:19
+ * @LastEditTime: 2020-08-09 20:32:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\CopyRight.vue
@@ -95,7 +95,6 @@ export default {
             msgSubPusher.push('obs-command', {
                 cmd: 'GetStats',
                 callback: (data) => {
-                    console.log(data);
                     this.fps = Math.floor(data.stats.fps);
                     this.cpu = data.stats['cpu-usage'].toFixed(1);
                     this.memory = data.stats['memory-usage'].toFixed(1);

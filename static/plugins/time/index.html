@@ -1,0 +1,45 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-12 19:40:45
+ * @LastEditTime: 2020-08-12 20:34:10
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \obs\static\plugins\time\index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="div1"></div>
+    <script src="../js.js"></script>
+    <script>
+
+        var fontsize = Number(getParam('fs') || 50);
+        var font = getParam('f') || '微软雅黑';
+        var color = '#' + (getParam('c') || 'fff');
+        var opacity = Number(getParam('o') || '100');
+        var fm = getParam('fm') || 'yyyy-MM-dd hh:mm:ss';
+
+        color = color.hex2rgb();
+        color.push(opacity / 100);
+
+        var div1 = document.getElementById("div1");
+        div1.style = `font-size:${fontsize}px;font-family:${font};color:rgba(${color.join(',')});text-shadow: 1px 1px 2px rgba(0,0,0,${opacity / 100});`;
+
+        function showtime() {
+            div1.innerHTML = new Date().format(fm);
+        }
+        showtime();
+        setInterval(function () {
+            showtime();
+        }, 1000);
+    </script>
+</body>
+
+</html>

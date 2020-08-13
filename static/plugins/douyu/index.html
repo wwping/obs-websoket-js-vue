@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-29 21:56:10
- * @LastEditTime: 2020-08-07 13:26:09
+ * @LastEditTime: 2020-08-11 20:17:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \undefinedd:\Desktop\dydm\index.html
@@ -57,7 +57,7 @@
         const rid = getParam('rid') || '0';
         const level = Number(getParam('level') || '0');
         const row = Number(getParam('row') || '5');
-        const price = Number(getParam('price') || '0');
+        const price = Number(getParam('price') || '0') * 100;
 
         let bcolor = '#' + (getParam('bcolor') || 'fff');
         const opacity = Number(getParam('opacity') || '100');
@@ -74,6 +74,9 @@
         const fcolor = '#' + (getParam('fcolor') || 'fff');
 
         const lw = (getParam('lw') || 'true') == 'true';
+        const yuchi = (getParam('yuchi') || 'true') == 'true';
+        const free = (getParam('free') || 'true') == 'true';
+
         const slevel = (getParam('slevel') || 'true') == 'true';
         const label = (getParam('label') || 'true') == 'true';
         const dm = (getParam('dm') || 'true') == 'true';
@@ -119,7 +122,6 @@
 
                 //消息事件
                 room.on('chatmsg', (res) => {
-                    console.log(res);
                     if (dm && res.level >= level) {
                         this.msgs.push({
                             type: 'dm',
@@ -147,6 +149,17 @@
                 room.on('dgb', (res) => {
                     if (lw) {
                         let gift = this.giftNames[res.pid] || this.giftNames[res.gfid] || '';
+                        //priceType   1   2   YUCHI
+                        if (gift.priceType == "YUCHI") {
+                            if (!!yuchi) {
+                                return;
+                            }
+                        } else {
+                            if (!free) {
+                                return;
+                            }
+                        }
+
                         this.msgs.push({
                             type: 'lw',
                             msg: res.txt,
@@ -184,7 +197,6 @@
                         }
                         this.scrollBottom();
                     }
-                    console.log(res);
                 })
 
                 //开始监听

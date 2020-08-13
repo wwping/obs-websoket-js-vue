@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-28 10:21:30
- * @LastEditTime: 2020-08-08 16:53:41
+ * @LastEditTime: 2020-08-13 16:24:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \obs\src\components\plugins\Setting.vue
@@ -76,7 +76,9 @@
                                              :step="item.step || 1"></InputNumber>
                             </span>
                             <span v-else-if="item.type == 'text'">
-                                <Input v-model="formValidate[key]"></Input>
+                                <Input v-model="formValidate[key]"
+                                       :type="item.textarea === true?'textarea':'text'"
+                                       :autosize="true"></Input>
                             </span>
                             <span v-else-if="item.type=='select'">
                                 <Select v-model="formValidate[key]">

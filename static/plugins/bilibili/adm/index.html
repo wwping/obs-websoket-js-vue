@@ -1,0 +1,62 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-13 16:02:07
+ * @LastEditTime: 2020-08-13 17:10:26
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \obs\static\plugins\bilibili\adm\index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../../js.js"></script>
+    <script src="../../axios.min.js"></script>
+    <script>
+        var rid = getParam('rid');
+        var cookie = getParam('ck');
+        var time = Number(getParam('time'));//s
+        var texts = (getParam('texts') || '').split('{|}');//s
+
+        function send() {
+
+            let index = 0;
+            var sends = texts.map(c => {
+                let res = new Promise((a, b) => {
+                    setTimeout(() => {
+                        try {
+                            axios.post('http://obs.qbcode.cn:8000/bilibili/dm', {
+                                roomid: rid,
+                                msg: c,
+                                cookie: cookie,
+                            }, {
+                                headers: { 'Content-Type': 'multipart/form-data' }
+                            }).then(() => {
+                                a();
+                            }).catch(() => {
+                                a();
+                            })
+                        } catch (e) {
+                            a();
+                        }
+                    }, index * 1000);
+                });
+                index++;
+                return res;
+            });
+            Promise.all(sends).then(c => {
+                setTimeout(send, time * 1000);
+            });
+        }
+
+        send();
+    </script>
+</body>
+
+</html>

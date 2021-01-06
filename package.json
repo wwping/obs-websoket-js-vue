@@ -10,7 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bili-danmu-loader-yl": "^1.0.4",
     "dexie": "^3.0.2",
     "obs-websocket-js": "^4.0.1",
